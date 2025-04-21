@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sqlserver-sercrets
+type: Opaque
+data:
+  SA_PASSWORD: U3FsU2VydmVyMjAxOSE= 
+  
+# echo -n 'your_secret_value' | base64
+# U3FsU2VydmVyMjAxOSE=

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiap-pos-tech-challenge-api-deployment
+  labels:
+    apps: fiap-pos-tech-challenge-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      apps: fiap-pos-tech-challenge-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        apps: fiap-pos-tech-challenge-api
+    spec:
+      containers:
+        - name: fiap-pos-tech-challenge-api-container
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Azure
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "8080"
+          image: fdelima/fiap-pos-techchallenge-gurpo-71-api:fase3az
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api-docs/index.html
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api-docs/index.html
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 20
+          resources:
+            requests:
+              cpu: 10m              
+      restartPolicy: Always

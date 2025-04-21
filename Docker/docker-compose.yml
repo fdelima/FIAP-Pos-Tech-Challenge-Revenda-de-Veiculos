@@ -1,0 +1,48 @@
+version: '3.4'
+
+name: fiap-pos-techchallenge-revenda-de-veiculos
+
+volumes:
+  sql_data: {}
+
+services:
+  fiap.pos.tech.challenge.revenda-de-veiculos.api:
+    image: fiappostechchallengerevendadeveiculosapi:stand-alone
+    depends_on:
+      - mssqltools-revenda-de-veiculos
+    build:
+      context: ../
+      dockerfile: Src/Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  sqlserver-revenda-de-veiculos:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "SqlServer2019!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1431:1433"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-PSqlServer2019!", "-Q", "SELECT NAME FROM SYS.DATABASES"]
+      interval: 10s
+      retries: 20
+    volumes:
+      - sql_data:/var/opt/mssql
+  mssqltools-revenda-de-veiculos:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver-revenda-de-veiculos
+    volumes:
+      - ./DataBase/init-database.sh:/tmp/init-database.sh
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/Modelagem-banco-de-dados/revenda-de-veiculos/tech-challenge-mer-1.sql:/tmp/tech-challenge-mer-1.sql
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/Modelagem-banco-de-dados/revenda-de-veiculos/tech-challenge-mer-2.sql:/tmp/tech-challenge-mer-2.sql
+    command: /bin/bash ./tmp/init-database.sh  

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sqlserver-cadastro-statefulset
+  labels:
+    apps: sqlserver-cadastro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      apps: sqlserver-cadastro
+  template:
+    metadata:
+      labels:
+        apps: sqlserver-cadastro
+    spec:      
+      containers:
+        - name: sqlserver-cadastro
+          env:
+            - name: ACCEPT_EULA
+              valueFrom:
+                configMapKeyRef:
+                  name: sqlserver-configmap
+                  key: ACCEPT_EULA
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  name: sqlserver-configmap
+                  key: MSSQL_PID
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sqlserver-sercrets
+                  key: SA_PASSWORD                  
+          image: mcr.microsoft.com/mssql/server:2019-latest          
+          ports:
+            - containerPort: 1433
+          volumeMounts:
+            - mountPath: /var/opt/mssql
+              name: sql-data-cadastro
+      restartPolicy: Always
+      volumes:
+        - name: sql-data-cadastro
+          persistentVolumeClaim:
+            claimName: sql-data-cadastro

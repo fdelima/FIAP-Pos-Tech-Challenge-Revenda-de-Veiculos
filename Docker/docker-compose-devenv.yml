@@ -1,0 +1,35 @@
+version: '3.4'
+volumes:
+  sql_data: {}
+
+services:
+  fiap.pos.tech.challenge.revendadeveiculos.api:
+    image: ${DOCKER_REGISTRY-}fiappostechchallengerevendadeveiculosapi
+    depends_on:
+      - mssqltools-revendadeveiculos
+    build:
+      context: ../
+      dockerfile: Src/Api/Dockerfile
+  sqlserver-revendadeveiculos:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "SqlServer2019!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1431:1433"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U sa -P SqlServer2019! -Q 'SELECT NAME FROM SYS.DATABASES'"]
+      interval: 10s
+      retries: 20
+    volumes:
+      - sql_data:/var/opt/mssql
+  mssqltools-revendadeveiculos:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver-revendadeveiculos
+    volumes:
+      - ./DataBase/init-database.sh:/tmp/init-database.sh
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/Modelagem-banco-de-dados/revendadeveiculos/tech-challenge-mer-1.sql:/tmp/tech-challenge-mer-1.sql
+      - ../../FIAP-Pos-Tech-Challenge-Infra-Bd/Src/Modelagem-banco-de-dados/revendadeveiculos/tech-challenge-mer-2.sql:/tmp/tech-challenge-mer-2.sql
+    command: /bin/bash ./tmp/init-database.sh  
