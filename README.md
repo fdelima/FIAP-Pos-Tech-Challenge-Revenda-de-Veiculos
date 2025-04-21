@@ -22,7 +22,7 @@ Além disso, como estamos com um novo time responsável pela infraestrutura, ser
 
 ## Como executar no visual studio 2022
 * Certifique-se que o docker desktop esteja em execução
-* Abra a solução (FIAP-Pos-Tech-Challenge-Micro-Servico-Pedido.sln) com o visual studio 2022
+* Abra a solução (FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos.sln) com o visual studio 2022
 * Start visual studio na opção docker-compose conforme imagem abaixo:
 ![image](Documentacao/VS-2022-play-docker-compose.png)
 
@@ -54,7 +54,8 @@ docker compose up
 
 ## 2. Conteúdo do Repositório:  
 ### 2.1 Arquivo Readme.md que explique o que é o projeto, como foi implementado, como usar localmente e como testar;  
-- xxx
+- [Como executar no visual studio 2022](#como-executar-no-visual-studio-2022)
+- [Como executar manualmente no windows](#como-executar-manualmente-no-windows)
 
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as 
 necessidades acima descritas e implemente os conceitos SOLID e Clean 
