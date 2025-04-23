@@ -15,19 +15,19 @@ namespace TestProject.UnitTest.Domain
     /// <summary>
     /// Classe de teste.
     /// </summary>
-    public partial class PedidoServiceTest
+    public partial class VeiculoServiceTest
     {
-        private readonly IGateways<Pedido> _gatewayPedidoMock;
-        private readonly IValidator<Pedido> _validator;
+        private readonly IGateways<Veiculo> _gatewayVeiculoMock;
+        private readonly IValidator<Veiculo> _validator;
         private readonly IGateways<Notificacao> _notificacaoGatewayMock;
 
         /// <summary>
         /// Construtor da classe de teste.
         /// </summary>
-        public PedidoServiceTest()
+        public VeiculoServiceTest()
         {
-            _validator = new PedidoValidator();
-            _gatewayPedidoMock = Substitute.For<IGateways<Pedido>>();
+            _validator = new VeiculoValidator();
+            _gatewayVeiculoMock = Substitute.For<IGateways<Veiculo>>();
             _notificacaoGatewayMock = Substitute.For<IGateways<Notificacao>>();
         }
 
@@ -36,16 +36,16 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
-        public async Task InserirComDadosValidos(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task InserirComDadosValidos(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Act
             var result = await domainService.InsertAsync(revendaDeVeiculos);
@@ -59,16 +59,16 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
-        public async Task InserirComDadosInvalidos(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task InserirComDadosInvalidos(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Act
             var result = await domainService.InsertAsync(revendaDeVeiculos);
@@ -83,24 +83,24 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task AlterarComDadosValidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task AlterarComDadosValidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Mockando retorno do metodo interno do UpdateAsync
-            _gatewayPedidoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Pedido, ICollection<PedidoItem>>>>(), Arg.Any<Expression<Func<Pedido, bool>>>())
-                .Returns(new ValueTask<Pedido>(revendaDeVeiculos));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
+                .Returns(new ValueTask<Veiculo>(revendaDeVeiculos));
 
             //Mockando retorno do metodo interno do UpdateAsync
-            _gatewayPedidoMock.UpdateAsync(Arg.Any<Pedido>())
+            _gatewayVeiculoMock.UpdateAsync(Arg.Any<Veiculo>())
                 .Returns(Task.FromResult(revendaDeVeiculos));
 
             //Act
@@ -115,21 +115,21 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, false, 3)]
-        public async Task AlterarComDadosInvalidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task AlterarComDadosInvalidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Mockando retorno do metodo interno do UpdateAsync
-            _gatewayPedidoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Pedido, ICollection<PedidoItem>>>>(), Arg.Any<Expression<Func<Pedido, bool>>>())
-                .Returns(new ValueTask<Pedido>(revendaDeVeiculos));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
+                .Returns(new ValueTask<Veiculo>(revendaDeVeiculos));
 
             //Act
             var result = await domainService.UpdateAsync(revendaDeVeiculos);
@@ -143,27 +143,27 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task DeletarPedido(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task DeletarVeiculo(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Mockando retorno do metodo interno do FindByIdAsync
-            _gatewayPedidoMock.FindByIdAsync(idPedido)
-                .Returns(new ValueTask<Pedido>(revendaDeVeiculos));
+            _gatewayVeiculoMock.FindByIdAsync(idVeiculo)
+                .Returns(new ValueTask<Veiculo>(revendaDeVeiculos));
 
-            _gatewayPedidoMock.DeleteAsync(idPedido)
+            _gatewayVeiculoMock.DeleteAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult()));
 
             //Act
-            var result = await domainService.DeleteAsync(idPedido);
+            var result = await domainService.DeleteAsync(idVeiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -174,24 +174,24 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task ConsultarPedidoPorIdComDadosValidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task ConsultarVeiculoPorIdComDadosValidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Mockando retorno do metodo interno do FindByIdAsync
-            _gatewayPedidoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Pedido, ICollection<PedidoItem>>>>(), Arg.Any<Expression<Func<Pedido, bool>>>())
-                .Returns(new ValueTask<Pedido>(revendaDeVeiculos));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
+                .Returns(new ValueTask<Veiculo>(revendaDeVeiculos));
 
             //Act
-            var result = await domainService.FindByIdAsync(idPedido);
+            var result = await domainService.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -202,20 +202,20 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task ConsultarPedidoPorIdComDadosInvalidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task ConsultarVeiculoPorIdComDadosInvalidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Act
-            var result = await domainService.FindByIdAsync(idPedido);
+            var result = await domainService.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.False(result.IsValid);
@@ -226,15 +226,15 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedido(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> Pedidos)
+        public async Task ConsultarVeiculo(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> Veiculos)
         {
             ///Arrange
-            var domainService = new PedidoService(_gatewayPedidoMock, _validator, _notificacaoGatewayMock);
+            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator, _notificacaoGatewayMock);
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayPedidoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Pedido>>(),
-                Arg.Any<Expression<Func<Pedido, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Pedido>>(new PagingQueryResult<Pedido>(new List<Pedido>(Pedidos))));
+            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
+                Arg.Any<Expression<Func<Veiculo, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(Veiculos))));
 
 
             //Act
@@ -249,19 +249,19 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedidoComCondicao(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> Pedidos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> Veiculos)
         {
             ///Arrange
-            var param = new PagingQueryParam<Pedido>() { CurrentPage = 1, Take = 10 };
+            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayPedidoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Pedido>>(),
-                Arg.Any<Expression<Func<Pedido, bool>>>(),
-                Arg.Any<Expression<Func<Pedido, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Pedido>>(new PagingQueryResult<Pedido>(new List<Pedido>(Pedidos))));
+            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
+                Arg.Any<Expression<Func<Veiculo, bool>>>(),
+                Arg.Any<Expression<Func<Veiculo, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(Veiculos))));
 
             //Act
-            var result = await _gatewayPedidoMock.GetItemsAsync(filter, param.ConsultRule(), sortProp);
+            var result = await _gatewayVeiculoMock.GetItemsAsync(filter, param.ConsultRule(), sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -272,16 +272,16 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedidoSemCondicao(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> Pedidos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> Veiculos)
         {
             ///Arrange
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayPedidoMock.GetItemsAsync(filter, sortProp)
-                .Returns(new ValueTask<PagingQueryResult<Pedido>>(new PagingQueryResult<Pedido>(new List<Pedido>(Pedidos))));
+            _gatewayVeiculoMock.GetItemsAsync(filter, sortProp)
+                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(Veiculos))));
 
             //Act
-            var result = await _gatewayPedidoMock.GetItemsAsync(filter, sortProp);
+            var result = await _gatewayVeiculoMock.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -298,21 +298,21 @@ namespace TestProject.UnitTest.Domain
             {
                 case enmTipo.Inclusao:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade);
+                        return VeiculoMock.ObterDadosValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosInvalidos(quantidade);
+                        return VeiculoMock.ObterDadosInvalidos(quantidade);
                 case enmTipo.Alteracao:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade)
+                        return VeiculoMock.ObterDadosValidos(quantidade)
                             .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                     else
-                        return PedidoMock.ObterDadosInvalidos(quantidade)
+                        return VeiculoMock.ObterDadosInvalidos(quantidade)
                             .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                 case enmTipo.Consulta:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosConsultaValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosConsultaInValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaInValidos(quantidade);
                 default:
                     return null;
             }

@@ -1,6 +1,6 @@
 ﻿namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 
-public enum enmPedidoStatusPagamento
+public enum enmVeiculoStatusPagamento
 {
     PENDENTE,
     PROCESSANDO,

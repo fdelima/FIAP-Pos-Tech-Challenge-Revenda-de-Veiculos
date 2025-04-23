@@ -2,11 +2,11 @@
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class PedidoGetListaCommand : IRequest<PagingQueryResult<Domain.Entities.Pedido>>
+    public class VeiculoGetListaCommand : IRequest<PagingQueryResult<Domain.Entities.Veiculo>>
     {
-        public PedidoGetListaCommand(IPagingQueryParam filter)
+        public VeiculoGetListaCommand(IPagingQueryParam filter)
         {
             Filter = filter;
         }

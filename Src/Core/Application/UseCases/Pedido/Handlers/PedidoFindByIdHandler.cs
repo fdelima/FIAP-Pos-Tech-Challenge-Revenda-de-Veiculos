@@ -1,20 +1,20 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class PedidoFindByIdHandler : IRequestHandler<PedidoFindByIdCommand, ModelResult>
+    public class VeiculoFindByIdHandler : IRequestHandler<VeiculoFindByIdCommand, ModelResult>
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
 
-        public PedidoFindByIdHandler(IPedidoService service)
+        public VeiculoFindByIdHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoFindByIdCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(VeiculoFindByIdCommand command, CancellationToken cancellationToken = default)
         {
             return await _service.FindByIdAsync(command.Id);
         }

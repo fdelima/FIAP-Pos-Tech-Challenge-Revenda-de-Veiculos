@@ -1,11 +1,11 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class PedidoFindByIdCommand : IRequest<ModelResult>
+    public class VeiculoFindByIdCommand : IRequest<ModelResult>
     {
-        public PedidoFindByIdCommand(Guid id)
+        public VeiculoFindByIdCommand(Guid id)
         {
             Id = id;
         }

@@ -1,5 +1,5 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
@@ -16,14 +16,14 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-            //Pedido
-            services.AddScoped<IRequestHandler<PedidoPostCommand, ModelResult>, PedidoPostHandler>();
-            services.AddScoped<IRequestHandler<PedidoAlterarStatusPagamentoCommand, ModelResult>, PedidoAlterarStatusPagamentoHandler>();
-            services.AddScoped<IRequestHandler<PedidoPutCommand, ModelResult>, PedidoPutHandler>();
-            services.AddScoped<IRequestHandler<PedidoDeleteCommand, ModelResult>, PedidoDeleteHandler>();
-            services.AddScoped<IRequestHandler<PedidoFindByIdCommand, ModelResult>, PedidoFindByIdHandler>();
-            services.AddScoped<IRequestHandler<PedidoGetItemsCommand, PagingQueryResult<Domain.Entities.Pedido>>, PedidoGetItemsHandler>();
-            services.AddScoped<IRequestHandler<PedidoGetListaCommand, PagingQueryResult<Domain.Entities.Pedido>>, PedidoGetIListaHandler>();
+            //Veiculo
+            services.AddScoped<IRequestHandler<VeiculoPostCommand, ModelResult>, VeiculoPostHandler>();
+            services.AddScoped<IRequestHandler<VeiculoAlterarStatusPagamentoCommand, ModelResult>, VeiculoAlterarStatusPagamentoHandler>();
+            services.AddScoped<IRequestHandler<VeiculoPutCommand, ModelResult>, VeiculoPutHandler>();
+            services.AddScoped<IRequestHandler<VeiculoDeleteCommand, ModelResult>, VeiculoDeleteHandler>();
+            services.AddScoped<IRequestHandler<VeiculoFindByIdCommand, ModelResult>, VeiculoFindByIdHandler>();
+            services.AddScoped<IRequestHandler<VeiculoGetItemsCommand, PagingQueryResult<Domain.Entities.Veiculo>>, VeiculoGetItemsHandler>();
+            services.AddScoped<IRequestHandler<VeiculoGetListaCommand, PagingQueryResult<Domain.Entities.Veiculo>>, VeiculoGetIListaHandler>();
 
         }
     }

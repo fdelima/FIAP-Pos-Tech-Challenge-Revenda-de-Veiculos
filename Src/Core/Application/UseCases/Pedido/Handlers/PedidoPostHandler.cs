@@ -1,22 +1,22 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 using System.Net.Http.Json;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class PedidoPostHandler : IRequestHandler<PedidoPostCommand, ModelResult>
+    public class VeiculoPostHandler : IRequestHandler<VeiculoPostCommand, ModelResult>
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
 
-        public PedidoPostHandler(IPedidoService service)
+        public VeiculoPostHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoPostCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(VeiculoPostCommand command, CancellationToken cancellationToken = default)
         {
             var warnings = new List<string>();
             try
@@ -34,7 +34,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.
                 if (!response.IsSuccessStatusCode)
                     warnings.Add($"Dispositivo {command.Entity.IdDispositivo} não encontrado!");
 
-                foreach (var produto in command.Entity.PedidoItems)
+                foreach (var produto in command.Entity.VeiculoFotos)
                 {
                     response = await cadastroClient.GetAsync($"api/cadastro/Produto/{produto.IdProduto}");
 
@@ -56,7 +56,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.
                     var pagamentoClient = Util.GetClient(command.MicroServicoPagamentoBaseAdress);
 
                     HttpResponseMessage response =
-                     await pagamentoClient.PostAsJsonAsync("api/Pagamento/Pedido", result.Model);
+                     await pagamentoClient.PostAsJsonAsync("api/Pagamento/Veiculo", result.Model);
 
                     if (!response.IsSuccessStatusCode)
                         result.AddMessage($"Não foi possível enviar revendaDeVeiculos para o pagamento.");

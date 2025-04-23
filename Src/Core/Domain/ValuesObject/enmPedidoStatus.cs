@@ -1,6 +1,6 @@
 ﻿namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 
-public enum enmPedidoStatus
+public enum enmVeiculoStatus
 {
     RECEBIDO,
     EM_PREPARACAO,

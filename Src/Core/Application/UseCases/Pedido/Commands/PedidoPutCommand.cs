@@ -1,11 +1,11 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class PedidoPutCommand : IRequest<ModelResult>
+    public class VeiculoPutCommand : IRequest<ModelResult>
     {
-        public PedidoPutCommand(Guid id, Domain.Entities.Pedido entity,
+        public VeiculoPutCommand(Guid id, Domain.Entities.Veiculo entity,
             string[]? businessRules = null)
         {
             Id = id;
@@ -14,7 +14,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.
         }
 
         public Guid Id { get; private set; }
-        public Domain.Entities.Pedido Entity { get; private set; }
+        public Domain.Entities.Veiculo Entity { get; private set; }
         public string[]? BusinessRules { get; private set; }
     }
 }

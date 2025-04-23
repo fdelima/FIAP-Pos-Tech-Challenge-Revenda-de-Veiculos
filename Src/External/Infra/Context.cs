@@ -13,9 +13,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
 
         public virtual DbSet<Notificacao> Notificacaos { get; set; }
 
-        public virtual DbSet<Domain.Entities.Pedido> Pedidos { get; set; }
+        public virtual DbSet<Domain.Entities.Veiculo> Veiculos { get; set; }
 
-        public virtual DbSet<PedidoItem> PedidoItems { get; set; }
+        public virtual DbSet<VeiculoFoto> VeiculoItems { get; set; }
 
         #endregion DbSets
 
@@ -23,8 +23,8 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
         {
             //TODO: Map :: 2 - Adicione sua configuração aqui
             modelBuilder.ApplyConfiguration(new NotificacaoMap());
-            modelBuilder.ApplyConfiguration(new PedidoItemMap());
-            modelBuilder.ApplyConfiguration(new PedidoMap());
+            modelBuilder.ApplyConfiguration(new VeiculoItemMap());
+            modelBuilder.ApplyConfiguration(new VeiculoMap());
 
             base.OnModelCreating(modelBuilder);
         }

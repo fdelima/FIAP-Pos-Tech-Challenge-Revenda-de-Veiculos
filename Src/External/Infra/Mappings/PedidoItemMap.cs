@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
 
-internal class PedidoItemMap : IEntityTypeConfiguration<PedidoItem>
+internal class VeiculoItemMap : IEntityTypeConfiguration<VeiculoFoto>
 {
-    public void Configure(EntityTypeBuilder<PedidoItem> builder)
+    public void Configure(EntityTypeBuilder<VeiculoFoto> builder)
     {
-        builder.HasKey(e => e.IdPedidoItem);
+        builder.HasKey(e => e.IdVeiculoItem);
 
-        builder.ToTable("pedido_item");
+        builder.ToTable("veiculo_item");
 
-        builder.Property(e => e.IdPedidoItem)
+        builder.Property(e => e.IdVeiculoItem)
             .ValueGeneratedNever()
-            .HasColumnName("id_pedido_item");
+            .HasColumnName("id_veiculo_item");
         builder.Property(e => e.Data)
             .HasDefaultValueSql("(getdate())")
             .HasColumnType("datetime")
             .HasColumnName("data");
-        builder.Property(e => e.IdPedido).HasColumnName("id_pedido");
+        builder.Property(e => e.IdVeiculo).HasColumnName("id_veiculo");
         builder.Property(e => e.IdProduto).HasColumnName("id_produto");
         builder.Property(e => e.Observacao)
             .HasMaxLength(50)
@@ -28,8 +28,8 @@ internal class PedidoItemMap : IEntityTypeConfiguration<PedidoItem>
             .HasDefaultValue(1)
             .HasColumnName("quantidade");
 
-        builder.HasOne(d => d.IdPedidoNavigation).WithMany(p => p.PedidoItems)
-            .HasForeignKey(d => d.IdPedido)
-            .HasConstraintName("FK_pedido_item_pedido");
+        builder.HasOne(d => d.IdVeiculoNavigation).WithMany(p => p.VeiculoFotos)
+            .HasForeignKey(d => d.IdVeiculo)
+            .HasConstraintName("FK_veiculo_item_veiculo");
     }
 }

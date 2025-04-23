@@ -10,16 +10,16 @@ namespace TestProject.ComponenteTest
     /// <summary>
     /// Classe de teste.
     /// </summary>
-    [FeatureFile("./BDD/Features/ControlarPedidos.feature")]
-    public class PedidoControllerTest : Feature, IClassFixture<ComponentTestsBase>
+    [FeatureFile("./BDD/Features/ControlarVeiculos.feature")]
+    public class VeiculoControllerTest : Feature, IClassFixture<ComponentTestsBase>
     {
         private readonly ApiTestFixture _apiTest;
-        Pedido _pedido;
+        Veiculo _veiculo;
 
         /// <summary>
         /// Construtor da classe de teste.
         /// </summary>
-        public PedidoControllerTest(ComponentTestsBase data)
+        public VeiculoControllerTest(ComponentTestsBase data)
         {
             _apiTest = data._apiTest;
         }
@@ -27,26 +27,26 @@ namespace TestProject.ComponenteTest
         {
             public List<string> Messages { get; set; }
             public List<string> Errors { get; set; }
-            public Pedido Model { get; set; }
+            public Veiculo Model { get; set; }
             public bool IsValid { get; set; }
         }
 
         [Given(@"Recebendo um revendaDeVeiculos na lanchonete vamos preparar o revendaDeVeiculos")]
-        public void PrepararPedido()
+        public void PrepararVeiculo()
         {
-            _pedido = new Pedido();
-            _pedido.IdDispositivo = Guid.NewGuid();
-            _pedido.PedidoItems.Add(new PedidoItem()
+            _veiculo = new Veiculo();
+            _veiculo.IdDispositivo = Guid.NewGuid();
+            _veiculo.VeiculoFotos.Add(new VeiculoFoto()
             {
                 IdProduto = Guid.Parse("f724910b-ed6d-41a2-ab52-da4cd26ba413"),
                 Quantidade = 1
             });
-            _pedido.PedidoItems.Add(new PedidoItem
+            _veiculo.VeiculoFotos.Add(new VeiculoFoto
             {
                 IdProduto = Guid.Parse("802be132-64ef-4737-9de7-c83298c70a73"),
                 Quantidade = 1
             });
-            _pedido.PedidoItems.Add(new PedidoItem
+            _veiculo.VeiculoFotos.Add(new VeiculoFoto
             {
                 IdProduto = Guid.Parse("f44b20ab-a453-4579-accf-d94d7075f508"),
                 Quantidade = 1
@@ -54,54 +54,54 @@ namespace TestProject.ComponenteTest
         }
 
         [And(@"Adicionar o revendaDeVeiculos")]
-        public async Task AdicionarPedido()
+        public async Task AdicionarVeiculo()
         {
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.PostAsJsonAsync(
-                "api/revendaDeVeiculos/checkout", _pedido);
+                "api/revendaDeVeiculos/checkout", _veiculo);
 
             var responseContent = await response.Content.ReadAsStringAsync();
             var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
 
-            _pedido = actualResult.Model;
+            _veiculo = actualResult.Model;
 
             Assert.True(actualResult.IsValid);
         }
 
         [And(@"Encontrar o revendaDeVeiculos")]
-        public async Task EncontrarPedido()
+        public async Task EncontrarVeiculo()
         {
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.GetAsync(
-                $"api/revendaDeVeiculos/{_pedido.IdPedido}");
+                $"api/revendaDeVeiculos/{_veiculo.IdVeiculo}");
 
             var responseContent = await response.Content.ReadAsStringAsync();
             var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _pedido = actualResult.Model;
+            _veiculo = actualResult.Model;
 
             Assert.True(actualResult.IsValid);
         }
 
         [And(@"Alterar o revendaDeVeiculos")]
-        public async Task AlterarPedido()
+        public async Task AlterarVeiculo()
         {
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.PutAsJsonAsync(
-                $"api/revendaDeVeiculos/{_pedido.IdPedido}", _pedido);
+                $"api/revendaDeVeiculos/{_veiculo.IdVeiculo}", _veiculo);
 
             var responseContent = await response.Content.ReadAsStringAsync();
             var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _pedido = actualResult.Model;
+            _veiculo = actualResult.Model;
 
             Assert.True(actualResult.IsValid);
         }
 
         [And(@"Consultar o revendaDeVeiculos")]
-        public async Task ConsultarPedido()
+        public async Task ConsultarVeiculo()
         {
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.PostAsJsonAsync(
-                $"api/revendaDeVeiculos/consult", new PagingQueryParam<Pedido> { ObjFilter = _pedido });
+                $"api/revendaDeVeiculos/consult", new PagingQueryParam<Veiculo> { ObjFilter = _veiculo });
 
             var responseContent = await response.Content.ReadAsStringAsync();
             dynamic actualResult = JsonConvert.DeserializeObject(responseContent);
@@ -123,15 +123,15 @@ namespace TestProject.ComponenteTest
         }
 
         [Then(@"posso deletar o revendaDeVeiculos")]
-        public async Task DeletarPedido()
+        public async Task DeletarVeiculo()
         {
             var client = _apiTest.GetClient();
             HttpResponseMessage response = await client.DeleteAsync(
-                $"api/revendaDeVeiculos/{_pedido.IdPedido}");
+                $"api/revendaDeVeiculos/{_veiculo.IdVeiculo}");
 
             var responseContent = await response.Content.ReadAsStringAsync();
             var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _pedido = null;
+            _veiculo = null;
 
             Assert.True(actualResult.IsValid);
         }

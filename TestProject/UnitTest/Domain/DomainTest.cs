@@ -33,8 +33,8 @@ namespace TestProject.UnitTest.Domain
 
             //Assert
             Assert.Contains(typeof(Notificacao), result);
-            Assert.Contains(typeof(Pedido), result);
-            Assert.Contains(typeof(PedidoItem), result);
+            Assert.Contains(typeof(Veiculo), result);
+            Assert.Contains(typeof(VeiculoFoto), result);
         }
 
         [Fact]
@@ -42,10 +42,10 @@ namespace TestProject.UnitTest.Domain
         {
             //Arrange
             //Act
-            var resut = ModelResultFactory.DuplicatedResult<Pedido>();
+            var resut = ModelResultFactory.DuplicatedResult<Veiculo>();
 
             //Assert
-            Assert.Contains(BusinessMessages.DuplicatedError<Pedido>(), resut.ListErrors());
+            Assert.Contains(BusinessMessages.DuplicatedError<Veiculo>(), resut.ListErrors());
         }
 
         [Fact]

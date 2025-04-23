@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 	  <Compile Remove="MockData\AcaoConsultaMock.cs" />
-	  <Compile Remove="MockData\PedidoConsultaMock.cs" />
+	  <Compile Remove="MockData\VeiculoConsultaMock.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -49,7 +49,7 @@
 	  <None Update="BDD\Sample\AddTwoNumbers.feature">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="BDD\Features\ControlarPedidos.feature">
+	  <None Update="BDD\Features\ControlarVeiculos.feature">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

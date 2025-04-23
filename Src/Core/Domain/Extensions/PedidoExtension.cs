@@ -5,39 +5,50 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions
     /// <summary>
     /// Extensão da model para informar os campos de validação.
     /// </summary>
-    public static class PedidoExtension
+    public static class VeiculoExtension
     {
         /// <summary>
         /// Retorna a regra de validação a ser utilizada na atualização.
         /// </summary>
-        public static Expression<Func<Entities.Pedido, bool>> ConsultRule(this PagingQueryParam<Entities.Pedido> param)
+        public static Expression<Func<Entities.Veiculo, bool>> ConsultRule(this PagingQueryParam<Entities.Veiculo> param)
         {
-            return x => (x.IdPedido.Equals(param.ObjFilter.IdPedido) || param.ObjFilter.IdPedido.Equals(default)) &&
-                        (x.Data.Equals(param.ObjFilter.Data) || param.ObjFilter.Data.Equals(default)) &&
-                        (x.IdDispositivo.Equals(param.ObjFilter.IdDispositivo) || param.ObjFilter.IdDispositivo.Equals(default)) &&
-                        (x.Status.ToString().Contains(param.ObjFilter.Status.ToString()) || string.IsNullOrWhiteSpace(param.ObjFilter.Status.ToString())) &&
-                        (x.DataStatusPedido.Equals(param.ObjFilter.DataStatusPedido) || param.ObjFilter.DataStatusPedido.Equals(default)) &&
-                        (x.IdCliente.Equals(param.ObjFilter.IdCliente) || param.ObjFilter.IdCliente == null || param.ObjFilter.IdCliente.Equals(default));
+            return x => (x.IdVeiculo.Equals(param.ObjFilter.IdVeiculo) || param.ObjFilter.IdVeiculo.Equals(default)) &&
+                        (x.Marca.Equals(param.ObjFilter.Marca) || string.IsNullOrWhiteSpace(param.ObjFilter.Marca)) &&
+                        (x.Modelo.Equals(param.ObjFilter.Modelo) || string.IsNullOrWhiteSpace(param.ObjFilter.Modelo)) &&
+                        (x.AnoFabricacao.Equals(param.ObjFilter.AnoFabricacao) || param.ObjFilter.AnoFabricacao.Equals(default)) &&
+                        (x.AnoModelo.Equals(param.ObjFilter.AnoModelo) || param.ObjFilter.AnoModelo.Equals(default)) &&
+                        (x.Placa.Equals(param.ObjFilter.Placa) || string.IsNullOrWhiteSpace(param.ObjFilter.Placa)) &&
+                        (x.Renavam.Equals(param.ObjFilter.Renavam) || string.IsNullOrWhiteSpace(param.ObjFilter.Renavam)) &&
+                        (x.Preco.Equals(param.ObjFilter.Preco) || param.ObjFilter.Preco.Equals(default)) &&
+                        (x.Status.Equals(param.ObjFilter.Status) || string.IsNullOrWhiteSpace(param.ObjFilter.Status));
         }
 
         /// <summary>
         /// Retorna a propriedade a ser ordenada
         /// </summary>
-        public static Expression<Func<Entities.Pedido, object>> SortProp(this PagingQueryParam<Entities.Pedido> param)
+        public static Expression<Func<Entities.Veiculo, object>> SortProp(this PagingQueryParam<Entities.Veiculo> param)
         {
             switch (param?.SortProperty?.ToLower())
             {
-                case "idpedido":
-                    return fa => fa.IdPedido;
-                case "iddispositivo":
-                    return fa => fa.IdDispositivo;
+                case "idveiculo":
+                    return fa => fa.IdVeiculo;
+                case "marca":
+                    return fa => fa.Marca;
+                case "modelo":
+                    return fa => fa.Modelo;
+                case "anofabricacao":
+                    return fa => fa.AnoFabricacao;
+                case "anomodelo":
+                    return fa => fa.AnoModelo;
+                case "placa":
+                    return fa => fa.Placa;
+                case "renavam":
+                    return fa => fa.Renavam;
+                case "preco":
+                    return fa => fa.Preco;
                 case "status":
                     return fa => fa.Status;
-                case "datastatuspedido":
-                    return fa => fa.DataStatusPedido;
-                case "idcliente":
-                    return fa => fa.IdCliente;
-                default: return fa => fa.Data;
+                default: return fa => fa.AnoModelo;
             }
         }
     }

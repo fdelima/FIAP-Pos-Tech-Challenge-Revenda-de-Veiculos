@@ -3,25 +3,25 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
 
-internal class PedidoMap : IEntityTypeConfiguration<Domain.Entities.Pedido>
+internal class VeiculoMap : IEntityTypeConfiguration<Domain.Entities.Veiculo>
 {
-    public void Configure(EntityTypeBuilder<Domain.Entities.Pedido> builder)
+    public void Configure(EntityTypeBuilder<Domain.Entities.Veiculo> builder)
     {
-        builder.HasKey(e => e.IdPedido);
+        builder.HasKey(e => e.IdVeiculo);
 
         builder.ToTable("revendaDeVeiculos");
 
-        builder.Property(e => e.IdPedido)
+        builder.Property(e => e.IdVeiculo)
             .ValueGeneratedNever()
-            .HasColumnName("id_pedido");
+            .HasColumnName("id_veiculo");
         builder.Property(e => e.Data)
             .HasDefaultValueSql("(getdate())")
             .HasColumnType("datetime")
             .HasColumnName("data");
-        builder.Property(e => e.DataStatusPedido)
+        builder.Property(e => e.DataStatusVeiculo)
             .HasDefaultValueSql("(getdate())")
             .HasColumnType("datetime")
-            .HasColumnName("data_status_pedido");
+            .HasColumnName("data_status_veiculo");
         builder.Property(e => e.IdCliente).HasColumnName("id_cliente");
         builder.Property(e => e.IdDispositivo).HasColumnName("id_dispositivo");
         builder.Property(e => e.Status)

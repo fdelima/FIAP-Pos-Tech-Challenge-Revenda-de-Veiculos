@@ -1,11 +1,11 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class PedidoDeleteCommand : IRequest<ModelResult>
+    public class VeiculoDeleteCommand : IRequest<ModelResult>
     {
-        public PedidoDeleteCommand(Guid id, string[]? businessRules = null)
+        public VeiculoDeleteCommand(Guid id, string[]? businessRules = null)
         {
             Id = id;
             BusinessRules = businessRules;

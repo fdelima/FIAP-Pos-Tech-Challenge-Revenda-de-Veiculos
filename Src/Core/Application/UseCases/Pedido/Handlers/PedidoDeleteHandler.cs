@@ -1,20 +1,20 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class PedidoDeleteHandler : IRequestHandler<PedidoDeleteCommand, ModelResult>
+    public class VeiculoDeleteHandler : IRequestHandler<VeiculoDeleteCommand, ModelResult>
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
 
-        public PedidoDeleteHandler(IPedidoService service)
+        public VeiculoDeleteHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoDeleteCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(VeiculoDeleteCommand command, CancellationToken cancellationToken = default)
         {
             return await _service.DeleteAsync(command.Id, command.BusinessRules);
         }

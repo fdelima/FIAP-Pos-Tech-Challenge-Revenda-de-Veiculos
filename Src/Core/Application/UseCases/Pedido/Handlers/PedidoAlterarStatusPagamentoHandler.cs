@@ -1,28 +1,28 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 using System.Net.Http.Json;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class PedidoAlterarStatusPagamentoHandler : IRequestHandler<PedidoAlterarStatusPagamentoCommand, ModelResult>
+    public class VeiculoAlterarStatusPagamentoHandler : IRequestHandler<VeiculoAlterarStatusPagamentoCommand, ModelResult>
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
 
-        public PedidoAlterarStatusPagamentoHandler(IPedidoService service)
+        public VeiculoAlterarStatusPagamentoHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoAlterarStatusPagamentoCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(VeiculoAlterarStatusPagamentoCommand command, CancellationToken cancellationToken = default)
         {
             var result = await _service.FindByIdAsync(command.Id);
 
             if (result.IsValid)
             {
-                var revendaDeVeiculos = (Domain.Entities.Pedido)result.Model;
+                var revendaDeVeiculos = (Domain.Entities.Veiculo)result.Model;
                 revendaDeVeiculos.StatusPagamento = command.StatusPagamento.ToString();
                 result = await _service.UpdateAsync(revendaDeVeiculos);
 

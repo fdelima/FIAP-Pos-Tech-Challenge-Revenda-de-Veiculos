@@ -3,7 +3,7 @@ using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 
 namespace TestProject.MockData;
 
-public class PedidoItemMock
+public class VeiculoItemMock
 {
     /// <summary>
     /// Mock de dados válidos
@@ -42,19 +42,19 @@ public class PedidoItemMock
     {
         for (var index = 1; index <= quantidade; index++)
         {
-            var notificacoes = new List<PedidoItem>();
+            var notificacoes = new List<VeiculoFoto>();
             for (var index2 = 1; index <= quantidade; index++)
             {
-                notificacoes.Add(new PedidoItem
+                notificacoes.Add(new VeiculoFoto
                 {
-                    IdPedidoItem = Guid.NewGuid(),
+                    IdVeiculoItem = Guid.NewGuid(),
                     Data = DateTime.Now,
-                    IdPedido = Guid.NewGuid(),
+                    IdVeiculo = Guid.NewGuid(),
                     IdProduto = Guid.NewGuid(),
                     Quantidade = 1
                 });
             }
-            var param = new PagingQueryParam<PedidoItem>() { CurrentPage = 1, Take = 10 };
+            var param = new PagingQueryParam<VeiculoFoto>() { CurrentPage = 1, Take = 10 };
             yield return new object[]
             {
                 param,
@@ -70,19 +70,19 @@ public class PedidoItemMock
     {
         for (var index = 1; index <= quantidade; index++)
         {
-            var notificacoes = new List<PedidoItem>();
+            var notificacoes = new List<VeiculoFoto>();
             for (var index2 = 1; index2 <= quantidade; index2++)
             {
-                notificacoes.Add(new PedidoItem
+                notificacoes.Add(new VeiculoFoto
                 {
-                    IdPedidoItem = Guid.Empty,
+                    IdVeiculoItem = Guid.Empty,
                     Data = DateTime.Now,
-                    IdPedido = Guid.Empty,
+                    IdVeiculo = Guid.Empty,
                     IdProduto = Guid.Empty,
                     Quantidade = 0
                 });
             }
-            var param = new PagingQueryParam<PedidoItem>() { CurrentPage = 1, Take = 10 };
+            var param = new PagingQueryParam<VeiculoFoto>() { CurrentPage = 1, Take = 10 };
             yield return new object[]
             {
                 param,

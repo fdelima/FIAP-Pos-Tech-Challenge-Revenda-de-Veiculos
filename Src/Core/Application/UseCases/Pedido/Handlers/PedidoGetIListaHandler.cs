@@ -1,20 +1,20 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class PedidoGetIListaHandler : IRequestHandler<PedidoGetListaCommand, PagingQueryResult<Domain.Entities.Pedido>>
+    public class VeiculoGetIListaHandler : IRequestHandler<VeiculoGetListaCommand, PagingQueryResult<Domain.Entities.Veiculo>>
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
 
-        public PedidoGetIListaHandler(IPedidoService service)
+        public VeiculoGetIListaHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<PagingQueryResult<Domain.Entities.Pedido>> Handle(PedidoGetListaCommand command, CancellationToken cancellationToken = default)
+        public async Task<PagingQueryResult<Domain.Entities.Veiculo>> Handle(VeiculoGetListaCommand command, CancellationToken cancellationToken = default)
         {
             return await _service.GetListaAsync(command.Filter);
         }

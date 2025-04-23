@@ -2,12 +2,12 @@
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class PedidoAlterarStatusPagamentoCommand : IRequest<ModelResult>
+    public class VeiculoAlterarStatusPagamentoCommand : IRequest<ModelResult>
     {
-        public PedidoAlterarStatusPagamentoCommand(Guid id,
-            enmPedidoStatusPagamento statusPagamento,
+        public VeiculoAlterarStatusPagamentoCommand(Guid id,
+            enmVeiculoStatusPagamento statusPagamento,
             string microServicoProducaoBaseAdress)
         {
             Id = id;
@@ -16,7 +16,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.
         }
 
         public Guid Id { get; private set; }
-        public enmPedidoStatusPagamento StatusPagamento { get; private set; }
+        public enmVeiculoStatusPagamento StatusPagamento { get; private set; }
         public string MicroServicoProducaoBaseAdress { get; private set; }
     }
 }

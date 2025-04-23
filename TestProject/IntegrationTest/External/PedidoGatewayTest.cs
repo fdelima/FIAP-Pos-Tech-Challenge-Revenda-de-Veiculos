@@ -13,14 +13,14 @@ namespace TestProject.IntegrationTest.External
     /// <summary>
     /// Classe de teste.
     /// </summary>
-    public partial class PedidoGatewayTest : IClassFixture<IntegrationTestsBase>
+    public partial class VeiculoGatewayTest : IClassFixture<IntegrationTestsBase>
     {
         internal readonly SqlServerTestFixture _sqlserverTest;
 
         /// <summary>
         /// Construtor da classe de teste.
         /// </summary>
-        public PedidoGatewayTest(IntegrationTestsBase data)
+        public VeiculoGatewayTest(IntegrationTestsBase data)
         {
             _sqlserverTest = data._sqlserverTest;
         }
@@ -30,35 +30,35 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
-        public async void InserirComDadosValidos(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async void InserirComDadosValidos(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange            
-            var idPedido = Guid.NewGuid();
-            var revendaDeVeiculos = new Pedido
+            var idVeiculo = Guid.NewGuid();
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items,
+                VeiculoFotos = items,
 
                 //Campos preenchidos automaticamente
-                IdPedido = idPedido,
-                Status = enmPedidoStatus.RECEBIDO.ToString(),
-                StatusPagamento = enmPedidoStatusPagamento.PENDENTE.ToString()
+                IdVeiculo = idVeiculo,
+                Status = enmVeiculoStatus.RECEBIDO.ToString(),
+                StatusPagamento = enmVeiculoStatusPagamento.PENDENTE.ToString()
             };
 
             foreach (var item in items)
             {
-                item.IdPedidoItem = Guid.NewGuid();
-                item.IdPedido = idPedido;
+                item.IdVeiculoItem = Guid.NewGuid();
+                item.IdVeiculo = idVeiculo;
             }
 
             //Act
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            var result = await _pedidoGateway.InsertAsync(revendaDeVeiculos);
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            var result = await _veiculoGateway.InsertAsync(revendaDeVeiculos);
 
             //Assert
             try
             {
-                await _pedidoGateway.CommitAsync();
+                await _veiculoGateway.CommitAsync();
                 Assert.True(true);
             }
             catch (InvalidOperationException)
@@ -72,34 +72,34 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
-        public async Task InserirComDadosInvalidos(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task InserirComDadosInvalidos(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
 
             ///Arrange
-            var idPedido = Guid.NewGuid();
-            var revendaDeVeiculos = new Pedido
+            var idVeiculo = Guid.NewGuid();
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items,
+                VeiculoFotos = items,
 
                 //Campos preenchidos automaticamente não passando outros campos para dar erro
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
             };
 
             foreach (var item in items)
             {
-                item.IdPedidoItem = Guid.NewGuid();
-                item.IdPedido = idPedido;
+                item.IdVeiculoItem = Guid.NewGuid();
+                item.IdVeiculo = idVeiculo;
             }
 
             //Act
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            var result = await _pedidoGateway.InsertAsync(revendaDeVeiculos);
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            var result = await _veiculoGateway.InsertAsync(revendaDeVeiculos);
 
             //Assert
             try
             {
-                await _pedidoGateway.CommitAsync();
+                await _veiculoGateway.CommitAsync();
                 Assert.True(false);
             }
             catch (InvalidOperationException)
@@ -114,42 +114,42 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async void AlterarComDadosValidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async void AlterarComDadosValidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items,
+                VeiculoFotos = items,
 
                 //Campos preenchidos automaticamente
-                IdPedido = idPedido,
-                Status = enmPedidoStatus.RECEBIDO.ToString(),
-                StatusPagamento = enmPedidoStatusPagamento.PENDENTE.ToString()
+                IdVeiculo = idVeiculo,
+                Status = enmVeiculoStatus.RECEBIDO.ToString(),
+                StatusPagamento = enmVeiculoStatusPagamento.PENDENTE.ToString()
             };
 
             foreach (var item in items)
             {
-                item.IdPedidoItem = Guid.NewGuid();
-                item.IdPedido = idPedido;
+                item.IdVeiculoItem = Guid.NewGuid();
+                item.IdVeiculo = idVeiculo;
             }
 
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            var result = await _pedidoGateway.InsertAsync(revendaDeVeiculos);
-            await _pedidoGateway.CommitAsync();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            var result = await _veiculoGateway.InsertAsync(revendaDeVeiculos);
+            await _veiculoGateway.CommitAsync();
 
             //Alterando
-            revendaDeVeiculos.StatusPagamento = enmPedidoStatusPagamento.PROCESSANDO.ToString();
+            revendaDeVeiculos.StatusPagamento = enmVeiculoStatusPagamento.PROCESSANDO.ToString();
 
-            var dbEntity = await _pedidoGateway.FirstOrDefaultWithIncludeAsync(x => x.PedidoItems, x => x.IdPedido == revendaDeVeiculos.IdPedido);
+            var dbEntity = await _veiculoGateway.FirstOrDefaultWithIncludeAsync(x => x.VeiculoFotos, x => x.IdVeiculo == revendaDeVeiculos.IdVeiculo);
 
             //Act
-            await _pedidoGateway.UpdateAsync(dbEntity, revendaDeVeiculos);
-            await _pedidoGateway.UpdateAsync(revendaDeVeiculos);
+            await _veiculoGateway.UpdateAsync(dbEntity, revendaDeVeiculos);
+            await _veiculoGateway.UpdateAsync(revendaDeVeiculos);
 
             try
             {
-                await _pedidoGateway.CommitAsync();
+                await _veiculoGateway.CommitAsync();
                 Assert.True(true);
             }
             catch (InvalidOperationException)
@@ -167,44 +167,44 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async void AlterarComDadosInvalidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async void AlterarComDadosInvalidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items,
+                VeiculoFotos = items,
 
                 //Campos preenchidos automaticamente
-                IdPedido = idPedido,
-                Status = enmPedidoStatus.RECEBIDO.ToString(),
-                StatusPagamento = enmPedidoStatusPagamento.PENDENTE.ToString()
+                IdVeiculo = idVeiculo,
+                Status = enmVeiculoStatus.RECEBIDO.ToString(),
+                StatusPagamento = enmVeiculoStatusPagamento.PENDENTE.ToString()
             };
 
             foreach (var item in items)
             {
-                item.IdPedidoItem = Guid.NewGuid();
-                item.IdPedido = idPedido;
+                item.IdVeiculoItem = Guid.NewGuid();
+                item.IdVeiculo = idVeiculo;
             }
 
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            var result = await _pedidoGateway.InsertAsync(revendaDeVeiculos);
-            await _pedidoGateway.CommitAsync();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            var result = await _veiculoGateway.InsertAsync(revendaDeVeiculos);
+            await _veiculoGateway.CommitAsync();
 
             //Alterando
             revendaDeVeiculos.Status = null;
             revendaDeVeiculos.StatusPagamento = null;
 
-            var dbEntity = await _pedidoGateway.FirstOrDefaultWithIncludeAsync(x => x.PedidoItems, x => x.IdPedido == revendaDeVeiculos.IdPedido);
+            var dbEntity = await _veiculoGateway.FirstOrDefaultWithIncludeAsync(x => x.VeiculoFotos, x => x.IdVeiculo == revendaDeVeiculos.IdVeiculo);
 
             //Act
-            await _pedidoGateway.UpdateAsync(dbEntity, revendaDeVeiculos);
-            await _pedidoGateway.UpdateAsync(revendaDeVeiculos);
+            await _veiculoGateway.UpdateAsync(dbEntity, revendaDeVeiculos);
+            await _veiculoGateway.UpdateAsync(revendaDeVeiculos);
 
             //Assert
             try
             {
-                await _pedidoGateway.CommitAsync();
+                await _veiculoGateway.CommitAsync();
                 Assert.True(false);
             }
             catch (InvalidOperationException)
@@ -222,38 +222,38 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 1)]
-        public async void DeletarPedido(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async void DeletarVeiculo(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange            
-            var idPedido = Guid.NewGuid();
-            var revendaDeVeiculos = new Pedido
+            var idVeiculo = Guid.NewGuid();
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items,
+                VeiculoFotos = items,
 
                 //Campos preenchidos automaticamente
-                IdPedido = idPedido,
-                Status = enmPedidoStatus.RECEBIDO.ToString(),
-                StatusPagamento = enmPedidoStatusPagamento.PENDENTE.ToString()
+                IdVeiculo = idVeiculo,
+                Status = enmVeiculoStatus.RECEBIDO.ToString(),
+                StatusPagamento = enmVeiculoStatusPagamento.PENDENTE.ToString()
             };
 
             foreach (var item in items)
             {
-                item.IdPedidoItem = Guid.NewGuid();
-                item.IdPedido = idPedido;
+                item.IdVeiculoItem = Guid.NewGuid();
+                item.IdVeiculo = idVeiculo;
             }
 
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            await _pedidoGateway.InsertAsync(revendaDeVeiculos);
-            await _pedidoGateway.CommitAsync();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            await _veiculoGateway.InsertAsync(revendaDeVeiculos);
+            await _veiculoGateway.CommitAsync();
 
             //Act
-            await _pedidoGateway.DeleteAsync(idPedido);
+            await _veiculoGateway.DeleteAsync(idVeiculo);
 
             //Assert
             try
             {
-                await _pedidoGateway.CommitAsync();
+                await _veiculoGateway.CommitAsync();
                 Assert.True(true);
             }
             catch (InvalidOperationException)
@@ -271,33 +271,33 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 1)]
-        public async void ConsultarPedidoPorId(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async void ConsultarVeiculoPorId(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange            
-            var idPedido = Guid.NewGuid();
-            var revendaDeVeiculos = new Pedido
+            var idVeiculo = Guid.NewGuid();
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items,
+                VeiculoFotos = items,
 
                 //Campos preenchidos automaticamente
-                IdPedido = idPedido,
-                Status = enmPedidoStatus.RECEBIDO.ToString(),
-                StatusPagamento = enmPedidoStatusPagamento.PENDENTE.ToString()
+                IdVeiculo = idVeiculo,
+                Status = enmVeiculoStatus.RECEBIDO.ToString(),
+                StatusPagamento = enmVeiculoStatusPagamento.PENDENTE.ToString()
             };
 
             foreach (var item in items)
             {
-                item.IdPedidoItem = Guid.NewGuid();
-                item.IdPedido = idPedido;
+                item.IdVeiculoItem = Guid.NewGuid();
+                item.IdVeiculo = idVeiculo;
             }
 
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            await _pedidoGateway.InsertAsync(revendaDeVeiculos);
-            await _pedidoGateway.CommitAsync();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            await _veiculoGateway.InsertAsync(revendaDeVeiculos);
+            await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _pedidoGateway.FindByIdAsync(idPedido);
+            var result = await _veiculoGateway.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.True(result != null);
@@ -308,13 +308,13 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedido(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> Pedidos)
+        public async Task ConsultarVeiculo(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> Veiculos)
         {
             ///Arrange
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
 
             //Act
-            var result = await _pedidoGateway.GetItemsAsync(filter, sortProp);
+            var result = await _veiculoGateway.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -325,20 +325,20 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedidoComCondicao(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> pedidos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            foreach (var revendaDeVeiculos in pedidos)
-                revendaDeVeiculos.StatusPagamento = enmPedidoStatusPagamento.APROVADO.ToString();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            foreach (var revendaDeVeiculos in veiculos)
+                revendaDeVeiculos.StatusPagamento = enmVeiculoStatusPagamento.APROVADO.ToString();
 
-            await _pedidoGateway.InsertRangeAsync(pedidos);
-            await _pedidoGateway.CommitAsync();
+            await _veiculoGateway.InsertRangeAsync(veiculos);
+            await _veiculoGateway.CommitAsync();
 
-            var param = new PagingQueryParam<Pedido>() { CurrentPage = 1, Take = 10, ObjFilter = pedidos.ElementAt(0) };
+            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10, ObjFilter = veiculos.ElementAt(0) };
 
             //Act
-            var result = await _pedidoGateway.GetItemsAsync(filter, param.ConsultRule(), sortProp);
+            var result = await _veiculoGateway.GetItemsAsync(filter, param.ConsultRule(), sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -349,40 +349,40 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedidoSemCondicao(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> pedidos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            foreach (var revendaDeVeiculos in pedidos)
-                revendaDeVeiculos.StatusPagamento = enmPedidoStatusPagamento.APROVADO.ToString();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            foreach (var revendaDeVeiculos in veiculos)
+                revendaDeVeiculos.StatusPagamento = enmVeiculoStatusPagamento.APROVADO.ToString();
 
-            await _pedidoGateway.InsertRangeAsync(pedidos);
-            await _pedidoGateway.CommitAsync();
+            await _veiculoGateway.InsertRangeAsync(veiculos);
+            await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _pedidoGateway.GetItemsAsync(filter, sortProp);
+            var result = await _veiculoGateway.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
         }
 
         /// <summary>
-        /// Testa a base que lista todos os pedidos
+        /// Testa a base que lista todos os veiculos
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarPedidos(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> pedidos)
+        public async Task ListarVeiculos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var _pedidoGateway = new BaseGateway<Pedido>(_sqlserverTest.GetDbContext());
-            foreach (var revendaDeVeiculos in pedidos)
-                revendaDeVeiculos.StatusPagamento = enmPedidoStatusPagamento.APROVADO.ToString();
+            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            foreach (var revendaDeVeiculos in veiculos)
+                revendaDeVeiculos.StatusPagamento = enmVeiculoStatusPagamento.APROVADO.ToString();
 
-            await _pedidoGateway.InsertRangeAsync(pedidos);
-            await _pedidoGateway.CommitAsync();
+            await _veiculoGateway.InsertRangeAsync(veiculos);
+            await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _pedidoGateway.GetItemsAsync();
+            var result = await _veiculoGateway.GetItemsAsync();
 
             //Assert
             Assert.True(result.Content.Any());
@@ -399,21 +399,21 @@ namespace TestProject.IntegrationTest.External
             {
                 case enmTipo.Inclusao:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade);
+                        return VeiculoMock.ObterDadosValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosInvalidos(quantidade);
+                        return VeiculoMock.ObterDadosInvalidos(quantidade);
                 case enmTipo.Alteracao:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade)
+                        return VeiculoMock.ObterDadosValidos(quantidade)
                             .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                     else
-                        return PedidoMock.ObterDadosInvalidos(quantidade)
+                        return VeiculoMock.ObterDadosInvalidos(quantidade)
                             .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                 case enmTipo.Consulta:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosConsultaValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosConsultaInValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaInValidos(quantidade);
                 default:
                     return null;
             }

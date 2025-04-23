@@ -15,8 +15,8 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
 
             //Validators
             services.AddScoped(typeof(IValidator<Notificacao>), typeof(NotificacaoValidator));
-            services.AddScoped(typeof(IValidator<PedidoItem>), typeof(PedidoItemValidator));
-            services.AddScoped(typeof(IValidator<Domain.Entities.Pedido>), typeof(PedidoValidator));
+            services.AddScoped(typeof(IValidator<VeiculoFoto>), typeof(VeiculoItemValidator));
+            services.AddScoped(typeof(IValidator<Domain.Entities.Veiculo>), typeof(VeiculoValidator));
         }
     }
 }

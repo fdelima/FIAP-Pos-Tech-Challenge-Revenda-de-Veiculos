@@ -1,20 +1,20 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class PedidoPutHandler : IRequestHandler<PedidoPutCommand, ModelResult>
+    public class VeiculoPutHandler : IRequestHandler<VeiculoPutCommand, ModelResult>
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
 
-        public PedidoPutHandler(IPedidoService service)
+        public VeiculoPutHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(PedidoPutCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult> Handle(VeiculoPutCommand command, CancellationToken cancellationToken = default)
         {
             return await _service.UpdateAsync(command.Entity, command.BusinessRules);
         }

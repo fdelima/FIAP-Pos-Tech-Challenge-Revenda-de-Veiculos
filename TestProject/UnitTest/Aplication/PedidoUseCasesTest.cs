@@ -1,5 +1,5 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Commands;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Pedido.Handlers;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions;
@@ -15,18 +15,18 @@ namespace TestProject.UnitTest.Aplication
     /// <summary>
     /// Classe de teste.
     /// </summary>
-    public partial class PedidoUseCasesTest
+    public partial class VeiculoUseCasesTest
     {
-        private readonly IPedidoService _service;
+        private readonly IVeiculoService _service;
         private const string microServicoCadastroBaseAdress = "http://localhost:8082/";
         private const string microServicoProducaoBaseAdress = "http://localhost:8084/";
         private const string microServicoPagamentoBaseAdress = "http://localhost:8086/";
         /// <summary>
         /// Construtor da classe de teste.
         /// </summary>
-        public PedidoUseCasesTest()
+        public VeiculoUseCasesTest()
         {
-            _service = Substitute.For<IPedidoService>();
+            _service = Substitute.For<IVeiculoService>();
         }
 
         /// <summary>
@@ -34,23 +34,23 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
-        public async Task InserirComDadosValidos(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task InserirComDadosValidos(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoPostCommand(revendaDeVeiculos, microServicoCadastroBaseAdress, microServicoPagamentoBaseAdress);
+            var command = new VeiculoPostCommand(revendaDeVeiculos, microServicoCadastroBaseAdress, microServicoPagamentoBaseAdress);
 
             //Mockando retorno do serviço de domínio.
             _service.InsertAsync(revendaDeVeiculos)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(revendaDeVeiculos)));
 
             //Act
-            var handler = new PedidoPostHandler(_service);
+            var handler = new VeiculoPostHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -62,23 +62,23 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
-        public async Task InserirComDadosInvalidos(Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task InserirComDadosInvalidos(Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoPostCommand(revendaDeVeiculos, microServicoCadastroBaseAdress, microServicoPagamentoBaseAdress);
+            var command = new VeiculoPostCommand(revendaDeVeiculos, microServicoCadastroBaseAdress, microServicoPagamentoBaseAdress);
 
             //Mockando retorno do serviço de domínio.
             _service.InsertAsync(revendaDeVeiculos)
-                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<Pedido>()));
+                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<Veiculo>()));
 
             //Act
-            var handler = new PedidoPostHandler(_service);
+            var handler = new VeiculoPostHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -91,24 +91,24 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task AlterarComDadosValidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task AlterarComDadosValidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoPutCommand(idPedido, revendaDeVeiculos);
+            var command = new VeiculoPutCommand(idVeiculo, revendaDeVeiculos);
 
             //Mockando retorno do serviço de domínio.
             _service.UpdateAsync(revendaDeVeiculos)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult()));
 
             //Act
-            var handler = new PedidoPutHandler(_service);
+            var handler = new VeiculoPutHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -120,24 +120,24 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, false, 3)]
-        public async Task AlterarComDadosInvalidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task AlterarComDadosInvalidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoPutCommand(idPedido, revendaDeVeiculos);
+            var command = new VeiculoPutCommand(idVeiculo, revendaDeVeiculos);
 
             //Mockando retorno do serviço de domínio.
             _service.UpdateAsync(revendaDeVeiculos)
-                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<Pedido>()));
+                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<Veiculo>()));
 
             //Act
-            var handler = new PedidoPutHandler(_service);
+            var handler = new VeiculoPutHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -149,20 +149,20 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task AlterarStatusPagamentoComDadosValidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task AlterarStatusPagamentoComDadosValidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoAlterarStatusPagamentoCommand(idPedido, enmPedidoStatusPagamento.APROVADO, microServicoProducaoBaseAdress);
+            var command = new VeiculoAlterarStatusPagamentoCommand(idVeiculo, enmVeiculoStatusPagamento.APROVADO, microServicoProducaoBaseAdress);
 
             //Mockando retorno do serviço de domínio.
-            _service.FindByIdAsync(idPedido)
+            _service.FindByIdAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(revendaDeVeiculos)));
 
             //Mockando retorno do serviço de domínio.
@@ -170,7 +170,7 @@ namespace TestProject.UnitTest.Aplication
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(revendaDeVeiculos)));
 
             //Act
-            var handler = new PedidoAlterarStatusPagamentoHandler(_service);
+            var handler = new VeiculoAlterarStatusPagamentoHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -182,20 +182,20 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, false, 3)]
-        public async Task AlterarStatusPagamentoComDadosInValidos(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task AlterarStatusPagamentoComDadosInValidos(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoAlterarStatusPagamentoCommand(idPedido, enmPedidoStatusPagamento.APROVADO, microServicoProducaoBaseAdress);
+            var command = new VeiculoAlterarStatusPagamentoCommand(idVeiculo, enmVeiculoStatusPagamento.APROVADO, microServicoProducaoBaseAdress);
 
             //Mockando retorno do serviço de domínio.
-            _service.FindByIdAsync(idPedido)
+            _service.FindByIdAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(revendaDeVeiculos)));
 
             //Mockando retorno do serviço de domínio.
@@ -203,7 +203,7 @@ namespace TestProject.UnitTest.Aplication
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(revendaDeVeiculos)));
 
             //Act
-            var handler = new PedidoAlterarStatusPagamentoHandler(_service);
+            var handler = new VeiculoAlterarStatusPagamentoHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -215,17 +215,17 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.ConsultaPorId, true, 3)]
-        public async Task DeletarPedido(Guid idPedido)
+        public async Task DeletarVeiculo(Guid idVeiculo)
         {
             ///Arrange
-            var command = new PedidoDeleteCommand(idPedido);
+            var command = new VeiculoDeleteCommand(idVeiculo);
 
             //Mockando retorno do serviço de domínio.
-            _service.DeleteAsync(idPedido)
+            _service.DeleteAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult()));
 
             //Act
-            var handler = new PedidoDeleteHandler(_service);
+            var handler = new VeiculoDeleteHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -237,24 +237,24 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
-        public async Task ConsultarPedidoPorId(Guid idPedido, Guid idDispositivo, ICollection<PedidoItem> items)
+        public async Task ConsultarVeiculoPorId(Guid idVeiculo, Guid idDispositivo, ICollection<VeiculoFoto> items)
         {
             ///Arrange
-            var revendaDeVeiculos = new Pedido
+            var revendaDeVeiculos = new Veiculo
             {
-                IdPedido = idPedido,
+                IdVeiculo = idVeiculo,
                 IdDispositivo = idDispositivo,
-                PedidoItems = items
+                VeiculoFotos = items
             };
 
-            var command = new PedidoFindByIdCommand(idPedido);
+            var command = new VeiculoFindByIdCommand(idVeiculo);
 
             //Mockando retorno do serviço de domínio.
-            _service.FindByIdAsync(idPedido)
+            _service.FindByIdAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(revendaDeVeiculos)));
 
             //Act
-            var handler = new PedidoFindByIdHandler(_service);
+            var handler = new VeiculoFindByIdHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -266,20 +266,20 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedidoComCondicao(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> pedidos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var param = new PagingQueryParam<Pedido>() { CurrentPage = 1, Take = 10 };
-            var command = new PedidoGetItemsCommand(filter, param.ConsultRule(), sortProp);
+            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
+            var command = new VeiculoGetItemsCommand(filter, param.ConsultRule(), sortProp);
 
             //Mockando retorno do serviço de domínio.
-            _service.GetItemsAsync(Arg.Any<PagingQueryParam<Pedido>>(),
-                Arg.Any<Expression<Func<Pedido, bool>>>(),
-                Arg.Any<Expression<Func<Pedido, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Pedido>>(new PagingQueryResult<Pedido>(new List<Pedido>(pedidos))));
+            _service.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
+                Arg.Any<Expression<Func<Veiculo, bool>>>(),
+                Arg.Any<Expression<Func<Veiculo, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
 
             //Act
-            var handler = new PedidoGetItemsHandler(_service);
+            var handler = new VeiculoGetItemsHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -292,17 +292,17 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarPedidoSemCondicao(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> pedidos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var command = new PedidoGetItemsCommand(filter, sortProp);
+            var command = new VeiculoGetItemsCommand(filter, sortProp);
 
             //Mockando retorno do serviço de domínio.
             _service.GetItemsAsync(filter, sortProp)
-                .Returns(new ValueTask<PagingQueryResult<Pedido>>(new PagingQueryResult<Pedido>(new List<Pedido>(pedidos))));
+                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
 
             //Act
-            var handler = new PedidoGetItemsHandler(_service);
+            var handler = new VeiculoGetItemsHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -310,21 +310,21 @@ namespace TestProject.UnitTest.Aplication
         }
 
         /// <summary>
-        /// Testa a lista de pedidos
+        /// Testa a lista de veiculos
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarPedidos(IPagingQueryParam filter, Expression<Func<Pedido, object>> sortProp, IEnumerable<Pedido> pedidos)
+        public async Task ListarVeiculos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var command = new PedidoGetListaCommand(filter);
+            var command = new VeiculoGetListaCommand(filter);
 
             //Mockando retorno do serviço de domínio.
             _service.GetListaAsync(filter)
-                .Returns(new ValueTask<PagingQueryResult<Pedido>>(new PagingQueryResult<Pedido>(new List<Pedido>(pedidos))));
+                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
 
             //Act
-            var handler = new PedidoGetIListaHandler(_service);
+            var handler = new VeiculoGetIListaHandler(_service);
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -342,26 +342,26 @@ namespace TestProject.UnitTest.Aplication
             {
                 case enmTipo.Inclusao:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade);
+                        return VeiculoMock.ObterDadosValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosInvalidos(quantidade);
+                        return VeiculoMock.ObterDadosInvalidos(quantidade);
                 case enmTipo.Alteracao:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosValidos(quantidade)
+                        return VeiculoMock.ObterDadosValidos(quantidade)
                             .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                     else
-                        return PedidoMock.ObterDadosInvalidos(quantidade)
+                        return VeiculoMock.ObterDadosInvalidos(quantidade)
                             .Select(i => new object[] { Guid.NewGuid() }.Concat(i).ToArray());
                 case enmTipo.Consulta:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosConsultaValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosConsultaInValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaInValidos(quantidade);
                 case enmTipo.ConsultaPorId:
                     if (dadosValidos)
-                        return PedidoMock.ObterDadosConsultaPorIdValidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaPorIdValidos(quantidade);
                     else
-                        return PedidoMock.ObterDadosConsultaPorIdInvalidos(quantidade);
+                        return VeiculoMock.ObterDadosConsultaPorIdInvalidos(quantidade);
                 default:
                     return null;
             }

@@ -8,7 +8,7 @@ namespace TestProject.MockData
     /// <summary>
     /// Mock de dados das ações
     /// </summary>
-    public class PedidoMock
+    public class VeiculoMock
     {
 
         /// <summary>
@@ -20,9 +20,9 @@ namespace TestProject.MockData
                 yield return new object[]
                 {
                     Guid.NewGuid(),
-                    new PedidoItem[]
+                    new VeiculoFoto[]
                     {
-                        new PedidoItem {
+                        new VeiculoFoto {
                             IdProduto =  Guid.NewGuid(),
                             Quantidade = 1
                         }
@@ -39,9 +39,9 @@ namespace TestProject.MockData
                 yield return new object[]
                 {
                     Guid.Empty,
-                    new PedidoItem[]
+                    new VeiculoFoto[]
                     {
-                        new PedidoItem {
+                        new VeiculoFoto {
                             IdProduto =  Guid.NewGuid(),
                             Quantidade = 0
                         }
@@ -56,32 +56,32 @@ namespace TestProject.MockData
         {
             for (var index = 1; index <= quantidade; index++)
             {
-                var pedidos = new List<Pedido>();
+                var veiculos = new List<Veiculo>();
                 for (var index2 = 1; index <= quantidade; index++)
                 {
-                    var idPedido = Guid.NewGuid();
-                    pedidos.Add(new Pedido
+                    var idVeiculo = Guid.NewGuid();
+                    veiculos.Add(new Veiculo
                     {
-                        IdPedido = idPedido,
+                        IdVeiculo = idVeiculo,
                         IdDispositivo = Guid.NewGuid(),
-                        PedidoItems = new PedidoItem[]
+                        VeiculoFotos = new VeiculoFoto[]
                         {
-                        new PedidoItem {
-                            IdPedidoItem = Guid.NewGuid(),
-                            IdPedido = idPedido,
+                        new VeiculoFoto {
+                            IdVeiculoItem = Guid.NewGuid(),
+                            IdVeiculo = idVeiculo,
                             IdProduto =  Guid.NewGuid(),
                             Quantidade = 1
                         }
                         },
-                        Status = ((enmPedidoStatus)new Random().Next(0, 2)).ToString(),
+                        Status = ((enmVeiculoStatus)new Random().Next(0, 2)).ToString(),
                     });
                 }
-                var param = new PagingQueryParam<Pedido>() { CurrentPage = 1, Take = 10 };
+                var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
                 yield return new object[]
                 {
                     param,
                     param.SortProp(),
-                    pedidos
+                    veiculos
                 };
             }
 
@@ -92,44 +92,44 @@ namespace TestProject.MockData
         /// </summary>
         public static IEnumerable<object[]> ObterDadosConsultaInValidos(int quantidade)
         {
-            var pedidos = new List<Pedido>();
+            var veiculos = new List<Veiculo>();
             for (var index = 1; index <= quantidade; index++)
-                pedidos.Add(new Pedido
+                veiculos.Add(new Veiculo
                 {
-                    IdPedido = Guid.NewGuid(),
+                    IdVeiculo = Guid.NewGuid(),
                     IdDispositivo = Guid.NewGuid(),
-                    PedidoItems = new PedidoItem[]
+                    VeiculoFotos = new VeiculoFoto[]
                     {
-                        new PedidoItem {
+                        new VeiculoFoto {
                             IdProduto =  Guid.NewGuid(),
                             Quantidade = 1
                         }
                     },
-                    Status = ((enmPedidoStatus)new Random().Next(0, 2)).ToString()
+                    Status = ((enmVeiculoStatus)new Random().Next(0, 2)).ToString()
                 });
 
-            pedidos.Add(
-                new Pedido
+            veiculos.Add(
+                new Veiculo
                 {
-                    IdPedido = Guid.NewGuid(),
-                    PedidoItems = new PedidoItem[]
+                    IdVeiculo = Guid.NewGuid(),
+                    VeiculoFotos = new VeiculoFoto[]
                     {
-                        new PedidoItem {
+                        new VeiculoFoto {
                             IdProduto =  Guid.NewGuid(),
                             Quantidade = 1
                         }
                     },
-                    Status = enmPedidoStatus.FINALIZADO.ToString()
+                    Status = enmVeiculoStatus.FINALIZADO.ToString()
                 });
 
             for (var index = 1; index <= quantidade; index++)
             {
-                var param = new PagingQueryParam<Pedido>() { CurrentPage = index, Take = 10 };
+                var param = new PagingQueryParam<Veiculo>() { CurrentPage = index, Take = 10 };
                 yield return new object[]
                 {
                     param,
                     param.SortProp(),
-                    pedidos
+                    veiculos
                 };
             }
         }

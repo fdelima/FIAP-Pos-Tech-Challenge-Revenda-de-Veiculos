@@ -11,7 +11,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
         public static void RegisterAppControllers(this IServiceCollection services)
         {
             //Controlles
-            services.AddScoped(typeof(IPedidoController), typeof(PedidoController));
+            services.AddScoped(typeof(IVeiculoController), typeof(VeiculoController));
         }
     }
 }
