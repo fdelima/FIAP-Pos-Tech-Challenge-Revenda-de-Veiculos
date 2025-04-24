@@ -25,32 +25,32 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
         /// Valida o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
-        Task<ModelResult> ValidateAsync(TEntity entity);
+        Task<ModelResult<TEntity>> ValidateAsync(TEntity entity);
 
         /// <summary>
         /// Insere o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
-        Task<ModelResult> InsertAsync(TEntity entity, string[]? businessRules = null);
+        Task<ModelResult<TEntity>> InsertAsync(TEntity entity, string[]? businessRules = null);
 
         /// <summary>
         /// Atualiza o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
         /// <param name="duplicatedExpression">Expressão para verificação de duplicidade.</param>
-        Task<ModelResult> UpdateAsync(TEntity entity, string[]? businessRules = null);
+        Task<ModelResult<TEntity>> UpdateAsync(TEntity entity, string[]? businessRules = null);
 
         /// <summary>
         /// Deleta o objeto
         /// </summary>
         /// <param name="id">id do objeto relacional do bd mapeado</param>
-        Task<ModelResult> DeleteAsync(Guid id, string[]? businessRules = null);
+        Task<ModelResult<TEntity>> DeleteAsync(Guid id, string[]? businessRules = null);
 
         /// <summary>
         /// Retorna o objeto do bd
         /// </summary>
         /// <param name="id">id do objeto relacional do bd mapeado</param>
-        Task<ModelResult> FindByIdAsync(Guid id);
+        Task<ModelResult<TEntity>> FindByIdAsync(Guid id);
 
         /// <summary>
         /// Retorna os objetos do bd

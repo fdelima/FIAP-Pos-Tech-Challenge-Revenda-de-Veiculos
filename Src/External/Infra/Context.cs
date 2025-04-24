@@ -1,5 +1,4 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
@@ -11,19 +10,19 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
 
         #region [ DbSets ]
 
-        public virtual DbSet<Notificacao> Notificacaos { get; set; }
-
+        public virtual DbSet<Domain.Entities.Notificacao> Notificacoes { get; set; }
         public virtual DbSet<Domain.Entities.Veiculo> Veiculos { get; set; }
-
-        public virtual DbSet<VeiculoFoto> VeiculoItems { get; set; }
+        public virtual DbSet<Domain.Entities.VeiculoFoto> VeiculoFotos { get; set; }
+        public virtual DbSet<Domain.Entities.VeiculoPagamento> VeiculoPagamentos { get; set; }
 
         #endregion DbSets
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //TODO: Map :: 2 - Adicione sua configuração aqui
-            modelBuilder.ApplyConfiguration(new NotificacaoMap());
-            modelBuilder.ApplyConfiguration(new VeiculoItemMap());
+            //modelBuilder.ApplyConfiguration(new NotificacaoMap());
+            modelBuilder.ApplyConfiguration(new VeiculoFotoMap());
+            modelBuilder.ApplyConfiguration(new VeiculoPagamentoMap());
             modelBuilder.ApplyConfiguration(new VeiculoMap());
 
             base.OnModelCreating(modelBuilder);

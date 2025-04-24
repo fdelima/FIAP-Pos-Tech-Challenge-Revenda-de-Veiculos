@@ -27,11 +27,16 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         }
 
         /// <summary>
-        /// Regra para carregar o revendaDeVeiculos e seus itens.
+        /// Regra para carregar o revendaDeVeiculos e suas fotos.
         /// </summary>
         public async override Task<ModelResult> FindByIdAsync(Guid Id)
         {
-            Entities.Veiculo? result = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.VeiculoFotos, x => x.IdVeiculo == Id);
+            var result = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == Id);
+            if (result != null && result.Status.Equals(enmVeiculoStatus.VENDIDO))
+            {
+                var r1 = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Pagamentos, x => x.IdVeiculo == Id);
+                if (r1 != null) result.Pagamentos = r1.Pagamentos;
+            }
 
             if (result == null)
                 return ModelResultFactory.NotFoundResult<Entities.Veiculo>();
@@ -53,26 +58,11 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
 
             entity.IdVeiculo = entity.IdVeiculo.Equals(default) ? Guid.NewGuid() : entity.IdVeiculo;
 
-            entity.DataStatusVeiculo = entity.Data = DateTime.Now;
-            entity.Status = enmVeiculoStatus.RECEBIDO.ToString();
-
-            entity.DataStatusPagamento = DateTime.Now;
-            entity.StatusPagamento = enmVeiculoStatusPagamento.PENDENTE.ToString();
-
-            foreach (VeiculoFoto itemVeiculo in entity.VeiculoFotos)
+            foreach (Entities.VeiculoFoto fotoVeiculo in entity.Fotos)
             {
-                itemVeiculo.IdVeiculo = entity.IdVeiculo;
-                itemVeiculo.IdVeiculoItem = itemVeiculo.IdVeiculoItem.Equals(default) ? Guid.NewGuid() : itemVeiculo.IdVeiculoItem;
-                itemVeiculo.Data = DateTime.Now;
+                fotoVeiculo.IdVeiculo = entity.IdVeiculo;
+                fotoVeiculo.IdVeiculoFoto = fotoVeiculo.IdVeiculoFoto.Equals(default) ? Guid.NewGuid() : fotoVeiculo.IdVeiculoFoto;
             }
-
-            await _gateway.InsertAsync(new Notificacao
-            {
-                IdNotificacao = Guid.NewGuid(),
-                Data = DateTime.Now,
-                IdDispositivo = entity.IdDispositivo,
-                Mensagem = $"Veiculo recebido."
-            });
 
             return await base.InsertAsync(entity, lstWarnings.ToArray());
         }
@@ -82,26 +72,25 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// </summary>
         public async override Task<ModelResult> UpdateAsync(Entities.Veiculo entity, string[]? businessRules = null)
         {
-            Entities.Veiculo? dbEntity = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.VeiculoFotos, x => x.IdVeiculo == entity.IdVeiculo);
+            var dbEntity = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == entity.IdVeiculo);
 
-            //TODO:Há Resolver...
-            //if (dbEntity == null)
-            //    return ModelResultFactory.NotFoundResult<Produto>();
+            if(dbEntity == null)
+                return ModelResultFactory.NotFoundResult<Entities.Veiculo>();
 
-            for (int i = 0; i < dbEntity.VeiculoFotos.Count; i++)
+            for (int i = 0; i < dbEntity.Fotos.Count; i++)
             {
-                VeiculoFoto item = dbEntity.VeiculoFotos.ElementAt(i);
-                if (!entity.VeiculoFotos.Any(x => x.IdVeiculoItem.Equals(item.IdVeiculoItem)))
-                    dbEntity.VeiculoFotos.Remove(dbEntity.VeiculoFotos.First(x => x.IdVeiculoItem.Equals(item.IdVeiculoItem)));
+                var item = dbEntity.Fotos.ElementAt(i);
+                if (!entity.Fotos.Any(x => x.IdVeiculoFoto.Equals(item.IdVeiculoFoto)))
+                    dbEntity.Fotos.Remove(dbEntity.Fotos.First(x => x.IdVeiculoFoto.Equals(item.IdVeiculoFoto)));
             }
 
-            for (int i = 0; i < entity.VeiculoFotos.Count; i++)
+            for (int i = 0; i < entity.Fotos.Count; i++)
             {
-                VeiculoFoto item = entity.VeiculoFotos.ElementAt(i);
-                if (!dbEntity.VeiculoFotos.Any(x => x.IdVeiculoItem.Equals(item.IdVeiculoItem)))
+                var item = entity.Fotos.ElementAt(i);
+                if (!dbEntity.Fotos.Any(x => x.IdVeiculoFoto.Equals(item.IdVeiculoFoto)))
                 {
-                    item.IdVeiculoItem = item.IdVeiculoItem.Equals(default) ? Guid.NewGuid() : item.IdVeiculoItem;
-                    dbEntity.VeiculoFotos.Add(item);
+                    item.IdVeiculoFoto = item.IdVeiculoFoto.Equals(default) ? Guid.NewGuid() : item.IdVeiculoFoto;
+                    dbEntity.Fotos.Add(item);
                 }
             }
 
@@ -110,16 +99,21 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         }
 
         /// <summary>
-        /// Regra para retornar os Veiculos cadastrados
-        /// A lista de veiculos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
-        /// 1. Pronto > Em Preparação > Recebido;
-        /// 2. Veiculos mais antigos primeiro e mais novos depois;
-        /// 3. Veiculos com status Finalizado não devem aparecer na lista.
+        /// Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro.
         /// </summary>
-        public async ValueTask<PagingQueryResult<Entities.Veiculo>> GetListaAsync(IPagingQueryParam filter)
+        public async ValueTask<PagingQueryResult<Entities.Veiculo>> GetVehiclesForSaleAsync(IPagingQueryParam filter)
         {
-            filter.SortDirection = "Desc";
-            return await _gateway.GetItemsAsync(filter, x => x.Status != enmVeiculoStatus.FINALIZADO.ToString(), o => o.Data);
+            filter.SortDirection = "Asc";
+            return await _gateway.GetItemsAsync(filter, x => x.Status == enmVeiculoStatus.VITRINE.ToString(), o => o.Preco);
+        }
+
+        /// <summary>
+        /// Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro.
+        /// </summary>
+        public async ValueTask<PagingQueryResult<Entities.Veiculo>> GetVehiclesSoldAsync(IPagingQueryParam filter)
+        {
+            filter.SortDirection = "Asc";
+            return await _gateway.GetItemsAsync(filter, x => x.Status == enmVeiculoStatus.VENDIDO.ToString(), o => o.Preco);
         }
     }
 }

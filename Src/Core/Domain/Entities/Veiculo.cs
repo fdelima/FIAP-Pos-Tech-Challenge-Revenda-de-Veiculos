@@ -23,14 +23,14 @@ public partial class Veiculo : IDomainEntity
     }
 
     public Guid IdVeiculo { get; set; }
-    public string Marca { get; set; }
-    public string Modelo { get; set; }
+    public required string Marca { get; set; }
+    public required string Modelo { get; set; }
     public int AnoFabricacao { get; set; }
     public int AnoModelo { get; set; }
-    public string Placa { get; set; }
-    public string Renavam { get; set; }
+    public required string Placa { get; set; }
+    public required string Renavam { get; set; }
     public decimal Preco { get; set; }
-    public string Status { get; set; }
+    public required string Status { get; set; }
 
     public virtual ICollection<VeiculoFoto> Fotos { get; set; } = new List<VeiculoFoto>();
     public virtual ICollection<VeiculoPagamento> Pagamentos { get; set; } = new List<VeiculoPagamento>();

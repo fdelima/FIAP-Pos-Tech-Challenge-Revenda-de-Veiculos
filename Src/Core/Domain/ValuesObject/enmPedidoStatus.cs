@@ -2,8 +2,6 @@
 
 public enum enmVeiculoStatus
 {
-    RECEBIDO,
-    EM_PREPARACAO,
-    PRONTO,
-    FINALIZADO
+    VITRINE,
+    VENDIDO
 }

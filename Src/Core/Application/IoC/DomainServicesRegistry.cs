@@ -12,8 +12,6 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
         {
             //Services
             services.AddScoped(typeof(IService<>), typeof(BaseService<>));
-            services.AddScoped(typeof(IService<Domain.Entities.Notificacao>), typeof(NotificacaoService));
-            services.AddScoped(typeof(IService<Domain.Entities.VeiculoFoto>), typeof(VeiculoFotoService));
             services.AddScoped(typeof(IVeiculoService), typeof(VeiculoService));
         }
     }

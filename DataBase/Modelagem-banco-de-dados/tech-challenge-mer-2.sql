@@ -56,7 +56,7 @@ CREATE TABLE [dbo].[veiculo_pagamento](
 	[valor_recebido] [decimal](18, 2) NOT NULL,
 	[banco] [nvarchar](100) NOT NULL,
 	[conta] [nvarchar](100) NOT NULL,
-	[cpf] [nchar](11) NOT NULL,
+	[cpf_cnpj] [nchar](14) NOT NULL,
  CONSTRAINT [PK_veiculo_pagamento] PRIMARY KEY CLUSTERED 
 (
 	[id_veiculo_pagamento] ASC

@@ -6,7 +6,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
     /// <summary>
     /// Result para os commands
     /// </summary>
-    public class ModelResult : IModelResult
+    public class ModelResult<T> : IModelResult
     {
         /// <summary>
         /// construtor vazio do result para os commands
@@ -17,7 +17,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// contrutor do result para os commands
         /// </summary>
         /// <param name="model">model</param>
-        public ModelResult(object model) => Model = model;
+        public ModelResult(T model) => Model = model;
 
         /// <summary>
         /// lista de mensagens
@@ -33,7 +33,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Model
         /// </summary>
-        public object Model { get; }
+        public T Model { get; }
 
         /// <summary>
         /// Retorna se é válido
@@ -43,7 +43,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Adiciona as validações
         /// </summary>
-        public void Add(ModelResult model)
+        public void Add(ModelResult<T> model)
         {
             AddError(model.ListErrors());
             AddMessage(model.ListMessages());

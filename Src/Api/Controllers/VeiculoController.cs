@@ -82,13 +82,13 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         }
 
         /// <summary>
-        /// Inseri o Veiculo cadastrado.
+        /// Cadastra um novo Veiculo.
         /// </summary>
         /// <param name="model">Objeto contendo as informações para inclusão.</param>
         /// <returns>Retorna o result do Veiculo cadastrado.</returns>
         /// <response code="200">Veiculo inserida com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para inserção do Veiculo.</response>
-        [HttpPost("Checkout")]
+        [HttpPost()]
         [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Post(Veiculo model)
