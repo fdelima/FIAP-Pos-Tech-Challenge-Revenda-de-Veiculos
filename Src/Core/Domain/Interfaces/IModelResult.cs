@@ -6,14 +6,14 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
     /// <summary>
     /// Interface regulamentando as propriedades e métodos necessários a uma entidade
     /// </summary>
-    public interface IModelResult<T>
+    public interface IModelResult<TEntity>
     {
         List<string> Messages { get; }
         List<string> Errors { get; }
-        object Model { get; }
+        TEntity Model { get; }
         bool IsValid { get; }
 
-        void Add(ModelResult<T> model);
+        void Add(ModelResult<TEntity> model);
         void AddError(string error);
         void AddError(IReadOnlyList<string> errors);
         void AddMessage(string message);

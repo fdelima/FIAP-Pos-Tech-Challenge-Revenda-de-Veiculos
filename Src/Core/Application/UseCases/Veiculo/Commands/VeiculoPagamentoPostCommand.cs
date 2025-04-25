@@ -3,9 +3,9 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class VeiculoAlterarStatusPagamentoCommand : IRequest<ModelResult<Domain.Entities.Veiculo>>
+    public class VeiculoPagamentoPostCommand : IRequest<ModelResult<Domain.Entities.Veiculo>>
     {
-        public VeiculoAlterarStatusPagamentoCommand(Guid idVeiculo,
+        public VeiculoPagamentoPostCommand(Guid idVeiculo,
             DateTime data, decimal valorRecebido, string banco, string conta,
             string cpfCnpj)
         {

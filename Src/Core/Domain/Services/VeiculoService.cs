@@ -7,8 +7,6 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
 {
     public class VeiculoService : BaseService<Entities.Veiculo>, IVeiculoService
     {
-        protected readonly IGateways<Entities.Notificacao> _notificacaoGateway;
-
         /// <summary>
         /// Lógica de negócio referentes ao revendaDeVeiculos.
         /// </summary>
@@ -19,17 +17,13 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <param name="clienteGateway">Gateway de cliente a ser injetado durante a execução</param>
         /// <param name="produtoGateway">Gateway de produto a ser injetado durante a execução</param>
         public VeiculoService(IGateways<Entities.Veiculo> gateway,
-            IValidator<Entities.Veiculo> validator,
-            IGateways<Entities.Notificacao> notificacaoGateway)
-            : base(gateway, validator)
-        {
-            _notificacaoGateway = notificacaoGateway;
-        }
+            IValidator<Entities.Veiculo> validator)
+            : base(gateway, validator) { }
 
         /// <summary>
         /// Regra para carregar o revendaDeVeiculos e suas fotos.
         /// </summary>
-        public async override Task<ModelResult> FindByIdAsync(Guid Id)
+        public async override Task<ModelResult<Entities.Veiculo>> FindByIdAsync(Guid Id)
         {
             var result = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == Id);
             if (result != null && result.Status.Equals(enmVeiculoStatus.VENDIDO))
@@ -49,7 +43,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <param name="ValidatorResult">Validações já realizadas a serem adicionadas ao contexto</param>
-        public override async Task<ModelResult> InsertAsync(Entities.Veiculo entity, string[]? businessRules = null)
+        public override async Task<ModelResult<Entities.Veiculo>> InsertAsync(Entities.Veiculo entity, string[]? businessRules = null)
         {
             List<string> lstWarnings = new List<string>();
 
@@ -70,11 +64,11 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <summary>
         /// Regra para atualização do revendaDeVeiculos e suas dependências.
         /// </summary>
-        public async override Task<ModelResult> UpdateAsync(Entities.Veiculo entity, string[]? businessRules = null)
+        public async override Task<ModelResult<Entities.Veiculo>> UpdateAsync(Entities.Veiculo entity, string[]? businessRules = null)
         {
             var dbEntity = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == entity.IdVeiculo);
 
-            if(dbEntity == null)
+            if (dbEntity == null)
                 return ModelResultFactory.NotFoundResult<Entities.Veiculo>();
 
             for (int i = 0; i < dbEntity.Fotos.Count; i++)

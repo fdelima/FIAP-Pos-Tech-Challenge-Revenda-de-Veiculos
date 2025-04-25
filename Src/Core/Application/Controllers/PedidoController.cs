@@ -31,9 +31,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
         /// Valida a entidade
         /// </summary>
         /// <param name="entity">Entidade</param>
-        public async Task<ModelResult> ValidateAsync(Domain.Entities.Veiculo entity)
+        public async Task<ModelResult<TEntity>> ValidateAsync(Domain.Entities.Veiculo entity)
         {
-            ModelResult ValidatorResult = new ModelResult(entity);
+            ModelResult<TEntity> ValidatorResult = new ModelResult<TEntity>(entity);
 
             FluentValidation.Results.ValidationResult validations = _validator.Validate(entity);
             if (!validations.IsValid)
@@ -49,11 +49,11 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
         /// Envia a entidade para inserção ao domínio
         /// </summary>
         /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> PostAsync(Domain.Entities.Veiculo entity)
+        public virtual async Task<ModelResult<TEntity>> PostAsync(Domain.Entities.Veiculo entity)
         {
             if (entity == null) throw new InvalidOperationException($"Necessário informar o Veiculo");
 
-            ModelResult ValidatorResult = await ValidateAsync(entity);
+            ModelResult<TEntity> ValidatorResult = await ValidateAsync(entity);
 
             if (ValidatorResult.IsValid)
             {
@@ -71,11 +71,11 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <param name="duplicatedExpression">Expressão para verificação de duplicidade.</param>
-        public virtual async Task<ModelResult> PutAsync(Guid id, Domain.Entities.Veiculo entity)
+        public virtual async Task<ModelResult<TEntity>> PutAsync(Guid id, Domain.Entities.Veiculo entity)
         {
             if (entity == null) throw new InvalidOperationException($"Necessário informar o Veiculo");
 
-            ModelResult ValidatorResult = await ValidateAsync(entity);
+            ModelResult<TEntity> ValidatorResult = await ValidateAsync(entity);
 
             if (ValidatorResult.IsValid)
             {
@@ -90,7 +90,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
         /// Envia a entidade para deleção ao domínio
         /// </summary>
         /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> DeleteAsync(Guid id)
+        public virtual async Task<ModelResult<TEntity>> DeleteAsync(Guid id)
         {
             VeiculoDeleteCommand command = new(id);
             return await _mediator.Send(command);
@@ -100,7 +100,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
         /// Retorna a entidade
         /// </summary>
         /// <param name="entity">Entidade</param>
-        public virtual async Task<ModelResult> FindByIdAsync(Guid id)
+        public virtual async Task<ModelResult<TEntity>> FindByIdAsync(Guid id)
         {
             VeiculoFindByIdCommand command = new(id);
             return await _mediator.Send(command);
@@ -142,16 +142,16 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
         /// </summary>
         public async Task<PagingQueryResult<Domain.Entities.Veiculo>> GetListaAsync(PagingQueryParam<Domain.Entities.Veiculo> param)
         {
-            VeiculoGetListaCommand command = new(param);
+            VeiculoGetVehiclesForSaleCommand command = new(param);
             return await _mediator.Send(command);
         }
 
         /// <summary>
         /// Alterar o status de pagamento do revendaDeVeiculos
         /// </summary>
-        public async Task<ModelResult> AlterarStatusPagamento(Guid id, enmVeiculoStatusPagamento statusPagamento)
+        public async Task<ModelResult<TEntity>> AlterarStatusPagamento(Guid id, enmVeiculoStatusPagamento statusPagamento)
         {
-            VeiculoAlterarStatusPagamentoCommand command = new(id, statusPagamento, _configuration["micro-servico-producao-baseadress"] ?? "");
+            VeiculoPagamentoPostCommand command = new(id, statusPagamento, _configuration["micro-servico-producao-baseadress"] ?? "");
             return await _mediator.Send(command);
         }
     }

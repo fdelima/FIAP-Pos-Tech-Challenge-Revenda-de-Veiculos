@@ -3,7 +3,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
 {
-    public class VeiculoPostCommand : IRequest<ModelResult>
+    public class VeiculoPostCommand : IRequest<ModelResult<Domain.Entities.Veiculo>>
     {
         public VeiculoPostCommand(Domain.Entities.Veiculo entity,
             string microServicoCadastroBaseAdress,

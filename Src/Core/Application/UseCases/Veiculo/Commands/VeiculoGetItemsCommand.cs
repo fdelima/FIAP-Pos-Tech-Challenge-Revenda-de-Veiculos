@@ -7,22 +7,23 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo
 {
     public class VeiculoGetItemsCommand : IRequest<PagingQueryResult<Domain.Entities.Veiculo>>
     {
-        public VeiculoGetItemsCommand(IPagingQueryParam filter, Expression<Func<Domain.Entities.Veiculo, object>> sortProp)
+        public VeiculoGetItemsCommand(IPagingQueryParam filter,
+            Expression<Func<Domain.Entities.Veiculo, object>> sortProp)
         {
             Filter = filter;
             SortProp = sortProp;
         }
 
         public VeiculoGetItemsCommand(IPagingQueryParam filter,
-            Expression<Func<Domain.Entities.Veiculo, bool>> expression, Expression<Func<Domain.Entities.Veiculo, object>> sortProp)
+         Expression<Func<Domain.Entities.Veiculo, object>> sortProp,
+         Expression<Func<Domain.Entities.Veiculo, bool>> expression) 
             : this(filter, sortProp)
         {
             Expression = expression;
         }
 
         public IPagingQueryParam Filter { get; }
-        public Expression<Func<Domain.Entities.Veiculo, bool>> Expression { get; }
-
+        public Expression<Func<Domain.Entities.Veiculo, bool>>? Expression { get; }
         public Expression<Func<Domain.Entities.Veiculo, object>> SortProp { get; }
     }
 }

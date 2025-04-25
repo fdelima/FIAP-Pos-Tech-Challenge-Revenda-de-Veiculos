@@ -17,32 +17,32 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages
         /// <summary>
         /// Retorna mensagem genérica de sucesso para insert
         /// </summary>
-        public static string InsertSucess<T>() => GenericSucess();
+        public static string InsertSucess<TEntity>() => GenericSucess();
 
         /// <summary>
         /// Retorna mensagem genérica de sucesso para update
         /// </summary>
-        public static string UpdateSucess<T>() => GenericSucess();
+        public static string UpdateSucess<TEntity>() => GenericSucess();
 
         /// <summary>
         /// Retorna mensagem genérica de sucesso para delete
         /// </summary>
-        public static string DeleteSucess<T>() => GenericSucess();
+        public static string DeleteSucess<TEntity>() => GenericSucess();
 
         /// <summary>
         /// Retorna mensagem de erro - registro em duplicidade
         /// </summary>
-        public static string DuplicatedError<T>() => $"Já existe um registro {typeof(T).Name}.";
+        public static string DuplicatedError<TEntity>() => $"Já existe um registro {typeof(T).Name}.";
 
         /// <summary>
         /// Retorna mensagem de erro - registro não encontrado
         /// </summary>
-        public static string NotFoundError<T>() => $"Nenhum registro de {typeof(T).Name} encontrado.";
+        public static string NotFoundError<TEntity>() => $"Nenhum registro de {typeof(T).Name} encontrado.";
 
         /// <summary>
         /// Retorna mensagem de erro - registro não encontrado
         /// </summary>
-        public static string NotFoundInError<T>(Guid id) => $"{typeof(T).Name} informado {id} não encontrado.";
+        public static string NotFoundInError<TEntity>(Guid id) => $"{typeof(T).Name} informado {id} não encontrado.";
 
     }
 }

@@ -5,18 +5,18 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
 {
-    public class VeiculoFindByIdHandler : IRequestHandler<VeiculoFindByIdCommand, ModelResult>
+    public class VeiculoDeleteHandler : IRequestHandler<VeiculoDeleteCommand, ModelResult<Domain.Entities.Veiculo>>
     {
         private readonly IVeiculoService _service;
 
-        public VeiculoFindByIdHandler(IVeiculoService service)
+        public VeiculoDeleteHandler(IVeiculoService service)
         {
             _service = service;
         }
 
-        public async Task<ModelResult> Handle(VeiculoFindByIdCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult<Domain.Entities.Veiculo>> Handle(VeiculoDeleteCommand command, CancellationToken cancellationToken = default)
         {
-            return await _service.FindByIdAsync(command.Id);
+            return await _service.DeleteAsync(command.Id, command.BusinessRules);
         }
     }
 }

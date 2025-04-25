@@ -45,7 +45,7 @@ namespace FIAP.Pos.Tech.Challenge.Api
             stackTrace = stackTrace.Length > 200 ? stackTrace.IndexOf(" in ") > -1 ? stackTrace.Substring(0, stackTrace.IndexOf(" in ")) : stackTrace.Substring(0, 200) : stackTrace;
             stackTrace += " ...";
 
-            ModelResult m = ModelResultFactory.Error(exception.Message, stackTrace);
+            ModelResult<TEntity> m = ModelResultFactory.Error(exception.Message, stackTrace);
             m.AddMessage(ErrorMessages.InternalServerError);
 
             string exceptionResult = JsonSerializer.Serialize(m);

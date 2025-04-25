@@ -9,7 +9,7 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
     [ApiController]
     public abstract class ApiController : ControllerBase
     {
-        protected IActionResult ExecuteCommand(ModelResult result)
+        protected IActionResult ExecuteCommand(ModelResult<TEntity> result)
         {
             if (result.IsValid)
                 return Ok(result);

@@ -10,7 +10,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
 
         #region [ DbSets ]
 
-        public virtual DbSet<Domain.Entities.Notificacao> Notificacoes { get; set; }
+        //public virtual DbSet<Domain.Entities.Notificacao> Notificacoes { get; set; }
         public virtual DbSet<Domain.Entities.Veiculo> Veiculos { get; set; }
         public virtual DbSet<Domain.Entities.VeiculoFoto> VeiculoFotos { get; set; }
         public virtual DbSet<Domain.Entities.VeiculoPagamento> VeiculoPagamentos { get; set; }

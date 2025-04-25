@@ -1,0 +1,24 @@
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
+using MediatR;
+using System.Net.Http.Json;
+
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
+{
+    public class VeiculoPostHandler : IRequestHandler<VeiculoPostCommand, ModelResult<Domain.Entities.Veiculo>>
+    {
+        private readonly IVeiculoService _service;
+
+        public VeiculoPostHandler(IVeiculoService service)
+        {
+            _service = service;
+        }
+
+        public async Task<ModelResult<Domain.Entities.Veiculo>> Handle(VeiculoPostCommand command, CancellationToken cancellationToken = default)
+        {
+            return await _service.InsertAsync(command.Entity, command.BusinessRules);
+        }
+    }
+}

@@ -12,31 +12,31 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
         /// Valida o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
-        Task<ModelResult> ValidateAsync(TEntity entity);
+        Task<ModelResult<TEntity>> ValidateAsync(TEntity entity);
 
         /// <summary>
         /// Insere o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
-        Task<ModelResult> PostAsync(TEntity entity);
+        Task<ModelResult<TEntity>> PostAsync(TEntity entity);
 
         /// <summary>
         /// Atualiza o objeto
         /// </summary>
         /// <param name="entity">Objeto relacional do bd mapeado</param>
-        Task<ModelResult> PutAsync(Guid id, TEntity entity);
+        Task<ModelResult<TEntity>> PutAsync(Guid id, TEntity entity);
 
         /// <summary>
         /// Deleta o objeto
         /// </summary>
         /// <param name="id">id do objeto relacional do bd mapeado</param>
-        Task<ModelResult> DeleteAsync(Guid id);
+        Task<ModelResult<TEntity>> DeleteAsync(Guid id);
 
         /// <summary>
         /// Retorna o objeto do bd
         /// </summary>
         /// <param name="id">id do objeto relacional do bd mapeado</param>
-        Task<ModelResult> FindByIdAsync(Guid id);
+        Task<ModelResult<TEntity>> FindByIdAsync(Guid id);
 
         /// <summary>
         /// Retorna os objetos do bd

@@ -1,7 +1,4 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
-
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
+﻿namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
 {
     public interface IVeiculoService : IService<Entities.Veiculo>
     {

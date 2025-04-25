@@ -18,12 +18,12 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
 
             //Veiculo
             services.AddScoped<IRequestHandler<VeiculoPostCommand, ModelResult>, VeiculoPostHandler>();
-            services.AddScoped<IRequestHandler<VeiculoAlterarStatusPagamentoCommand, ModelResult>, VeiculoAlterarStatusPagamentoHandler>();
+            services.AddScoped<IRequestHandler<VeiculoPagamentoPostCommand, ModelResult>, VeiculoPagamentoPostHandler>();
             services.AddScoped<IRequestHandler<VeiculoPutCommand, ModelResult>, VeiculoPutHandler>();
             services.AddScoped<IRequestHandler<VeiculoDeleteCommand, ModelResult>, VeiculoDeleteHandler>();
             services.AddScoped<IRequestHandler<VeiculoFindByIdCommand, ModelResult>, VeiculoFindByIdHandler>();
             services.AddScoped<IRequestHandler<VeiculoGetItemsCommand, PagingQueryResult<Domain.Entities.Veiculo>>, VeiculoGetItemsHandler>();
-            services.AddScoped<IRequestHandler<VeiculoGetListaCommand, PagingQueryResult<Domain.Entities.Veiculo>>, VeiculoGetIListaHandler>();
+            services.AddScoped<IRequestHandler<VeiculoGetVehiclesForSaleCommand, PagingQueryResult<Domain.Entities.Veiculo>>, VeiculoGetVehiclesForSaleHandler>();
 
         }
     }
