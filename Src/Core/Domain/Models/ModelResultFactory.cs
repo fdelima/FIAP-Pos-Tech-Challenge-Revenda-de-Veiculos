@@ -50,9 +50,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um commad result com o erro de não encontrato
         /// </summary>
-        public static ModelResult<TEntity> NotFoundResult<TEntity>(TEntity model)
+        public static ModelResult<TEntity> NotFoundResult<TEntity>()
         {
-            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
+            ModelResult<TEntity> result = new ModelResult<TEntity>(default!);
             result.AddError(BusinessMessages.NotFoundError<TEntity>());
             return result;
         }
@@ -70,9 +70,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um commad resut novo
         /// </summary>
-        public static ModelResult<TEntity> None<TEntity>(TEntity model)
+        public static ModelResult<object> None()
         {
-            return new ModelResult<TEntity>(model);
+            return new ModelResult<object>(default!);
         }
 
         /// <summary>

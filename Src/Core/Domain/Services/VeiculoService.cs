@@ -28,7 +28,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         {
             Veiculo? veiculo = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == Id);
 
-            if (veiculo == null) return ModelResultFactory.NotFoundResult(veiculo ?? default!);
+            if (veiculo == null) return ModelResultFactory.NotFoundResult<Veiculo>();
 
             if (veiculo.Status.Equals(enmVeiculoStatus.VENDIDO))
             {
@@ -36,7 +36,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
                 if (r1 != null) veiculo.Pagamentos = r1.Pagamentos;
             }
 
-            return ModelResultFactory.NotFoundResult(veiculo ?? default!);
+            return ModelResultFactory.SucessResult(veiculo);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         {
             Veiculo? veiculo = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == entity.IdVeiculo);
 
-            if (veiculo == null) return ModelResultFactory.NotFoundResult(veiculo ?? default!);
+            if (veiculo == null) return ModelResultFactory.NotFoundResult<Veiculo>();
 
             for (int i = 0; i < veiculo.Fotos.Count; i++)
             {

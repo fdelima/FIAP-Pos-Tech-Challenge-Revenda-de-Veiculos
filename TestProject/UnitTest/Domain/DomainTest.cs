@@ -53,7 +53,7 @@ namespace TestProject.UnitTest.Domain
         {
             //Arrange
             //Act
-            var resut = ModelResultFactory.None(new { });
+            var resut = ModelResultFactory.None();
 
             //Assert
             Assert.True(resut.ListErrors().Count() == 0);

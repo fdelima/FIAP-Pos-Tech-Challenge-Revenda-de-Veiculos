@@ -10,7 +10,7 @@ internal class VeiculoFotoMap : IEntityTypeConfiguration<VeiculoFoto>
     {
         builder.HasKey(e => e.IdVeiculoFoto);
 
-        builder.ToTable("id_veiculo_foto");
+        builder.ToTable("veiculo_foto");
 
         builder.Property(e => e.IdVeiculoFoto)
             .ValueGeneratedNever()

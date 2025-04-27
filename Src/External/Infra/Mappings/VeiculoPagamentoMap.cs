@@ -10,7 +10,7 @@ internal class VeiculoPagamentoMap : IEntityTypeConfiguration<VeiculoPagamento>
     {
         builder.HasKey(e => e.IdVeiculoPagamento);
 
-        builder.ToTable("id_veiculo_pagamento");
+        builder.ToTable("veiculo_pagamento");
 
         builder.Property(e => e.IdVeiculoPagamento)
             .ValueGeneratedNever()

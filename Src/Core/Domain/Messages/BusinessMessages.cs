@@ -32,17 +32,17 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages
         /// <summary>
         /// Retorna mensagem de erro - registro em duplicidade
         /// </summary>
-        public static string DuplicatedError<TEntity>() => $"Já existe um registro {typeof(TEntity).Name}.";
+        public static string DuplicatedError<TEntity>() => $"Já existe um registro {typeof(TEntity).Name.ToLower()}.";
 
         /// <summary>
         /// Retorna mensagem de erro - registro não encontrado
         /// </summary>
-        public static string NotFoundError<TEntity>() => $"Nenhum registro de {typeof(TEntity).Name} encontrado.";
+        public static string NotFoundError<TEntity>() => $"Nenhum registro de {typeof(TEntity).Name.ToLower()} encontrado.";
 
         /// <summary>
         /// Retorna mensagem de erro - registro não encontrado
         /// </summary>
-        public static string NotFoundInError<TEntity>(Guid id) => $"{typeof(TEntity).Name} informado {id} não encontrado.";
+        public static string NotFoundInError<TEntity>(Guid id) => $"{typeof(TEntity).Name.ToLower()} informado {id} não encontrado.";
 
     }
 }

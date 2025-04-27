@@ -169,9 +169,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
             ModelResult<TEntity> validatorResult;
 
             if (entity == null)
-                validatorResult = ModelResultFactory.NotFoundResult(entity ?? default!);
+                validatorResult = ModelResultFactory.NotFoundResult<TEntity>();
             else
-                validatorResult = new ModelResult<TEntity>(entity ?? default!);
+                validatorResult = new ModelResult<TEntity>(entity);
 
             if (businessRules != null)
                 validatorResult.AddError(businessRules);
@@ -201,7 +201,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
             TEntity? result = await _gateway.FindByIdAsync(Id);
 
             if (result == null)
-                return ModelResultFactory.NotFoundResult(result ?? default!);
+                return ModelResultFactory.NotFoundResult<TEntity>();
 
             return ModelResultFactory.SucessResult(result);
         }
