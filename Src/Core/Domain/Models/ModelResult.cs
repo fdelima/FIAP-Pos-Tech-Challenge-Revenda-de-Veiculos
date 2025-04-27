@@ -9,18 +9,13 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
     public class ModelResult<TEntity> : IModelResult<TEntity>
     {
         /// <summary>
-        /// construtor vazio do result para os commands
-        /// </summary>
-        public ModelResult()
-        {
-            Model = default!;
-        }
-
-        /// <summary>
         /// contrutor do result para os commands
         /// </summary>
         /// <param name="model">model</param>
-        public ModelResult(TEntity model) => Model = model;
+        public ModelResult(TEntity model)
+        {
+            Model = model;
+        }
 
         /// <summary>
         /// lista de mensagens

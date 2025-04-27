@@ -1,9 +1,10 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoPagamentoPostCommand : IRequest<ModelResult<Domain.Entities.Veiculo>>
+    public class VeiculoPagamentoPostCommand : IRequest<ModelResult<Veiculo>>
     {
         public VeiculoPagamentoPostCommand(Guid idVeiculo,
             DateTime data, decimal valorRecebido, string banco, string conta,

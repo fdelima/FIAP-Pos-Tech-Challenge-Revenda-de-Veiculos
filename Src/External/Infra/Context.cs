@@ -1,4 +1,5 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
@@ -11,9 +12,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
         #region [ DbSets ]
 
         //public virtual DbSet<Domain.Entities.Notificacao> Notificacoes { get; set; }
-        public virtual DbSet<Domain.Entities.Veiculo> Veiculos { get; set; }
-        public virtual DbSet<Domain.Entities.VeiculoFoto> VeiculoFotos { get; set; }
-        public virtual DbSet<Domain.Entities.VeiculoPagamento> VeiculoPagamentos { get; set; }
+        public virtual DbSet<Veiculo> Veiculos { get; set; }
+        public virtual DbSet<VeiculoFoto> VeiculoFotos { get; set; }
+        public virtual DbSet<VeiculoPagamento> VeiculoPagamentos { get; set; }
 
         #endregion DbSets
 

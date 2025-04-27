@@ -7,16 +7,15 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator
     /// <summary>
     /// Regras de validação da model
     /// </summary>
-    public class VeiculoItemValidator : AbstractValidator<VeiculoFoto>
+    public class VeiculoFotoValidator : AbstractValidator<VeiculoFoto>
     {
         /// <summary>
         /// Contrutor das regras de validação da model
         /// </summary>
-        public VeiculoItemValidator()
+        public VeiculoFotoValidator()
         {
-            RuleFor(c => c.IdVeiculo).NotNull().WithMessage(ValidationMessages.RequiredField);
-            RuleFor(c => c.IdProduto).NotEmpty().WithMessage(ValidationMessages.RequiredField);
-            RuleFor(c => c.Quantidade).NotEmpty().WithMessage(ValidationMessages.RequiredField);
+            RuleFor(c => c.IdVeiculo).NotEmpty().WithMessage(ValidationMessages.RequiredField);
+            RuleFor(c => c.Imagem).NotEmpty().WithMessage(ValidationMessages.RequiredField);
         }
     }
 }

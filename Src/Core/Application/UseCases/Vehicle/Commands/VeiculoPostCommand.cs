@@ -1,11 +1,12 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoPostCommand : IRequest<ModelResult<Domain.Entities.Veiculo>>
+    public class VeiculoPostCommand : IRequest<ModelResult<Veiculo>>
     {
-        public VeiculoPostCommand(Domain.Entities.Veiculo entity,
+        public VeiculoPostCommand(Veiculo entity,
             string microServicoCadastroBaseAdress,
             string microServicoPagamentoBaseAdress,
             string[]? businessRules = null)
@@ -16,7 +17,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo
             BusinessRules = businessRules;
         }
 
-        public Domain.Entities.Veiculo Entity { get; private set; }
+        public Veiculo Entity { get; private set; }
         public string MicroServicoCadastroBaseAdress { get; private set; }
         public string MicroServicoPagamentoBaseAdress { get; private set; }
         public string[]? BusinessRules { get; private set; }

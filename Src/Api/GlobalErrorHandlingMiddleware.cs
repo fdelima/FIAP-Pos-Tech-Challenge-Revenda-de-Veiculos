@@ -40,12 +40,11 @@ namespace FIAP.Pos.Tech.Challenge.Api
 
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-
             string stackTrace = (exception.StackTrace ?? "");
             stackTrace = stackTrace.Length > 200 ? stackTrace.IndexOf(" in ") > -1 ? stackTrace.Substring(0, stackTrace.IndexOf(" in ")) : stackTrace.Substring(0, 200) : stackTrace;
             stackTrace += " ...";
 
-            ModelResult<TEntity> m = ModelResultFactory.Error(exception.Message, stackTrace);
+            var m = ModelResultFactory.Error(new { }, exception.Message, stackTrace);
             m.AddMessage(ErrorMessages.InternalServerError);
 
             string exceptionResult = JsonSerializer.Serialize(m);

@@ -1,14 +1,13 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 using MediatR;
-using System.Net.Http.Json;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Handlers
 {
-    public class VeiculoPagamentoPostHandler : IRequestHandler<VeiculoPagamentoPostCommand, ModelResult<Domain.Entities.Veiculo>>
+    public class VeiculoPagamentoPostHandler : IRequestHandler<VeiculoPagamentoPostCommand, ModelResult<Veiculo>>
     {
         private readonly IVeiculoService _service;
 
@@ -17,18 +16,18 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo
             _service = service;
         }
 
-        public async Task<ModelResult<Domain.Entities.Veiculo>> Handle(VeiculoPagamentoPostCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult<Veiculo>> Handle(VeiculoPagamentoPostCommand command, CancellationToken cancellationToken = default)
         {
-            var result = await _service.FindByIdAsync(command.IdVeiculo);
+            ModelResult<Veiculo> result = await _service.FindByIdAsync(command.IdVeiculo);
 
             if (result.IsValid)
             {
-                var veiculo = result.Model;
+                Veiculo veiculo = result.Model;
                 veiculo.Status = enmVeiculoStatus.VENDIDO.ToString();
 
-                veiculo.Pagamentos = new List<Domain.Entities.VeiculoPagamento>
+                veiculo.Pagamentos = new List<VeiculoPagamento>
                 {
-                    new Domain.Entities.VeiculoPagamento
+                    new VeiculoPagamento
                     {
                         Data = command.Data,
                         ValorRecebido = command.ValorRecebido,

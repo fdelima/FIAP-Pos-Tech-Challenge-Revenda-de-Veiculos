@@ -1,5 +1,5 @@
 ﻿//using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands;
-//using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Handlers;
+//using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicles.Handlers;
 //using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 //using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 //using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions;

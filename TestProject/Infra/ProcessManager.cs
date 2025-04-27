@@ -6,7 +6,7 @@ public class ProcessManager
 {
     public static string ExecuteCommand(string file, string arguments)
     {
-        var processStartInfo = new ProcessStartInfo
+        ProcessStartInfo processStartInfo = new ProcessStartInfo
         {
             FileName = FindExecutable(file),
             Arguments = arguments,
@@ -16,7 +16,7 @@ public class ProcessManager
             RedirectStandardOutput = true
         };
 
-        var process = Process.Start(processStartInfo);
+        Process? process = Process.Start(processStartInfo);
 
         if (process == null)
             throw new Exception($"Falha ao iniciar processo: {file} {arguments}");
@@ -32,7 +32,7 @@ public class ProcessManager
     public static Process StartProccess(string file, string arguments, string workingDirectory,
         bool useShell = true)
     {
-        var processStartInfo = new ProcessStartInfo
+        ProcessStartInfo processStartInfo = new ProcessStartInfo
         {
             FileName = FindExecutable(file),
             Arguments = arguments,
@@ -41,7 +41,7 @@ public class ProcessManager
             WindowStyle = ProcessWindowStyle.Hidden
         };
 
-        var process = Process.Start(processStartInfo);
+        Process? process = Process.Start(processStartInfo);
         return process!;
     }
 
@@ -78,7 +78,7 @@ public class ProcessManager
 
     private static void KillWindowsProcess(int processId)
     {
-        using var killer =
+        using Process? killer =
             Process.Start(
                 new ProcessStartInfo("taskkill.exe", $"/PID {processId} /T /F")
                 {
@@ -89,23 +89,23 @@ public class ProcessManager
 
     private static void KillUnixProcess(int processId)
     {
-        using (var idGetter =
+        using (Process? idGetter =
             Process.Start(new ProcessStartInfo("ps", $"-o pid= --ppid {processId}")
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true
             }))
         {
-            var exited = idGetter != null && idGetter.WaitForExit(2000);
+            bool exited = idGetter != null && idGetter.WaitForExit(2000);
             if (exited && idGetter!.ExitCode == 0)
             {
-                var stdout = idGetter.StandardOutput.ReadToEnd();
+                string stdout = idGetter.StandardOutput.ReadToEnd();
 
-                var pids = stdout.Split("\n")
+                List<int> pids = stdout.Split("\n")
                     .Where(pid => !string.IsNullOrEmpty(pid))
                     .Select(int.Parse)
                     .ToList();
-                foreach (var pid in pids)
+                foreach (int pid in pids)
                     KillUnixProcess(pid);
             }
         }

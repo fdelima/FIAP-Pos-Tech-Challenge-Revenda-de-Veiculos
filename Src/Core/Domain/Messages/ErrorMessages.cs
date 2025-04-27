@@ -27,6 +27,6 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages
         /// <summary>
         /// Mensage de erro timeout em uma requisição ao banco de dados.
         /// </summary>
-        public static string DeleteDatabaseError<TEntity>() => $"Erro ao deletar {typeof(T).Name} do banco de dados.";
+        public static string DeleteDatabaseError<TEntity>() => $"Erro ao deletar {typeof(TEntity).Name} do banco de dados.";
     }
 }

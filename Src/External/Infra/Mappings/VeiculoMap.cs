@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
 
-internal class VeiculoMap : IEntityTypeConfiguration<Domain.Entities.Veiculo>
+internal class VeiculoMap : IEntityTypeConfiguration<Veiculo>
 {
-    public void Configure(EntityTypeBuilder<Domain.Entities.Veiculo> builder)
+    public void Configure(EntityTypeBuilder<Veiculo> builder)
     {
         builder.HasKey(e => e.IdVeiculo);
 

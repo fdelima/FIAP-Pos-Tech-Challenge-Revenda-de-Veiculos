@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions
 {
@@ -10,7 +11,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions
         /// <summary>
         /// Retorna a regra de validação a ser utilizada na atualização.
         /// </summary>
-        public static Expression<Func<Entities.Veiculo, bool>> ConsultRule(this PagingQueryParam<Entities.Veiculo> param)
+        public static Expression<Func<Veiculo, bool>> ConsultRule(this PagingQueryParam<Veiculo> param)
         {
             return x => (x.IdVeiculo.Equals(param.ObjFilter.IdVeiculo) || param.ObjFilter.IdVeiculo.Equals(default)) &&
                         (x.Marca.Equals(param.ObjFilter.Marca) || string.IsNullOrWhiteSpace(param.ObjFilter.Marca)) &&
@@ -26,7 +27,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions
         /// <summary>
         /// Retorna a propriedade a ser ordenada
         /// </summary>
-        public static Expression<Func<Entities.Veiculo, object>> SortProp(this PagingQueryParam<Entities.Veiculo> param)
+        public static Expression<Func<Veiculo, object>> SortProp(this PagingQueryParam<Veiculo> param)
         {
             switch (param?.SortProperty?.ToLower())
             {

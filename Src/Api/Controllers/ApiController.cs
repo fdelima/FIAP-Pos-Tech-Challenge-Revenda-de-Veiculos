@@ -7,7 +7,7 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
     /// Classe abstrata base para impelmentação dos controllers
     /// </summary>
     [ApiController]
-    public abstract class ApiController : ControllerBase
+    public abstract class ApiController<TEntity> : ControllerBase
     {
         protected IActionResult ExecuteCommand(ModelResult<TEntity> result)
         {

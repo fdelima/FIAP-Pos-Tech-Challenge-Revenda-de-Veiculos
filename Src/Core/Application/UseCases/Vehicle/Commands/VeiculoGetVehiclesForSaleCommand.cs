@@ -1,10 +1,11 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using MediatR;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Veiculo.Commands
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoGetVehiclesForSaleCommand : IRequest<PagingQueryResult<Domain.Entities.Veiculo>>
+    public class VeiculoGetVehiclesForSaleCommand : IRequest<PagingQueryResult<Veiculo>>
     {
         public VeiculoGetVehiclesForSaleCommand(IPagingQueryParam filter)
         {

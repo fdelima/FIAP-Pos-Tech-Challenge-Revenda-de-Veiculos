@@ -16,7 +16,7 @@ namespace TestProject.UnitTest.Domain
             const string valor = "ToSnakeCaseTest";
             const string expectedResult = "to_snake_case_test";
             //Act
-            var result = StringExtension.ToSnakeCase(valor);
+            string? result = StringExtension.ToSnakeCase(valor);
 
             //Assert
             Assert.Equal(expectedResult, result);
@@ -29,7 +29,7 @@ namespace TestProject.UnitTest.Domain
             const string valor = "FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities";
 
             //Act
-            var result = Util.GetTypesInNamespace(valor);
+            Type[] result = Util.GetTypesInNamespace(valor);
 
             //Assert
             //Assert.Contains(typeof(Notificacao), result);
@@ -42,7 +42,7 @@ namespace TestProject.UnitTest.Domain
         {
             //Arrange
             //Act
-            var resut = ModelResultFactory.DuplicatedResult<Veiculo>();
+            var resut = ModelResultFactory.DuplicatedResult(new { });
 
             //Assert
             Assert.Contains(BusinessMessages.DuplicatedError<Veiculo>(), resut.ListErrors());
@@ -53,7 +53,7 @@ namespace TestProject.UnitTest.Domain
         {
             //Arrange
             //Act
-            var resut = ModelResultFactory.None();
+            var resut = ModelResultFactory.None(new { });
 
             //Assert
             Assert.True(resut.ListErrors().Count() == 0);
@@ -67,7 +67,7 @@ namespace TestProject.UnitTest.Domain
             const string msg = "mensagem";
 
             //Act
-            var resut = ModelResultFactory.Message(msg);
+            var resut = ModelResultFactory.Message(new { }, msg);
 
             //Assert
             Assert.Contains(msg, resut.ListMessages());
@@ -80,7 +80,7 @@ namespace TestProject.UnitTest.Domain
             const string msg = "erro";
 
             //Act
-            var resut = ModelResultFactory.Error(msg);
+            var resut = ModelResultFactory.Error(new { }, msg);
 
             //Assert
             Assert.Contains(msg, resut.ListErrors());

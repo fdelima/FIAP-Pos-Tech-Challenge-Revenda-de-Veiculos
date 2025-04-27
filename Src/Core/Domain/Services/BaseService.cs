@@ -43,7 +43,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <param name="entity">Entidade</param>
         public async Task<ModelResult<TEntity>> ValidateAsync(TEntity entity)
         {
-            var ValidatorResult = new ModelResult<TEntity>(entity);
+            ModelResult<TEntity> ValidatorResult = new ModelResult<TEntity>(entity);
 
             FluentValidation.Results.ValidationResult validations = _validator.Validate(entity);
             if (!validations.IsValid)
@@ -62,7 +62,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <param name="ValidatorResult">Validações já realizadas a serem adicionadas ao contexto</param>
         public virtual async Task<ModelResult<TEntity>> InsertAsync(TEntity entity, string[]? businessRules = null)
         {
-            var ValidatorResult = await ValidateAsync(entity);
+            ModelResult<TEntity> ValidatorResult = await ValidateAsync(entity);
 
             Expression<Func<IDomainEntity, bool>> duplicatedExpression = entity.InsertDuplicatedRule();
 
@@ -73,7 +73,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
                     bool duplicado = await _gateway.Any(duplicatedExpression);
 
                     if (duplicado)
-                        ValidatorResult.Add(ModelResultFactory.DuplicatedResult<TEntity>());
+                        ValidatorResult.Add(ModelResultFactory.DuplicatedResult(entity));
                 }
 
                 if (businessRules != null)
@@ -84,7 +84,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
 
                 await _gateway.InsertAsync(entity);
                 await _gateway.CommitAsync();
-                return ModelResultFactory.InsertSucessResult<TEntity>(entity);
+                return ModelResultFactory.InsertSucessResult(entity);
             }
 
             return ValidatorResult;
@@ -96,7 +96,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <param name="entity">Entidade</param>
         public virtual async Task<ModelResult<TEntity>> UpdateAsync(TEntity entity, string[]? businessRules = null)
         {
-            var ValidatorResult = await ValidateAsync(entity);
+            ModelResult<TEntity> ValidatorResult = await ValidateAsync(entity);
 
             Expression<Func<IDomainEntity, bool>> duplicatedExpression = entity.AlterDuplicatedRule();
 
@@ -107,7 +107,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
                     bool duplicado = await _gateway.Any(duplicatedExpression);
 
                     if (duplicado)
-                        ValidatorResult.Add(ModelResultFactory.DuplicatedResult<TEntity>());
+                        ValidatorResult.Add(ModelResultFactory.DuplicatedResult(entity));
                 }
 
                 if (businessRules != null)
@@ -118,7 +118,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
 
                 await _gateway.UpdateAsync(entity);
                 await _gateway.CommitAsync();
-                return ModelResultFactory.UpdateSucessResult<TEntity>(entity);
+                return ModelResultFactory.UpdateSucessResult(entity);
             }
 
             return ValidatorResult;
@@ -130,7 +130,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <param name="entity">Entidade</param>
         public virtual async Task<ModelResult<TEntity>> UpdateAsync(TEntity oldEntity, TEntity NewEntity, string[]? businessRules = null)
         {
-            var ValidatorResult = await ValidateAsync(NewEntity);
+            ModelResult<TEntity> ValidatorResult = await ValidateAsync(NewEntity);
 
             Expression<Func<IDomainEntity, bool>> duplicatedExpression = NewEntity.AlterDuplicatedRule();
 
@@ -141,7 +141,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
                     bool duplicado = await _gateway.Any(duplicatedExpression);
 
                     if (duplicado)
-                        ValidatorResult.Add(ModelResultFactory.DuplicatedResult<TEntity>());
+                        ValidatorResult.Add(ModelResultFactory.DuplicatedResult(NewEntity));
                 }
 
                 if (businessRules != null)
@@ -152,7 +152,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
 
                 await _gateway.UpdateAsync(oldEntity, NewEntity);
                 await _gateway.CommitAsync();
-                return ModelResultFactory.UpdateSucessResult<TEntity>(NewEntity);
+                return ModelResultFactory.UpdateSucessResult(NewEntity);
             }
 
             return ValidatorResult;
@@ -164,26 +164,30 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         /// <param name="entity">Entidade</param>
         public virtual async Task<ModelResult<TEntity>> DeleteAsync(Guid Id, string[]? businessRules = null)
         {
-            var ValidatorResult = new ModelResult<TEntity>();
-
             TEntity? entity = await _gateway.FindByIdAsync(Id);
-            if (entity == null) ValidatorResult.Add(ModelResultFactory.NotFoundResult<TEntity>());
+
+            ModelResult<TEntity> validatorResult;
+
+            if (entity == null)
+                validatorResult = ModelResultFactory.NotFoundResult(entity ?? default!);
+            else
+                validatorResult = new ModelResult<TEntity>(entity ?? default!);
 
             if (businessRules != null)
-                ValidatorResult.AddError(businessRules);
+                validatorResult.AddError(businessRules);
 
-            if (!ValidatorResult.IsValid)
-                return ValidatorResult;
+            if (!validatorResult.IsValid)
+                return validatorResult;
 
             try
             {
                 await _gateway.DeleteAsync(Id);
                 await _gateway.CommitAsync();
-                return ModelResultFactory.DeleteSucessResult<TEntity>();
+                return ModelResultFactory.DeleteSucessResult(entity ?? default!);
             }
             catch (Exception ex)
             {
-                return ModelResultFactory.DeleteFailResult<TEntity>(ex.Message);
+                return ModelResultFactory.DeleteFailResult(entity ?? default!, ex.Message);
             }
 
         }
@@ -197,7 +201,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
             TEntity? result = await _gateway.FindByIdAsync(Id);
 
             if (result == null)
-                return ModelResultFactory.NotFoundResult<TEntity>();
+                return ModelResultFactory.NotFoundResult(result ?? default!);
 
             return ModelResultFactory.SucessResult(result);
         }

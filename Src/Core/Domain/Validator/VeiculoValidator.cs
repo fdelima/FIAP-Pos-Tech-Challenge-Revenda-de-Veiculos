@@ -1,4 +1,5 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages;
 using FluentValidation;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator
@@ -6,7 +7,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator
     /// <summary>
     /// Regras de validação da model
     /// </summary>
-    public class VeiculoValidator : AbstractValidator<Entities.Veiculo>
+    public class VeiculoValidator : AbstractValidator<Veiculo>
     {
         /// <summary>
         /// Contrutor das regras de validação da model
@@ -22,7 +23,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator
             RuleFor(c => c.Preco).NotEmpty().WithMessage(ValidationMessages.RequiredField);
             RuleFor(c => c.Status).NotEmpty().WithMessage(ValidationMessages.RequiredField);
             RuleFor(c => c.Fotos).Must(x => x.Count() > 0).WithMessage(ValidationMessages.OneMandatoryItem);
-            RuleForEach(c => c.VeiculoFotos).SetValidator(x => new VeiculoItemValidator());
+            RuleForEach(c => c.Fotos).SetValidator(x => new VeiculoFotoValidator());
         }
     }
 }

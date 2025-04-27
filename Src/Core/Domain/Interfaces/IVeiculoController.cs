@@ -1,15 +1,17 @@
-﻿namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+
+namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces
 {
-    public interface IVeiculoController : IController<Entities.Veiculo>
+    public interface IVeiculoController : IController<Veiculo>
     {
         /// <summary>
         /// Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro.
         /// </summary>
-        Task<PagingQueryResult<Entities.Veiculo>> GetVehiclesForSaleAsync(PagingQueryParam<Entities.Veiculo> param);
+        Task<PagingQueryResult<Veiculo>> GetVehiclesForSaleAsync(PagingQueryParam<Veiculo> filter);
 
         /// <summary>
         /// Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro.
         /// </summary>
-        Task<PagingQueryResult<Entities.Veiculo>> GetVehiclesSoldAsync(PagingQueryParam<Entities.Veiculo> param);
+        Task<PagingQueryResult<Veiculo>> GetVehiclesSoldAsync(PagingQueryParam<Veiculo> filter);
     }
 }

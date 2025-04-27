@@ -60,7 +60,7 @@ namespace TestProject.Infra
         {
             string ConnectionString = $"Server=localhost,{_port}; Database={DataBaseName}; User ID=sa; Password={pwd}; MultipleActiveResultSets=true; TrustServerCertificate=True";
 
-            var options = new DbContextOptionsBuilder<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Context>()
+            DbContextOptions<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Context> options = new DbContextOptionsBuilder<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Context>()
                                 .UseSqlServer(ConnectionString).Options;
 
             return new FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Context(options);

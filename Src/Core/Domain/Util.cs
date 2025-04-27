@@ -15,7 +15,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain
 
         public static HttpClient GetClient(string baseAddress)
         {
-            var _client = new HttpClient();
+            HttpClient _client = new HttpClient();
             _client.BaseAddress = new Uri(baseAddress);
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(

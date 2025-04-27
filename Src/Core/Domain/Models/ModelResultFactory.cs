@@ -12,7 +12,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// </summary>
         public static ModelResult<TEntity> InsertSucessResult<TEntity>(TEntity model)
         {
-            var result = new ModelResult<TEntity>(model);
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddMessage(BusinessMessages.InsertSucess<TEntity>());
             return result;
         }
@@ -22,7 +22,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// </summary>
         public static ModelResult<TEntity> UpdateSucessResult<TEntity>(TEntity model)
         {
-            var result = new ModelResult<TEntity>(model);
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddMessage(BusinessMessages.UpdateSucess<TEntity>());
             return result;
         }
@@ -30,9 +30,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um result com as mensagens de sucesso do delete
         /// </summary>
-        public static ModelResult<TEntity> DeleteSucessResult<TEntity>(TEntity? model = default)
+        public static ModelResult<TEntity> DeleteSucessResult<TEntity>(TEntity model)
         {
-            var result = model is null ? new ModelResult<TEntity>() : new ModelResult<TEntity>(model);
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddMessage(BusinessMessages.DeleteSucess<TEntity>());
             return result;
         }
@@ -40,9 +40,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um commad result com o erro de duplicidade
         /// </summary>
-        public static ModelResult<TEntity> DuplicatedResult<TEntity>()
+        public static ModelResult<TEntity> DuplicatedResult<TEntity>(TEntity model)
         {
-            var result = new ModelResult<TEntity>();
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddError(BusinessMessages.DuplicatedError<TEntity>());
             return result;
         }
@@ -50,20 +50,10 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um commad result com o erro de não encontrato
         /// </summary>
-        public static ModelResult<TEntity> NotFoundResult<TEntity>()
+        public static ModelResult<TEntity> NotFoundResult<TEntity>(TEntity model)
         {
-            var result = new ModelResult<TEntity>();
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddError(BusinessMessages.NotFoundError<TEntity>());
-            return result;
-        }
-
-        /// <summary>
-        /// Retorna um commad result com a mensagem de sucesso generico
-        /// </summary>
-        public static ModelResult<TEntity> SucessResult<TEntity>()
-        {
-            var result = new ModelResult<TEntity>();
-            result.AddMessage(BusinessMessages.GenericSucess());
             return result;
         }
 
@@ -72,7 +62,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// </summary>
         public static ModelResult<TEntity> SucessResult<TEntity>(TEntity model)
         {
-            var result = new ModelResult<TEntity>(model);
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddMessage(BusinessMessages.GenericSucess());
             return result;
         }
@@ -80,17 +70,17 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um commad resut novo
         /// </summary>
-        public static ModelResult<TEntity> None<TEntity>()
+        public static ModelResult<TEntity> None<TEntity>(TEntity model)
         {
-            return new ModelResult<TEntity>();
+            return new ModelResult<TEntity>(model);
         }
 
         /// <summary>
         /// Retorna um result com as mensagens
         /// </summary>
-        public static ModelResult<TEntity> Message<TEntity>(string message)
+        public static ModelResult<TEntity> Message<TEntity>(TEntity model, string message)
         {
-            var result = new ModelResult<TEntity>();
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddMessage(message);
             return result;
         }
@@ -100,16 +90,16 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// </summary>
         /// <param name="errors"></param>
         /// <returns></returns>
-        public static ModelResult<TEntity> Error<TEntity>(params string[] errors)
+        public static ModelResult<TEntity> Error<TEntity>(TEntity model, params string[] errors)
         {
-            var result = new ModelResult<TEntity>();
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             foreach (string error in errors) result.AddError(error);
             return result;
         }
 
-        internal static ModelResult<TEntity> DeleteFailResult<TEntity>(params string[] errors)
+        internal static ModelResult<TEntity> DeleteFailResult<TEntity>(TEntity model, params string[] errors)
         {
-            var result = new ModelResult<TEntity>();
+            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
             result.AddMessage(ErrorMessages.DeleteDatabaseError<TEntity>());
             foreach (string error in errors) result.AddError(error);
             return result;

@@ -29,7 +29,7 @@ public sealed class AddTwoNumbersTest : Feature
     [Then(@"the result should be (\d+) on the screen")]
     public void The_result_should_be_z_on_the_screen(int expectedResult)
     {
-        var actualResult = _calculator.Result;
+        int actualResult = _calculator.Result;
 
         Assert.Equal(expectedResult, actualResult);
     }

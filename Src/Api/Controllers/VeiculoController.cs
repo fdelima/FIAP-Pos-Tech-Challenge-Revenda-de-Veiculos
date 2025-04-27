@@ -3,7 +3,6 @@ using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -14,7 +13,7 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
     /// Controller dos Veiculos cadastrados
     /// </summary>
     [Route("api/[Controller]")]
-    public class VeiculoController : ApiController
+    public class VeiculoController : ApiController<Veiculo>
     {
         private readonly IVeiculoController _controller;
 
@@ -44,13 +43,13 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// 2. Veiculos mais antigos primeiro e mais novos depois;
         /// 3. Veiculos com status Finalizado não devem aparecer na lista.
         /// </summary>
-        [HttpGet("Lista")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<PagingQueryResult<Veiculo>> GetLista(int currentPage = 1, int take = 10)
-        {
-            PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
-            return await _controller.GetListaAsync(param);
-        }
+        //[HttpGet("Lista")]
+        //[ProducesResponseType((int)HttpStatusCode.OK)]
+        //public async Task<PagingQueryResult<Veiculo>> GetLista(int currentPage = 1, int take = 10)
+        //{
+        //    PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
+        //    return await _controller.GetListaAsync(param);
+        //}
 
         /// <summary>
         /// Recupera o Veiculo cadastrado pelo seu Id
@@ -59,8 +58,8 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo encontrada ou nulo</response>
         /// <response code="400">Erro ao recuperar Veiculo cadastrado</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> FindById(Guid id)
         {
@@ -89,7 +88,7 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo inserida com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para inserção do Veiculo.</response>
         [HttpPost()]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Post(Veiculo model)
         {
@@ -105,8 +104,8 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo alterada com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para alteração do Veiculo.</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Put(Guid id, Veiculo model)
         {
@@ -121,14 +120,14 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <returns>Retorna o result do Veiculo cadastrado.</returns>
         /// <response code="200">Veiculo alterada com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para alteração do Veiculo.</response>
-        [HttpPut("ReceberStatusPagamento")]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Put(Guid id, enmVeiculoStatusPagamento statusPagamento)
-        {
-            return ExecuteCommand(await _controller.AlterarStatusPagamento(id, statusPagamento));
-        }
+        //[HttpPut("ReceberStatusPagamento")]
+        //[ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
+        //[ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
+        //[ProducesResponseType((int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> Put(Guid id, enmVeiculoStatusPagamento statusPagamento)
+        //{
+        //    return ExecuteCommand(await _controller.AlterarStatusPagamento(id, statusPagamento));
+        //}
 
         /// <summary>
         /// Deleta o Veiculo cadastrado.
@@ -138,8 +137,8 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo deletada com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para deleção do Veiculo.</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Delete(Guid id)
         {

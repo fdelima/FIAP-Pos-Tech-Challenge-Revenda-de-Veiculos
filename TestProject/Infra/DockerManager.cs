@@ -9,7 +9,7 @@ namespace TestProject.Infra
 
         public static void PullImageIfDoesNotExists(string imageName, string version = "latest")
         {
-            var imageId = ProcessManager.ExecuteCommand("docker", $"images -q {imageName}:{version}");
+            string imageId = ProcessManager.ExecuteCommand("docker", $"images -q {imageName}:{version}");
 
             if (string.IsNullOrEmpty(imageId))
                 ProcessManager.ExecuteCommand("docker", $"pull {imageName}:{version}");
@@ -23,7 +23,7 @@ namespace TestProject.Infra
 
         public static void RunContainerIfIsNotRunning(string containerName, string command)
         {
-            var containerId = ProcessManager.ExecuteCommand("docker", $"ps -q --filter name={containerName}");
+            string containerId = ProcessManager.ExecuteCommand("docker", $"ps -q --filter name={containerName}");
 
             if (string.IsNullOrEmpty(containerId))
                 ProcessManager.ExecuteCommand("docker", command);
@@ -31,7 +31,7 @@ namespace TestProject.Infra
 
         public static bool ContainerIsRunning(string containerName)
         {
-            var containerId = ProcessManager.ExecuteCommand("docker", $"ps -q --filter name={containerName}");
+            string containerId = ProcessManager.ExecuteCommand("docker", $"ps -q --filter name={containerName}");
 
             if (string.IsNullOrEmpty(containerId))
                 return false;
