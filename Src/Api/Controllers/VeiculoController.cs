@@ -37,19 +37,26 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         }
 
         /// <summary>
-        /// Retorna os Veiculos cadastrados
-        /// A lista de veiculos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
-        /// 1. Pronto > Em Preparação > Recebido;
-        /// 2. Veiculos mais antigos primeiro e mais novos depois;
-        /// 3. Veiculos com status Finalizado não devem aparecer na lista.
+        /// Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro.
         /// </summary>
-        //[HttpGet("Lista")]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //public async Task<PagingQueryResult<Veiculo>> GetLista(int currentPage = 1, int take = 10)
-        //{
-        //    PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
-        //    return await _controller.GetListaAsync(param);
-        //}
+        [HttpGet("Venda")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<PagingQueryResult<Veiculo>> GetVehiclesForSaleAsync(int currentPage = 1, int take = 10)
+        {
+            PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
+            return await _controller.GetVehiclesForSaleAsync(param);
+        }
+
+        /// <summary>
+        /// Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro.
+        /// </summary>
+        [HttpGet("Vendidos")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<PagingQueryResult<Veiculo>> GetVehiclesSoldAsync(int currentPage = 1, int take = 10)
+        {
+            PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
+            return await _controller.GetVehiclesSoldAsync(param);
+        }
 
         /// <summary>
         /// Recupera o Veiculo cadastrado pelo seu Id
