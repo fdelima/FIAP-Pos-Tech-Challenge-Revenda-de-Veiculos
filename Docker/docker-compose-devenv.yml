@@ -29,7 +29,7 @@ services:
     depends_on:
       - sqlserver-revendadeveiculos
     volumes:
-      - ../DataBase/Scripts/init-database.sh:/tmp/init-database.sh
+      - ../DataBase/Scripts/init-database-dev.sh:/tmp/init-database.sh
       - ../DataBase/Modelagem-banco-de-dados/tech-challenge-mer-1.sql:/tmp/tech-challenge-mer-1.sql
       - ../DataBase/Modelagem-banco-de-dados/tech-challenge-mer-2.sql:/tmp/tech-challenge-mer-2.sql
     command: /bin/bash ./tmp/init-database.sh  

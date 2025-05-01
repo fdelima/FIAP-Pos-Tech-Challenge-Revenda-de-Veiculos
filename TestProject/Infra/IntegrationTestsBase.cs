@@ -9,9 +9,9 @@
         {
             _tests += 1;
             _sqlserverTest = new SqlServerTestFixture(
-                imageNameMssqlTools: "fdelima/fiap-pos-techchallenge-revendaDeVeiculos-scripts-database:fase4-test",
-                containerNameMssqlTools: "mssql-tools-revendaDeVeiculos-test",
-                databaseContainerName: "sqlserver-db-revendaDeVeiculos-test", port: "1430");
+                imageNameMssqlTools: "fdelima/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-integration-test",
+                containerNameMssqlTools: "mssql-tools-revendadeveiculos-integration-test",
+                databaseContainerName: "sqlserver-db-revendadeveiculos-integration-test", port: "1430");
             Thread.Sleep(15000);
         }
 

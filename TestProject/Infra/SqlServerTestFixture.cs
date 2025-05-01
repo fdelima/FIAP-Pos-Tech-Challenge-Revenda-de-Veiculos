@@ -5,11 +5,11 @@ namespace TestProject.Infra
     public class SqlServerTestFixture : IDisposable
     {
         const string pwd = "SqlServer2019!";
-        const string network = "network-revendaDeVeiculos-test";
+        const string network = "network-revendadeveiculos-test";
 
         //sqlserver
         private const string ImageName = "mcr.microsoft.com/mssql/server:2019-latest";
-        private const string DataBaseName = "tech-challenge-revendaDeVeiculos";
+        private const string DataBaseName = "tech-challenge-revenda-de-veiculos";
 
         string _port; string _databaseContainerName;
 
