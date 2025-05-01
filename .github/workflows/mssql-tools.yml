@@ -59,7 +59,7 @@ jobs:
     - name: Build and Push Azure Docker image
       uses: docker/build-push-action@v6.7.0
       with:
-        context: /
+        context: ./
         file: ./Docker/DataBase/Dockerfile-az
         #fixo, pois, sempre que trocar as secrets necessario alterar o nome da imagem a ser gerada.
         tags: ${{ secrets.DOCKER_USERNAME }}/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-az 
@@ -68,7 +68,7 @@ jobs:
     - name: Build and Push Component Test Docker image
       uses: docker/build-push-action@v6.7.0
       with:
-        context: /
+        context: ./
         file: ./Docker/DataBase/Dockerfile-component-test
         #fixo, pois, sempre que trocar as secrets necessario alterar o nome da imagem a ser gerada.
         tags: ${{ secrets.DOCKER_USERNAME }}/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-component-test
@@ -77,7 +77,7 @@ jobs:
     - name: Build and Push Integration Test Docker image
       uses: docker/build-push-action@v6.7.0
       with:
-        context: /
+        context: ./
         file: ./Docker/DataBase/Dockerfile-integration-test
         #fixo, pois, sempre que trocar as secrets necessario alterar o nome da imagem a ser gerada.
         tags: ${{ secrets.DOCKER_USERNAME }}/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-integration-test
