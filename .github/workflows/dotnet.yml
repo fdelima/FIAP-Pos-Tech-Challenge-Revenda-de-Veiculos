@@ -15,15 +15,15 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Set AZURE_SERVER
+    - name: Set SECRET_AZURE_SERVER_NAME
       uses: thiagodnf/string-replacer@v1.0.2
       with:
-        find: "{{ secrets.AZURE_SERVER }}"
-        replace: "${{ secrets.AZURE_SERVER }}"
+        find: "{{ secrets.AZURE_SERVER_NAME }}"
+        replace: "${{ secrets.AZURE_SERVER_NAME }}"
         include: |
           ./Src/Api/appsettings.Azure.json 
 
-    - name: Set AZURE_DATABASE
+    - name: Set SECRET_AZURE_DATABASE
       uses: thiagodnf/string-replacer@v1.0.2
       with:
         find: "{{ secrets.AZURE_DATABASE }}"
@@ -31,19 +31,19 @@ jobs:
         include: |
           ./Src/Api/appsettings.Azure.json 
 
-    - name: Set AZURE_USER
+    - name: Set SECRET_AZURE_SA_USER
       uses: thiagodnf/string-replacer@v1.0.2
       with:
-        find: "{{ secrets.AZURE_USER }}"
-        replace: "${{ secrets.AZURE_USER }}"
+        find: "{{ secrets.AZURE_SA_USER }}"
+        replace: "${{ secrets.AZURE_SA_USER }}"
         include: |
           ./Src/Api/appsettings.Azure.json 
 
-    - name: Set AZURE_USER_PASSWORD
+    - name: Set SECRET_SA_PASSWORD
       uses: thiagodnf/string-replacer@v1.0.2
       with:
-        find: "{{ secrets.AZURE_USER_PASSWORD }}"
-        replace: "${{ secrets.AZURE_USER_PASSWORD }}"
+        find: "{{ secrets.SA_PASSWORD }}"
+        replace: "${{ secrets.SA_PASSWORD }}"
         include: |
           ./Src/Api/appsettings.Azure.json 
           

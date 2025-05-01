@@ -1,77 +1,77 @@
-# name: Deploy APP TO AKS
+name: Deploy APP TO AKS
 
-# on:
-#   push:
-#     branches: [ "main" ]
-#   workflow_run:
-#     workflows: ["Deploy Terraform In Azure with User-assigned Managed Identity", "Docker Image api CI"]
-#     types:
-#       - completed
+on:
+  push:
+    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Deploy Terraform In Azure with User-assigned Managed Identity", "Docker Image api CI"]
+    types:
+      - completed
 
-# permissions:
-#   id-token: write
-#   contents: read
-#   actions: read
+permissions:
+  id-token: write
+  contents: read
+  actions: read
   
-# env:
-#   RESOURCE_GROUP: "fiap-pos-tech-aks-rg"
-#   CLUSTER_NAME: "fiap-pos-tech-k8s-cluster"
-#   DEPLOYMENT_MANIFEST_PATH: "./Src/Infra/Azure/toDeploy"
+env:
+  RESOURCE_GROUP: "fiap-pos-tech-aks-rg"
+  CLUSTER_NAME: "fiap-pos-tech-k8s-cluster"
+  DEPLOYMENT_MANIFEST_PATH: "./Src/Infra/Azure/toDeploy"
 
-# jobs:
-#   deploy:
-#     runs-on: self-hosted    
+jobs:
+  deploy:
+    runs-on: self-hosted    
 
-#     steps:
-#       # Checks out the repository this file is in
-#       - name: Checkout
-#         uses: actions/checkout@v4
+    steps:
+      # Checks out the repository this file is in
+      - name: Checkout
+        uses: actions/checkout@v4
 
-#       - name: CREATE DEPLOYMENT MANIFEST PATH
-#         run: mkdir ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+      - name: CREATE DEPLOYMENT MANIFEST PATH
+        run: mkdir ${{ env.DEPLOYMENT_MANIFEST_PATH }}
 
-#       - name: COPY FILES TO DEPLOYMENT MANIFEST PATH
-#         run: |
-#           cp ./Src/02-api/01-fiap-pos-tech-challenge-api-service.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-#           cp ./Src/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-#           cp ./Src/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-#           cp ./Src/01-sqlserver/05-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+      - name: COPY FILES TO DEPLOYMENT MANIFEST PATH
+        run: |
+          cp ./Src/02-api/01-fiap-pos-tech-challenge-api-service.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./Src/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./Src/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./Src/01-sqlserver/05-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
 
-#       - name: List files in the ./Src/Infra/Azure
-#         working-directory: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-#         run: |
-#             ls
+      - name: List files in the ./Src/Infra/Azure
+        working-directory: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+        run: |
+            ls
 
-#       # Logs in with your Azure credentials
-#       - name: Azure login
-#         uses: azure/login@v2
-#         with:
-#           auth-type: IDENTITY
-#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
-#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#           enable-AzPSSession: true
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          auth-type: IDENTITY
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
     
-#       # Use kubelogin to configure your kubeconfig for Azure auth
-#       - name: Set up kubelogin for non-interactive login
-#         uses: azure/use-kubelogin@v1
-#         with:
-#           kubelogin-version: 'v0.0.25'
+      # Use kubelogin to configure your kubeconfig for Azure auth
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.0.25'
     
-#       # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
-#       - name: Get K8s context
-#         uses: azure/aks-set-context@v3
-#         with:
-#           resource-group: ${{ env.RESOURCE_GROUP }}
-#           cluster-name: ${{ env.CLUSTER_NAME }}
-#           admin: 'false'
-#           use-kubelogin: 'true'
+      # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
+      - name: Get K8s context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          admin: 'false'
+          use-kubelogin: 'true'
     
-#       # Deploys application based on given manifest file
-#       - name: Deploys application
-#         uses: Azure/k8s-deploy@v4
-#         with:
-#           action: deploy
-#           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-#           #  images: |
-#           #    ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+      # Deploys application based on given manifest file
+      - name: Deploys application
+        uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+          #  images: |
+          #    ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
