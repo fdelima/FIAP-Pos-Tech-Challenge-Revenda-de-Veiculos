@@ -11,7 +11,6 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
 
         #region [ DbSets ]
 
-        //public virtual DbSet<Domain.Entities.Notificacao> Notificacoes { get; set; }
         public virtual DbSet<Veiculo> Veiculos { get; set; }
         public virtual DbSet<VeiculoFoto> VeiculoFotos { get; set; }
         public virtual DbSet<VeiculoPagamento> VeiculoPagamentos { get; set; }
@@ -21,7 +20,6 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //TODO: Map :: 2 - Adicione sua configuração aqui
-            //modelBuilder.ApplyConfiguration(new NotificacaoMap());
             modelBuilder.ApplyConfiguration(new VeiculoFotoMap());
             modelBuilder.ApplyConfiguration(new VeiculoPagamentoMap());
             modelBuilder.ApplyConfiguration(new VeiculoMap());

@@ -9,20 +9,16 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
     public class VeiculoService : BaseService<Veiculo>, IVeiculoService
     {
         /// <summary>
-        /// Lógica de negócio referentes ao revendaDeVeiculos.
+        /// Lógica de negócio referentes ao veiculo.
         /// </summary>
-        /// <param name="gateway">Gateway de revendaDeVeiculos a ser injetado durante a execução</param>
+        /// <param name="gateway">Gateway de veiculos a ser injetado durante a execução</param>
         /// <param name="validator">abstração do validador a ser injetado durante a execução</param>
-        /// <param name="notificacaoGateway">Gateway de notificação a ser injetado durante a execução</param>
-        /// <param name="dispositivoGateway">Gateway de dispositivo a ser injetado durante a execução</param>
-        /// <param name="clienteGateway">Gateway de cliente a ser injetado durante a execução</param>
-        /// <param name="produtoGateway">Gateway de produto a ser injetado durante a execução</param>
         public VeiculoService(IGateways<Veiculo> gateway,
             IValidator<Veiculo> validator)
             : base(gateway, validator) { }
 
         /// <summary>
-        /// Regra para carregar o revendaDeVeiculos e suas fotos.
+        /// Regra para carregar o veiculo e suas fotos.
         /// </summary>
         public async override Task<ModelResult<Veiculo>> FindByIdAsync(Guid Id)
         {
@@ -40,7 +36,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         }
 
         /// <summary>
-        /// Regras para inserção do revendaDeVeiculos
+        /// Regras para inserção do veiculo
         /// </summary>
         /// <param name="entity">Entidade</param>
         /// <param name="ValidatorResult">Validações já realizadas a serem adicionadas ao contexto</param>
@@ -63,7 +59,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
         }
 
         /// <summary>
-        /// Regra para atualização do revendaDeVeiculos e suas dependências.
+        /// Regra para atualização do veiculo e suas dependências.
         /// </summary>
         public async override Task<ModelResult<Veiculo>> UpdateAsync(Veiculo entity, string[]? businessRules = null)
         {
