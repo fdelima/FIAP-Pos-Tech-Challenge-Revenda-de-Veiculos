@@ -18,7 +18,7 @@ internal class VeiculoFotoMap : IEntityTypeConfiguration<VeiculoFoto>
         builder.Property(e => e.IdVeiculo)
             .HasColumnName("id_veiculo");
         builder.Property(e => e.Imagem)
-            .HasMaxLength(4000)
+            .IsUnicode(false)
             .HasColumnName("imagem_base64");
 
         builder.HasOne(d => d.Veiculo).WithMany(p => p.Fotos)

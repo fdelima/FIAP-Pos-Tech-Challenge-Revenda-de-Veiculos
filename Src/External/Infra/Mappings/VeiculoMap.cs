@@ -36,5 +36,8 @@ internal class VeiculoMap : IEntityTypeConfiguration<Veiculo>
         builder.Property(e => e.Status)
             .HasMaxLength(10)
             .HasColumnName("status");
+        builder.Property(e => e.Thumb)
+            .IsUnicode(false)
+            .HasColumnName("thumb_base64");
     }
 }
