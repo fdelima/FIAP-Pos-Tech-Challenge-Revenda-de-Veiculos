@@ -12,20 +12,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Src/Api/FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Api.csproj", "Src/Api/"]
-COPY ["Src/Core/Ioc/FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Ioc.csproj", "Src/Core/Ioc/"]
-COPY ["Src/Core/Application/FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.csproj", "Src/Core/Application/"]
-COPY ["Src/Core/Domain/FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.csproj", "Src/Core/Domain/"]
-COPY ["Src/External/Infra/FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.csproj", "Src/External/Infra/"]
-RUN dotnet restore "./Src/Api/FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Api.csproj"
+COPY ["Src/Api/Api.csproj", "Src/Api/"]
+COPY ["Src/Core/Ioc/Ioc.csproj", "Src/Core/Ioc/"]
+COPY ["Src/Core/Application/Application.csproj", "Src/Core/Application/"]
+COPY ["Src/Core/Domain/Domain.csproj", "Src/Core/Domain/"]
+COPY ["Src/External/Infra/Infra.csproj", "Src/External/Infra/"]
+RUN dotnet restore "./Src/Api/Api.csproj"
 COPY . .
 WORKDIR "/src/Src/Api"
-RUN dotnet build "./FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
