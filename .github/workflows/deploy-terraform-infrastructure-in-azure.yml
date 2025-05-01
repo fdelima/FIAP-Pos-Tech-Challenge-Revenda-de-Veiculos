@@ -1,4 +1,4 @@
-name: Deploy Terraform In Azure with User-assigned Managed Identity
+name: Deploy Terraform In Azure with User-assigned Managed Identity Workfow
 
 on:
   push:

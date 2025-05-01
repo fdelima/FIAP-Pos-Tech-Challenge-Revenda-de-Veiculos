@@ -1,4 +1,4 @@
-name: Build-Push-Docker-Image-FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos-Mssql-tools
+name: FIAP Pos Tech Challenge Revenda de Veiculos Mssql Tools Workflow
 
 on:
   push:
@@ -8,7 +8,7 @@ jobs:
 
   build:
 
-    name: Build mssql-tools and scripts
+    name: Build FIAP Pos Tech Challenge Revenda de Veiculos Mssql Tools
     runs-on: ubuntu-latest
 
     steps:

@@ -1,4 +1,4 @@
-name: Deploy APP TO AKS
+name: Deploy APP TO AKS Workflow
 
 on:
   push:
