@@ -15,14 +15,12 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
     /// </summary>
     public class VeiculoController : IVeiculoController
     {
-        private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
         private readonly IValidator<Veiculo> _validator;
 
-        public VeiculoController(IConfiguration configuration, IMediator mediator,
+        public VeiculoController(IMediator mediator,
             IValidator<Veiculo> validator)
         {
-            _configuration = configuration;
             _mediator = mediator;
             _validator = validator;
         }
@@ -57,9 +55,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
 
             if (ValidatorResult.IsValid)
             {
-                VeiculoPostCommand command = new(entity,
-                    _configuration["revendaDeVeiculos-baseadress"] ?? "",
-                    _configuration["micro-servico-pagamento-baseadress"] ?? "");
+                VeiculoPostCommand command = new(entity);
                 return await _mediator.Send(command);
             }
 
