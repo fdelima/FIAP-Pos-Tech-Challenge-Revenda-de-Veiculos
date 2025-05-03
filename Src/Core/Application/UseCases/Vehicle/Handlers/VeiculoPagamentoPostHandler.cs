@@ -18,30 +18,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
 
         public async Task<ModelResult<Veiculo>> Handle(VeiculoPagamentoPostCommand command, CancellationToken cancellationToken = default)
         {
-            ModelResult<Veiculo> result = await _service.FindByIdAsync(command.IdVeiculo);
-
-            if (result.IsValid)
-            {
-                Veiculo veiculo = result.Model;
-                veiculo.Status = enmVeiculoStatus.VENDIDO.ToString();
-
-                veiculo.Pagamentos = new List<VeiculoPagamento>
-                {
-                    new VeiculoPagamento
-                    {
-                        Data = command.Data,
-                        ValorRecebido = command.ValorRecebido,
-                        Banco = command.Banco,
-                        Conta = command.Conta,
-                        CpfCnpj = command.CpfCnpj
-                    }
-                };
-
-                return await _service.UpdateAsync(veiculo);
-            }
-
-            return result;
-
+            command.Veiculo.Status = enmVeiculoStatus.VENDIDO.ToString();
+            command.Veiculo.Pagamentos.Add(command.Pagamento);
+            return await _service.UpdateAsync(command.Veiculo);
         }
     }
 }

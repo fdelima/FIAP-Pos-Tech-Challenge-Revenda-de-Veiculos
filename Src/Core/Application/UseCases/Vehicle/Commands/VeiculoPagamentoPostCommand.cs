@@ -6,23 +6,13 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
 {
     public class VeiculoPagamentoPostCommand : IRequest<ModelResult<Veiculo>>
     {
-        public VeiculoPagamentoPostCommand(Guid idVeiculo,
-            DateTime data, decimal valorRecebido, string banco, string conta,
-            string cpfCnpj)
+        public VeiculoPagamentoPostCommand(Veiculo veiculo, VeiculoPagamento pagamento)
         {
-            IdVeiculo = idVeiculo;
-            Data = data;
-            ValorRecebido = valorRecebido;
-            Banco = banco;
-            Conta = conta;
-            CpfCnpj = cpfCnpj;
+            Veiculo = veiculo;
+            Pagamento = pagamento;
         }
 
-        public Guid IdVeiculo { get; private set; }
-        public DateTime Data { get; private set; }
-        public decimal ValorRecebido { get; private set; }
-        public string Banco { get; private set; }
-        public string Conta { get; private set; }
-        public string CpfCnpj { get; private set; }
+        public Veiculo Veiculo { get; private set; }
+        public VeiculoPagamento Pagamento { get; private set; }
     }
 }

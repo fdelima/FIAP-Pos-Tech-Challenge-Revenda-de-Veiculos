@@ -14,6 +14,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
             //TODO: Validators :: 3 - Adicione sua configuração aqui
 
             //Validators
+            services.AddScoped(typeof(IValidator<VeiculoPagamento>), typeof(VeiculoPagamentoValidator));
             services.AddScoped(typeof(IValidator<VeiculoFoto>), typeof(VeiculoFotoValidator));
             services.AddScoped(typeof(IValidator<Veiculo>), typeof(VeiculoValidator));
         }

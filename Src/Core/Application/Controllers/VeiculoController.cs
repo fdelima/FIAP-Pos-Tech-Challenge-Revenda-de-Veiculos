@@ -17,12 +17,15 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IValidator<Veiculo> _validator;
+        private readonly IValidator<VeiculoPagamento> _pagamentoValidator;
 
         public VeiculoController(IMediator mediator,
-            IValidator<Veiculo> validator)
+            IValidator<Veiculo> validator,
+            IValidator<VeiculoPagamento> pagamentoValidator)
         {
             _mediator = mediator;
             _validator = validator;
+            _pagamentoValidator = pagamentoValidator;
         }
 
         /// <summary>
@@ -58,6 +61,36 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
                 VeiculoPostCommand command = new(entity);
                 return await _mediator.Send(command);
             }
+
+            return ValidatorResult;
+        }
+
+        /// <summary>
+        /// Cadastra um novo pagamento para um Veiculo.
+        /// </summary>
+        public virtual async Task<ModelResult<VeiculoPagamento>> PostPagamentoAsync(VeiculoPagamento entity)
+        {
+            if (entity == null) throw new InvalidOperationException($"Necessário informar o Veiculo Pagamento");
+
+            ModelResult<VeiculoPagamento> ValidatorResult = new ModelResult<VeiculoPagamento>(entity);
+
+            FluentValidation.Results.ValidationResult validations = _pagamentoValidator.Validate(entity);
+            if (!validations.IsValid)
+            {
+                ValidatorResult.AddValidations(validations);
+                return ValidatorResult;
+            }
+
+            var result = await FindByIdAsync(entity.IdVeiculo);
+            if (result.IsValid)
+            {
+                VeiculoPagamentoPostCommand command = new(result.Model, entity);
+                result = await _mediator.Send(command);
+            }
+
+            ValidatorResult.AddMessage(result.Messages);
+            ValidatorResult.AddError(result.Errors);
+            ValidatorResult.AddMessage(result.Messages);
 
             return ValidatorResult;
         }

@@ -120,23 +120,6 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         }
 
         /// <summary>
-        /// Altera o Stauts de pagamento do Veiculo cadastrado.
-        /// </summary>
-        /// <param name="id">Identificador do Veiculo cadastrado.</param>
-        /// <param name="statusPagamento">Objeto contendo as informações para modificação.</param>
-        /// <returns>Retorna o result do Veiculo cadastrado.</returns>
-        /// <response code="200">Veiculo alterada com sucesso.</response>
-        /// <response code="400">Erros de validação dos parâmetros para alteração do Veiculo.</response>
-        //[HttpPut("ReceberStatusPagamento")]
-        //[ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
-        //[ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //public async Task<IActionResult> Put(Guid id, enmVeiculoStatusPagamento statusPagamento)
-        //{
-        //    return ExecuteCommand(await _controller.AlterarStatusPagamento(id, statusPagamento));
-        //}
-
-        /// <summary>
         /// Deleta o Veiculo cadastrado.
         /// </summary>
         /// <param name="id">Identificador do Veiculo cadastrado.</param>
