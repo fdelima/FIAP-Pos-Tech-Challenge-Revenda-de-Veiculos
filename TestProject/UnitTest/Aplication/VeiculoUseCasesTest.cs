@@ -215,6 +215,57 @@ namespace TestProject.UnitTest.Aplication
         }
 
         /// <summary>
+        /// Testa a alteração com dados válidos
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
+        public async Task PagamentoVieculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+        {
+            ///Arrange
+            var veiculo = new Veiculo
+            {
+                IdVeiculo = idVeiculo,
+                Marca = marca,
+                Modelo = modelo,
+                AnoFabricacao = anoFabricacao,
+                AnoModelo = anoModelo,
+                Placa = placa,
+                Renavam = renavam,
+                Preco = preco,
+                Status = status,
+                Thumb = thumb,
+                Fotos = fotos
+            };
+
+            foreach (var item in fotos)
+                item.IdVeiculo = idVeiculo;
+
+            var pagamento = new VeiculoPagamento
+            {
+                IdVeiculo = idVeiculo,
+                Banco = "Banco do Brasil",
+                Conta = "1234",
+                CpfCnpj = "12345678900",
+                Data = DateTime.Now,
+                ValorRecebido = 100000
+            };
+
+            var command = new VeiculoPagamentoPostCommand(veiculo, pagamento);
+
+            //Mockando retorno do serviço de domínio.
+            _service.UpdateAsync(veiculo)
+                .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
+
+            //Act
+            var handler = new VeiculoPagamentoPostHandler(_service);
+            var result = await handler.Handle(command, CancellationToken.None);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }
+
+        /// <summary>
         /// Testa a consulta por id
         /// </summary>
         [Theory]
