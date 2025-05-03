@@ -1,4 +1,4 @@
-/****** Object:  Table [dbo].[veiculo]    Script Date: 01/05/2025 18:25:17 ******/
+/****** Object:  Table [dbo].[veiculo]    Script Date: 03/05/2025 16:39:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7,14 +7,14 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ve
 BEGIN
 CREATE TABLE [dbo].[veiculo](
 	[id_veiculo] [uniqueidentifier] NOT NULL,
-	[marca] [nvarchar](100) NOT NULL,
-	[modelo] [nvarchar](100) NOT NULL,
+	[marca] [varchar](100) NOT NULL,
+	[modelo] [varchar](100) NOT NULL,
 	[ano_fabricacao] [int] NOT NULL,
 	[ano_modelo] [int] NOT NULL,
-	[placa] [nchar](7) NOT NULL,
-	[renavam] [nchar](11) NOT NULL,
+	[placa] [varchar](7) NOT NULL,
+	[renavam] [varchar](11) NOT NULL,
 	[preco] [decimal](18, 2) NOT NULL,
-	[status] [nchar](10) NOT NULL,
+	[status] [varchar](50) NOT NULL,
 	[thumb_base64] [varchar](max) NULL,
  CONSTRAINT [PK_veiculo] PRIMARY KEY CLUSTERED 
 (
@@ -23,7 +23,7 @@ CREATE TABLE [dbo].[veiculo](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[veiculo_foto]    Script Date: 01/05/2025 18:25:18 ******/
+/****** Object:  Table [dbo].[veiculo_foto]    Script Date: 03/05/2025 16:39:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -41,7 +41,7 @@ CREATE TABLE [dbo].[veiculo_foto](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[veiculo_pagamento]    Script Date: 01/05/2025 18:25:18 ******/
+/****** Object:  Table [dbo].[veiculo_pagamento]    Script Date: 03/05/2025 16:39:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

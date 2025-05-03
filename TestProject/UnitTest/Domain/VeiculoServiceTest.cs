@@ -38,7 +38,7 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
         public async Task InserirComDadosValidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam,decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
         {
             ///Arrange
             var veiculo = new Veiculo
@@ -199,17 +199,17 @@ namespace TestProject.UnitTest.Domain
                 Preco = preco,
                 Status = status,
                 Thumb = thumb,
-                Fotos = fotos
+                Fotos =new List<VeiculoFoto>(fotos)
             };
 
             var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do FindByIdAsync
-            _gatewayVeiculoMock.FindByIdAsync(idVeiculo)
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
                 .Returns(new ValueTask<Veiculo>(veiculo));
 
             _gatewayVeiculoMock.DeleteAsync(idVeiculo)
-                .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
+                .Returns(Task.FromResult(ModelResultFactory.DeleteSucessResult<Veiculo>()));
 
             //Act
             var result = await domainService.DeleteAsync(idVeiculo);
