@@ -22,6 +22,7 @@ namespace TestProject.UnitTest.Aplication
     {
         private readonly IMediator _mediator;
         private readonly IValidator<Veiculo> _validator;
+        private readonly IValidator<VeiculoPagamento> _PagamentoValidator;
 
         /// <summary>
         /// Construtor da classe de teste.
@@ -30,6 +31,7 @@ namespace TestProject.UnitTest.Aplication
         {
             _mediator = Substitute.For<IMediator>();
             _validator = new VeiculoValidator();
+            _PagamentoValidator = new VeiculoPagamentoValidator();
         }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace TestProject.UnitTest.Aplication
             foreach (var item in fotos)
                 item.IdVeiculo = veiculo.IdVeiculo;
 
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoPostCommand>())
@@ -95,7 +97,7 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
             var result = await aplicationController.PostAsync(veiculo);
@@ -132,7 +134,7 @@ namespace TestProject.UnitTest.Aplication
             foreach (var item in fotos)
                 item.IdVeiculo = idVeiculo;
 
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoPutCommand>())
@@ -169,7 +171,7 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
             var result = await aplicationController.PutAsync(idVeiculo, veiculo);
@@ -202,7 +204,7 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoDeleteCommand>())
@@ -210,6 +212,60 @@ namespace TestProject.UnitTest.Aplication
 
             //Act
             var result = await aplicationController.DeleteAsync(idVeiculo);
+
+            //Assert
+            Assert.True(result.IsValid);
+        }
+
+        /// <summary>
+        /// Testa a alteração com dados válidos
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
+        public async Task PagamentoVieculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+        {
+            ///Arrange
+            var veiculo = new Veiculo
+            {
+                IdVeiculo = idVeiculo,
+                Marca = marca,
+                Modelo = modelo,
+                AnoFabricacao = anoFabricacao,
+                AnoModelo = anoModelo,
+                Placa = placa,
+                Renavam = renavam,
+                Preco = preco,
+                Status = status,
+                Thumb = thumb,
+                Fotos = fotos
+            };
+
+            foreach (var item in fotos)
+                item.IdVeiculo = idVeiculo;
+
+            var pagamento = new VeiculoPagamento
+            {
+                IdVeiculo = idVeiculo,
+                Banco = "Banco do Brasil",
+                Conta = "1234",
+                CpfCnpj = "12345678900",
+                Data = DateTime.Now,
+                ValorRecebido = 100000
+            };
+
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+
+            //Mockando retorno da busca do veiculo.
+            _mediator.Send(Arg.Any<VeiculoFindByIdCommand>())
+                .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
+            
+            //Mockando retorno do mediator.
+            _mediator.Send(Arg.Any<VeiculoPagamentoPostCommand>())
+                .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
+
+            //Act
+            var result = await aplicationController.PostPagamentoAsync(pagamento);
 
             //Assert
             Assert.True(result.IsValid);
@@ -238,7 +294,7 @@ namespace TestProject.UnitTest.Aplication
                 Thumb = thumb,
                 Fotos = fotos
             };
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoFindByIdCommand>())
@@ -259,7 +315,7 @@ namespace TestProject.UnitTest.Aplication
         public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
             var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
@@ -281,7 +337,7 @@ namespace TestProject.UnitTest.Aplication
         public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
             var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
@@ -306,7 +362,7 @@ namespace TestProject.UnitTest.Aplication
 
             filter = null;
             var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
             try
@@ -330,7 +386,7 @@ namespace TestProject.UnitTest.Aplication
             ///Arrange
 
             filter = null;
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
             try
@@ -353,7 +409,7 @@ namespace TestProject.UnitTest.Aplication
         public async Task ListarVeiculosAVenda(PagingQueryParam<Veiculo> filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
             var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
@@ -375,7 +431,7 @@ namespace TestProject.UnitTest.Aplication
         public async Task ListarVeiculosVendidos(PagingQueryParam<Veiculo> filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator);
+            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
             var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
