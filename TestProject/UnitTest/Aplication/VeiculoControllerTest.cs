@@ -9,7 +9,6 @@ using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using NSubstitute;
 using System.Linq.Expressions;
 using TestProject.MockData;
