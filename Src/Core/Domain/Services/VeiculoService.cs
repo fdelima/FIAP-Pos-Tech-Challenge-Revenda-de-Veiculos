@@ -88,6 +88,45 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
             return await base.UpdateAsync(veiculo, businessRules);
         }
 
+
+        /// <summary>
+        /// Regras base para deleção.
+        /// </summary>
+        /// <param name="entity">Entidade</param>
+        public async override Task<ModelResult<Veiculo>> DeleteAsync(Guid Id, string[]? businessRules = null)
+        {
+            var entity = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo.Equals(Id));
+
+            ModelResult<Veiculo> validatorResult;
+
+            if (entity == null)
+                validatorResult = ModelResultFactory.NotFoundResult<Veiculo>();
+            else
+                validatorResult = new ModelResult<Veiculo>(entity);
+
+            if (businessRules != null)
+                validatorResult.AddError(businessRules);
+
+            if (!validatorResult.IsValid)
+                return validatorResult;
+
+            try
+            {
+                //Removendo as fotos do veiculo, porém não os pagamentos.
+                //Caso tenha pagamentos, não é possível remover o veiculo.
+                entity.Fotos.Clear();
+
+                await _gateway.DeleteAsync(Id);
+                await _gateway.CommitAsync();
+                return ModelResultFactory.DeleteSucessResult<Veiculo>();
+            }
+            catch (Exception ex)
+            {
+                return ModelResultFactory.DeleteFailResult(entity ?? default!, ex.Message);
+            }
+
+        }
+
         /// <summary>
         /// Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro.
         /// </summary>

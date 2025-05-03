@@ -30,9 +30,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models
         /// <summary>
         /// Retorna um result com as mensagens de sucesso do delete
         /// </summary>
-        public static ModelResult<TEntity> DeleteSucessResult<TEntity>(TEntity model)
+        public static ModelResult<TEntity> DeleteSucessResult<TEntity>()
         {
-            ModelResult<TEntity> result = new ModelResult<TEntity>(model);
+            ModelResult<TEntity> result = new ModelResult<TEntity>(default!);
             result.AddMessage(BusinessMessages.DeleteSucess<TEntity>());
             return result;
         }

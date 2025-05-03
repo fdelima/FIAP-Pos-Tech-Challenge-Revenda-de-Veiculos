@@ -183,7 +183,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
             {
                 await _gateway.DeleteAsync(Id);
                 await _gateway.CommitAsync();
-                return ModelResultFactory.DeleteSucessResult(entity ?? default!);
+                return ModelResultFactory.DeleteSucessResult<TEntity>();
             }
             catch (Exception ex)
             {
