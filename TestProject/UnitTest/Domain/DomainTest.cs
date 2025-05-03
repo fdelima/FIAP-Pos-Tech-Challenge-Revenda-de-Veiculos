@@ -3,6 +3,7 @@ using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 
 namespace TestProject.UnitTest.Domain
 {
@@ -40,8 +41,10 @@ namespace TestProject.UnitTest.Domain
         public void DuplicatedResultTest()
         {
             //Arrange
+            var veiculo = new Veiculo { Marca = "FIAP", Modelo = "Teste", AnoFabricacao = 2023, AnoModelo = 2023, Placa = "ABC1234", Renavam = "12345678901234567", Preco = 100000, Status = enmVeiculoStatus.VITRINE.ToString() };
+            
             //Act
-            var resut = ModelResultFactory.DuplicatedResult(new { });
+            var resut = ModelResultFactory.DuplicatedResult(veiculo);
 
             //Assert
             Assert.Contains(BusinessMessages.DuplicatedError<Veiculo>(), resut.ListErrors());
