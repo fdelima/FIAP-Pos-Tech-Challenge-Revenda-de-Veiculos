@@ -1,7 +1,6 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
-using Microsoft.VisualBasic;
 
-namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.TestProject.UnitTest.Domain
+namespace TestProject.UnitTest.Domain
 {
     public class VeiculoPagamentoTest
     {
@@ -77,6 +76,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.TestProject.UnitTest.Domain
             var cpfCnpj = "123.456.789-00";
             var pagamento1 = new VeiculoPagamento
             {
+                IdVeiculoPagamento = Guid.NewGuid(),
                 IdVeiculo = veiculoId,
                 ValorRecebido = valor,
                 CpfCnpj = cpfCnpj,
@@ -85,6 +85,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.TestProject.UnitTest.Domain
             };
             var pagamento2 = new VeiculoPagamento
             {
+                IdVeiculoPagamento = Guid.NewGuid(),
                 IdVeiculo = veiculoId,
                 ValorRecebido = valor,
                 CpfCnpj = cpfCnpj,

@@ -47,6 +47,17 @@ docker compose up
 ## Diagrama entidade relacionamento (DER)
 ![image](Documentacao/Revenda-de-automoveis-DER.png)
 
+ # Qualidade de software;
+ ## **Teste realizados**  
+ > Realizado teste de componente em BDD.  
+ > Realizado teste de integração.  
+ > Realizado teste unitários.  
+ > * ![Teste realizados](Documentacao/tests.png)     
+ >    
+ > * **Code coverage**
+ ![Code coverage 80%](Documentacao/code-coverage.png)  
+ [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/develop/TestProject/CodeCoverage/Report/index.html)
+        - 
 # Entregáveis 
 ## 1. PDF contendo os links de acesso aos itens abaixo:  
 ### 1.1 Repositório com o código-fonte do software (ver próximo item);  
@@ -61,7 +72,7 @@ docker compose up
 - [Como executar manualmente no windows](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/tree/develop#como-executar-manualmente-no-windows)
 
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
-- xxx
+- ![image](Documentacao/estrutura-projeto-arquitetura-limpa.png)
 
 ### 2.3 Todos os arquivos “manifesto” Kubernetes para a implementação da solução em um cluster, o Dockerfile para o build da aplicação e o arquivo de definição dockercompose que descreva todos os componentes necessários para que a aplicação funcione corretamente e seja possível subir a aplicação localmente usando apenas o comando “docker compose up”.
 - xxx
