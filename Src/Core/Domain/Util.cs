@@ -12,16 +12,5 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain
                             .Where(t => String.Equals(t.Namespace, nameSpace, StringComparison.Ordinal))
                             .ToArray();
         }
-
-        public static HttpClient GetClient(string baseAddress)
-        {
-            HttpClient _client = new HttpClient();
-            _client.BaseAddress = new Uri(baseAddress);
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-            return _client;
-        }
     }
 }

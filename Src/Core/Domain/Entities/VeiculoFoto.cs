@@ -21,6 +21,7 @@ public partial class VeiculoFoto : IDomainEntity
     public Expression<Func<IDomainEntity, bool>> AlterDuplicatedRule()
     {
         return x => !((VeiculoFoto)x).IdVeiculoFoto.Equals(IdVeiculoFoto) &&
+                    ((VeiculoFoto)x).IdVeiculo.Equals(IdVeiculo) &&
                     ((VeiculoFoto)x).Imagem.Equals(Imagem);
     }
 
