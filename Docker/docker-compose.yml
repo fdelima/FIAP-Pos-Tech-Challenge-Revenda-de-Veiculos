@@ -9,7 +9,9 @@ services:
       - mssqltools-revendadeveiculos
     environment:
       - ASPNETCORE_ENVIRONMENT=Test
-  sqlserver-revendadeveiculos:
+    ports:
+      - "8080:8080"
+  sqlserver-db-revendadeveiculos-component-test:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       SA_PASSWORD: "SqlServer2019!"
@@ -26,4 +28,4 @@ services:
   mssqltools-revendadeveiculos:
     image: fdelima/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-component-test
     depends_on:
-      - sqlserver-revendadeveiculos
+      - sqlserver-db-revendadeveiculos-component-test
