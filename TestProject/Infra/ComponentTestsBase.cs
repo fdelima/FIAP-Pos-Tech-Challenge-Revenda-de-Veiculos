@@ -9,10 +9,7 @@
         public ComponentTestsBase()
         {
             _tests += 1;
-            _sqlserverTest = new SqlServerTestFixture(
-                imageNameMssqlTools: "fdelima/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-component-test",
-                containerNameMssqlTools: "mssql-tools-revendadeveiculos-component-test",
-                databaseContainerName: "sqlserver-db-revendadeveiculos-component-test", port: "1428");
+            _sqlserverTest = new SqlServerTestFixture("component-test", port: "1428");
             _apiTest = new ApiTestFixture();
             Thread.Sleep(10000);
         }

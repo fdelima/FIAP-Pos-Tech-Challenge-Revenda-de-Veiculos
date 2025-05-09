@@ -8,10 +8,7 @@
         public IntegrationTestsBase()
         {
             _tests += 1;
-            _sqlserverTest = new SqlServerTestFixture(
-                imageNameMssqlTools: "fdelima/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2-integration-test",
-                containerNameMssqlTools: "mssql-tools-revendadeveiculos-integration-test",
-                databaseContainerName: "sqlserver-db-revendadeveiculos-integration-test", port: "1430");
+            _sqlserverTest = new SqlServerTestFixture("integration-test", port: "1430");
             Thread.Sleep(15000);
         }
 
