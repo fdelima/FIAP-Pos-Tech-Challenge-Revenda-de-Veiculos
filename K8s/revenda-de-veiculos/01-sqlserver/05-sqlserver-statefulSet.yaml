@@ -1,45 +1,45 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: sqlserver-cadastro-statefulset
+  name: sqlserver-revendadeveiculos-statefulset
   labels:
-    apps: sqlserver-cadastro
+    apps: sqlserver-revendadeveiculos
 spec:
   replicas: 1
   selector:
     matchLabels:
-      apps: sqlserver-cadastro
+      apps: sqlserver-revendadeveiculos
   template:
     metadata:
       labels:
-        apps: sqlserver-cadastro
+        apps: sqlserver-revendadeveiculos
     spec:      
       containers:
-        - name: sqlserver-cadastro
+        - name: sqlserver-revendadeveiculos
           env:
             - name: ACCEPT_EULA
               valueFrom:
                 configMapKeyRef:
-                  name: sqlserver-configmap
+                  name: sqlserver-revendadeveiculos-configmap
                   key: ACCEPT_EULA
             - name: MSSQL_PID
               valueFrom:
                 configMapKeyRef:
-                  name: sqlserver-configmap
+                  name: sqlserver-revendadeveiculos-configmap
                   key: MSSQL_PID
             - name: SA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: sqlserver-sercrets
+                  name: sqlserver-revendadeveiculos-sercrets
                   key: SA_PASSWORD                  
           image: mcr.microsoft.com/mssql/server:2019-latest          
           ports:
             - containerPort: 1433
           volumeMounts:
             - mountPath: /var/opt/mssql
-              name: sql-data-cadastro
+              name: sql-data-revendadeveiculos
       restartPolicy: Always
       volumes:
-        - name: sql-data-cadastro
+        - name: sql-data-revendadeveiculos
           persistentVolumeClaim:
-            claimName: sql-data-cadastro
+            claimName: sql-data-revendadeveiculos

@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mssqltools-cadastro-pod
+  name: mssqltools-revendadeveiculos-pod
   labels:
-    apps: mssqltools-cadastro
+    apps: mssqltools-revendadeveiculos
 spec:
   containers:
-    - name: mssqltools-cadastro-container
-      image: fdelima/fiap-pos-techchallenge-revenda-de-veiculos-gurpo-71-scripts-database:fase4-test
+    - name: mssqltools-revendadeveiculos-container
+      image: fdelima/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2
   restartPolicy: Never

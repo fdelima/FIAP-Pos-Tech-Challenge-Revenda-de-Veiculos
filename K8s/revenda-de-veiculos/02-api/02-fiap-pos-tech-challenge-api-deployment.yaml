@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fiap-pos-tech-challenge-api-deployment
+  name: fiap-pos-tech-challenge-revendadeveiculos-api-deployment
   labels:
-    apps: fiap-pos-tech-challenge-api
+    apps: fiap-pos-tech-challenge-revendadeveiculos-api
 spec:
   replicas: 3
   selector:
     matchLabels:
-      apps: fiap-pos-tech-challenge-api
+      apps: fiap-pos-tech-challenge-revendadeveiculos-api
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        apps: fiap-pos-tech-challenge-api
+        apps: fiap-pos-tech-challenge-revendadeveiculos-api
     spec:
       containers:
-        - name: fiap-pos-tech-challenge-api-container
+        - name: fiap-pos-tech-challenge-revendadeveiculos-api-container
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: Azure
+              value: Development
             - name: ASPNETCORE_HTTP_PORTS
               value: "8080"
-          image: fdelima/fiap-pos-techchallenge-gurpo-71-api:fase3az
+          image: fdelima/fiap-pos-techchallenge-revendadeveiculos-api:fase2
           ports:
             - containerPort: 8080
               hostPort: 8080

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sql-data-cadastro
+  name: sql-data-revendadeveiculos
 spec:
   accessModes:
     - ReadWriteOnce
