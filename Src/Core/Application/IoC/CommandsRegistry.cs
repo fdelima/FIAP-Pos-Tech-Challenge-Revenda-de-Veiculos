@@ -18,13 +18,13 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.IoC
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
             //Veiculo
-            services.AddScoped<IRequestHandler<VeiculoPostCommand, ModelResult<Veiculo>>, VeiculoPostHandler>();
-            services.AddScoped<IRequestHandler<VeiculoPagamentoPostCommand, ModelResult<Veiculo>>, VeiculoPagamentoPostHandler>();
-            services.AddScoped<IRequestHandler<VeiculoPutCommand, ModelResult<Veiculo>>, VeiculoPutHandler>();
-            services.AddScoped<IRequestHandler<VeiculoDeleteCommand, ModelResult<Veiculo>>, VeiculoDeleteHandler>();
-            services.AddScoped<IRequestHandler<VeiculoFindByIdCommand, ModelResult<Veiculo>>, VeiculoFindByIdHandler>();
-            services.AddScoped<IRequestHandler<VeiculoGetItemsCommand, PagingQueryResult<Veiculo>>, VeiculoGetItemsHandler>();
-            services.AddScoped<IRequestHandler<VeiculoGetVehiclesForSaleCommand, PagingQueryResult<Veiculo>>, VeiculoGetVehiclesForSaleHandler>();
+            services.AddScoped<IRequestHandler<VeiculoPostCommand, ModelResult<VeiculoEntity>>, VeiculoPostHandler>();
+            services.AddScoped<IRequestHandler<VeiculoPagamentoPostCommand, ModelResult<VeiculoEntity>>, VeiculoPagamentoPostHandler>();
+            services.AddScoped<IRequestHandler<VeiculoPutCommand, ModelResult<VeiculoEntity>>, VeiculoPutHandler>();
+            services.AddScoped<IRequestHandler<VeiculoDeleteCommand, ModelResult<VeiculoEntity>>, VeiculoDeleteHandler>();
+            services.AddScoped<IRequestHandler<VeiculoFindByIdCommand, ModelResult<VeiculoEntity>>, VeiculoFindByIdHandler>();
+            services.AddScoped<IRequestHandler<VeiculoGetItemsCommand, PagingQueryResult<VeiculoEntity>>, VeiculoGetItemsHandler>();
+            services.AddScoped<IRequestHandler<VeiculoGetVehiclesForSaleCommand, PagingQueryResult<VeiculoEntity>>, VeiculoGetVehiclesForSaleHandler>();
 
         }
     }

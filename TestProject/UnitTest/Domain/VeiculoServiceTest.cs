@@ -7,10 +7,8 @@ using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 using FluentValidation;
-using Microsoft.Identity.Client;
 using NSubstitute;
 using System.Linq.Expressions;
-using System.Numerics;
 using TestProject.MockData;
 
 namespace TestProject.UnitTest.Domain
@@ -20,8 +18,8 @@ namespace TestProject.UnitTest.Domain
     /// </summary>
     public partial class VeiculoServiceTest
     {
-        private readonly IGateways<Veiculo> _gatewayVeiculoMock;
-        private readonly IValidator<Veiculo> _validator;
+        private readonly IGateways<VeiculoEntity> _gatewayVeiculoMock;
+        private readonly IValidator<VeiculoEntity> _validator;
 
         /// <summary>
         /// Construtor da classe de teste.
@@ -29,7 +27,7 @@ namespace TestProject.UnitTest.Domain
         public VeiculoServiceTest()
         {
             _validator = new VeiculoValidator();
-            _gatewayVeiculoMock = Substitute.For<IGateways<Veiculo>>();
+            _gatewayVeiculoMock = Substitute.For<IGateways<VeiculoEntity>>();
         }
 
         /// <summary>
@@ -38,10 +36,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
         public async Task InserirComDadosValidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 Marca = marca,
                 Modelo = modelo,
@@ -55,10 +53,10 @@ namespace TestProject.UnitTest.Domain
                 Fotos = fotos
             };
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Act
-            var result = await domainService.InsertAsync(veiculo);
+            ModelResult<VeiculoEntity> result = await domainService.InsertAsync(veiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -70,10 +68,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
         public async Task InserirComDadosInvalidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 Marca = marca,
                 Modelo = modelo,
@@ -87,10 +85,10 @@ namespace TestProject.UnitTest.Domain
                 Fotos = fotos
             };
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Act
-            var result = await domainService.InsertAsync(veiculo);
+            ModelResult<VeiculoEntity> result = await domainService.InsertAsync(veiculo);
 
             //Assert
             Assert.False(result.IsValid);
@@ -103,10 +101,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task AlterarComDadosValidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -121,21 +119,21 @@ namespace TestProject.UnitTest.Domain
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
                 item.IdVeiculo = idVeiculo;
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do UpdateAsync
-            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
-                .Returns(new ValueTask<Veiculo>(veiculo));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<VeiculoEntity, ICollection<VeiculoFotoEntity>>>>(), Arg.Any<Expression<Func<VeiculoEntity, bool>>>())
+                .Returns(new ValueTask<VeiculoEntity>(veiculo));
 
             //Mockando retorno do metodo interno do UpdateAsync
-            _gatewayVeiculoMock.UpdateAsync(Arg.Any<Veiculo>())
+            _gatewayVeiculoMock.UpdateAsync(Arg.Any<VeiculoEntity>())
                 .Returns(Task.FromResult(veiculo));
 
             //Act
-            var result = await domainService.UpdateAsync(veiculo);
+            ModelResult<VeiculoEntity> result = await domainService.UpdateAsync(veiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -147,10 +145,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, false, 3)]
         public async Task AlterarComDadosInvalidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -165,14 +163,14 @@ namespace TestProject.UnitTest.Domain
                 Fotos = fotos
             };
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do UpdateAsync
-            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
-                .Returns(new ValueTask<Veiculo>(veiculo));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<VeiculoEntity, ICollection<VeiculoFotoEntity>>>>(), Arg.Any<Expression<Func<VeiculoEntity, bool>>>())
+                .Returns(new ValueTask<VeiculoEntity>(veiculo));
 
             //Act
-            var result = await domainService.UpdateAsync(veiculo);
+            ModelResult<VeiculoEntity> result = await domainService.UpdateAsync(veiculo);
 
             //Assert
             Assert.False(result.IsValid);
@@ -184,10 +182,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task DeletarVeiculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -199,20 +197,20 @@ namespace TestProject.UnitTest.Domain
                 Preco = preco,
                 Status = status,
                 Thumb = thumb,
-                Fotos =new List<VeiculoFoto>(fotos)
+                Fotos = new List<VeiculoFotoEntity>(fotos)
             };
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do FindByIdAsync
-            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
-                .Returns(new ValueTask<Veiculo>(veiculo));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<VeiculoEntity, ICollection<VeiculoFotoEntity>>>>(), Arg.Any<Expression<Func<VeiculoEntity, bool>>>())
+                .Returns(new ValueTask<VeiculoEntity>(veiculo));
 
             _gatewayVeiculoMock.DeleteAsync(idVeiculo)
-                .Returns(Task.FromResult(ModelResultFactory.DeleteSucessResult<Veiculo>()));
+                .Returns(Task.FromResult(ModelResultFactory.DeleteSucessResult<VeiculoEntity>()));
 
             //Act
-            var result = await domainService.DeleteAsync(idVeiculo);
+            ModelResult<VeiculoEntity> result = await domainService.DeleteAsync(idVeiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -224,10 +222,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task ConsultarVeiculoPorIdComDadosValidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -242,14 +240,14 @@ namespace TestProject.UnitTest.Domain
                 Fotos = fotos
             };
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do FindByIdAsync
-            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<Veiculo, ICollection<VeiculoFoto>>>>(), Arg.Any<Expression<Func<Veiculo, bool>>>())
-                .Returns(new ValueTask<Veiculo>(veiculo));
+            _gatewayVeiculoMock.FirstOrDefaultWithIncludeAsync(Arg.Any<Expression<Func<VeiculoEntity, ICollection<VeiculoFotoEntity>>>>(), Arg.Any<Expression<Func<VeiculoEntity, bool>>>())
+                .Returns(new ValueTask<VeiculoEntity>(veiculo));
 
             //Act
-            var result = await domainService.FindByIdAsync(idVeiculo);
+            ModelResult<VeiculoEntity> result = await domainService.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -261,10 +259,10 @@ namespace TestProject.UnitTest.Domain
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task ConsultarVeiculoPorIdComDadosInvalidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -279,10 +277,10 @@ namespace TestProject.UnitTest.Domain
                 Fotos = fotos
             };
 
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Act
-            var result = await domainService.FindByIdAsync(idVeiculo);
+            ModelResult<VeiculoEntity> result = await domainService.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.False(result.IsValid);
@@ -293,19 +291,19 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculo(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculo(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
-                Arg.Any<Expression<Func<Veiculo, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<VeiculoEntity>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
 
             //Act
-            var result = await domainService.GetItemsAsync(filter, sortProp);
+            PagingQueryResult<VeiculoEntity> result = await domainService.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -316,19 +314,19 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
-                Arg.Any<Expression<Func<Veiculo, bool>>>(),
-                Arg.Any<Expression<Func<Veiculo, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<VeiculoEntity>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, bool>>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var result = await _gatewayVeiculoMock.GetItemsAsync(filter, param.ConsultRule(), sortProp);
+            PagingQueryResult<VeiculoEntity> result = await _gatewayVeiculoMock.GetItemsAsync(filter, param.ConsultRule(), sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -339,16 +337,16 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
 
             //Mockando retorno do metodo interno do GetItemsAsync
             _gatewayVeiculoMock.GetItemsAsync(filter, sortProp)
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var result = await _gatewayVeiculoMock.GetItemsAsync(filter, sortProp);
+            PagingQueryResult<VeiculoEntity> result = await _gatewayVeiculoMock.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -360,19 +358,19 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculosAVenda(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculosAVenda(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
-                Arg.Any<Expression<Func<Veiculo, bool>>>(),
-                Arg.Any<Expression<Func<Veiculo, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<VeiculoEntity>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, bool>>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var result = await domainService.GetVehiclesForSaleAsync(filter);
+            PagingQueryResult<VeiculoEntity> result = await domainService.GetVehiclesForSaleAsync(filter);
 
             //Assert
             Assert.Contains(result.Content, x => x.Status.Equals(enmVeiculoStatus.VITRINE.ToString()));
@@ -383,19 +381,19 @@ namespace TestProject.UnitTest.Domain
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculosVendidos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculosVendidos(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
+            VeiculoService domainService = new VeiculoService(_gatewayVeiculoMock, _validator);
 
             //Mockando retorno do metodo interno do GetItemsAsync
-            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
-                Arg.Any<Expression<Func<Veiculo, bool>>>(),
-                Arg.Any<Expression<Func<Veiculo, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+            _gatewayVeiculoMock.GetItemsAsync(Arg.Any<PagingQueryParam<VeiculoEntity>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, bool>>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var result = await domainService.GetVehiclesSoldAsync(filter);
+            PagingQueryResult<VeiculoEntity> result = await domainService.GetVehiclesSoldAsync(filter);
 
             //Assert
             Assert.Contains(result.Content, x => x.Status.Equals(enmVeiculoStatus.VENDIDO.ToString()));

@@ -4,16 +4,16 @@ using System.Text.Json.Serialization;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 
-public partial class VeiculoPagamento : IDomainEntity
+public partial class VeiculoPagamentoEntity : IDomainEntity
 {
     /// <summary>
     /// Retorna a regra de validação a ser utilizada na inserção.
     /// </summary>
     public Expression<Func<IDomainEntity, bool>> InsertDuplicatedRule()
     {
-        return x => ((VeiculoPagamento)x).IdVeiculo.Equals(IdVeiculo) &&
-                    ((VeiculoPagamento)x).ValorRecebido.Equals(ValorRecebido) &&
-                    ((VeiculoPagamento)x).CpfCnpj.Equals(CpfCnpj);
+        return x => ((VeiculoPagamentoEntity)x).IdVeiculo.Equals(IdVeiculo) &&
+                    ((VeiculoPagamentoEntity)x).ValorRecebido.Equals(ValorRecebido) &&
+                    ((VeiculoPagamentoEntity)x).CpfCnpj.Equals(CpfCnpj);
     }
 
     /// <summary>
@@ -21,10 +21,10 @@ public partial class VeiculoPagamento : IDomainEntity
     /// </summary>
     public Expression<Func<IDomainEntity, bool>> AlterDuplicatedRule()
     {
-        return x => !((VeiculoPagamento)x).IdVeiculoPagamento.Equals(IdVeiculoPagamento) &&
-                    ((VeiculoPagamento)x).IdVeiculo.Equals(IdVeiculo) &&
-                    ((VeiculoPagamento)x).ValorRecebido.Equals(ValorRecebido) &&
-                    ((VeiculoPagamento)x).CpfCnpj.Equals(CpfCnpj);
+        return x => !((VeiculoPagamentoEntity)x).IdVeiculoPagamento.Equals(IdVeiculoPagamento) &&
+                    ((VeiculoPagamentoEntity)x).IdVeiculo.Equals(IdVeiculo) &&
+                    ((VeiculoPagamentoEntity)x).ValorRecebido.Equals(ValorRecebido) &&
+                    ((VeiculoPagamentoEntity)x).CpfCnpj.Equals(CpfCnpj);
     }
 
     public Guid IdVeiculoPagamento { get; set; }
@@ -36,6 +36,6 @@ public partial class VeiculoPagamento : IDomainEntity
     public required string CpfCnpj { get; set; }
 
     [JsonIgnore]
-    public virtual Veiculo Veiculo { get; set; } = null!;
+    public virtual VeiculoEntity Veiculo { get; set; } = null!;
 
 }

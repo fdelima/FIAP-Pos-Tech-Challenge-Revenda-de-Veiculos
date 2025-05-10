@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Handlers
 {
-    public class VeiculoFindByIdHandler : IRequestHandler<VeiculoFindByIdCommand, ModelResult<Veiculo>>
+    public class VeiculoFindByIdHandler : IRequestHandler<VeiculoFindByIdCommand, ModelResult<VeiculoEntity>>
     {
         private readonly IVeiculoService _service;
 
@@ -15,7 +15,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
             _service = service;
         }
 
-        public async Task<ModelResult<Veiculo>> Handle(VeiculoFindByIdCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult<VeiculoEntity>> Handle(VeiculoFindByIdCommand command, CancellationToken cancellationToken = default)
         {
             return await _service.FindByIdAsync(command.Id);
         }

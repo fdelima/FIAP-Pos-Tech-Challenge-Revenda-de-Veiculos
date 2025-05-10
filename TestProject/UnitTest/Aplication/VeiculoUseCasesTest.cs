@@ -32,10 +32,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
         public async Task InserirComDadosValidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 Marca = marca,
                 Modelo = modelo,
@@ -49,15 +49,15 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var command = new VeiculoPostCommand(veiculo);
+            VeiculoPostCommand command = new VeiculoPostCommand(veiculo);
 
             //Mockando retorno do serviço de domínio.
             _service.InsertAsync(veiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var handler = new VeiculoPostHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoPostHandler handler = new VeiculoPostHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.IsValid);
@@ -69,10 +69,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
         public async Task InserirComDadosInvalidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 Marca = marca,
                 Modelo = modelo,
@@ -86,15 +86,15 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var command = new VeiculoPostCommand(veiculo);
+            VeiculoPostCommand command = new VeiculoPostCommand(veiculo);
 
             //Mockando retorno do serviço de domínio.
             _service.InsertAsync(veiculo)
-                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<Veiculo>()));
+                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<VeiculoEntity>()));
 
             //Act
-            var handler = new VeiculoPostHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoPostHandler handler = new VeiculoPostHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.False(result.IsValid);
@@ -107,10 +107,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task AlterarComDadosValidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -125,15 +125,15 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var command = new VeiculoPutCommand(idVeiculo, veiculo);
+            VeiculoPutCommand command = new VeiculoPutCommand(idVeiculo, veiculo);
 
             //Mockando retorno do serviço de domínio.
             _service.UpdateAsync(veiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var handler = new VeiculoPutHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoPutHandler handler = new VeiculoPutHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.IsValid);
@@ -145,10 +145,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, false, 3)]
         public async Task AlterarComDadosInvalidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -163,15 +163,15 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var command = new VeiculoPutCommand(idVeiculo, veiculo);
+            VeiculoPutCommand command = new VeiculoPutCommand(idVeiculo, veiculo);
 
             //Mockando retorno do serviço de domínio.
             _service.UpdateAsync(veiculo)
-                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<Veiculo>()));
+                .Returns(Task.FromResult(ModelResultFactory.NotFoundResult<VeiculoEntity>()));
 
             //Act
-            var handler = new VeiculoPutHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoPutHandler handler = new VeiculoPutHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.False(result.IsValid);
@@ -183,10 +183,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task DeletarVeiculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -200,15 +200,15 @@ namespace TestProject.UnitTest.Aplication
                 Thumb = thumb,
                 Fotos = fotos
             };
-            var command = new VeiculoDeleteCommand(idVeiculo);
+            VeiculoDeleteCommand command = new VeiculoDeleteCommand(idVeiculo);
 
             //Mockando retorno do serviço de domínio.
             _service.DeleteAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var handler = new VeiculoDeleteHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoDeleteHandler handler = new VeiculoDeleteHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.IsValid);
@@ -220,10 +220,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task PagamentoVieculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -238,10 +238,10 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
                 item.IdVeiculo = idVeiculo;
 
-            var pagamento = new VeiculoPagamento
+            VeiculoPagamentoEntity pagamento = new VeiculoPagamentoEntity
             {
                 IdVeiculo = idVeiculo,
                 Banco = "Banco do Brasil",
@@ -251,15 +251,15 @@ namespace TestProject.UnitTest.Aplication
                 ValorRecebido = 100000
             };
 
-            var command = new VeiculoPagamentoPostCommand(veiculo, pagamento);
+            VeiculoPagamentoPostCommand command = new VeiculoPagamentoPostCommand(veiculo, pagamento);
 
             //Mockando retorno do serviço de domínio.
             _service.UpdateAsync(veiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var handler = new VeiculoPagamentoPostHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoPagamentoPostHandler handler = new VeiculoPagamentoPostHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.IsValid);
@@ -271,10 +271,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task ConsultarVeiculoPorId(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -289,15 +289,15 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var command = new VeiculoFindByIdCommand(idVeiculo);
+            VeiculoFindByIdCommand command = new VeiculoFindByIdCommand(idVeiculo);
 
             //Mockando retorno do serviço de domínio.
             _service.FindByIdAsync(idVeiculo)
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var handler = new VeiculoFindByIdHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoFindByIdHandler handler = new VeiculoFindByIdHandler(_service);
+            ModelResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.IsValid);
@@ -308,21 +308,21 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
-            var command = new VeiculoGetItemsCommand(filter, sortProp, param.ConsultRule());
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
+            VeiculoGetItemsCommand command = new VeiculoGetItemsCommand(filter, sortProp, param.ConsultRule());
 
             //Mockando retorno do serviço de domínio.
-            _service.GetItemsAsync(Arg.Any<PagingQueryParam<Veiculo>>(),
-                Arg.Any<Expression<Func<Veiculo, bool>>>(),
-                Arg.Any<Expression<Func<Veiculo, object>>>())
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+            _service.GetItemsAsync(Arg.Any<PagingQueryParam<VeiculoEntity>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, bool>>>(),
+                Arg.Any<Expression<Func<VeiculoEntity, object>>>())
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var handler = new VeiculoGetItemsHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoGetItemsHandler handler = new VeiculoGetItemsHandler(_service);
+            PagingQueryResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -334,18 +334,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var command = new VeiculoGetItemsCommand(filter, sortProp);
+            VeiculoGetItemsCommand command = new VeiculoGetItemsCommand(filter, sortProp);
 
             //Mockando retorno do serviço de domínio.
             _service.GetItemsAsync(filter, sortProp)
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var handler = new VeiculoGetItemsHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoGetItemsHandler handler = new VeiculoGetItemsHandler(_service);
+            PagingQueryResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -356,18 +356,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarVeiculosAVenda(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ListarVeiculosAVenda(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var command = new VeiculoGetVehiclesForSaleCommand(filter);
+            VeiculoGetVehiclesForSaleCommand command = new VeiculoGetVehiclesForSaleCommand(filter);
 
             //Mockando retorno do serviço de domínio.
             _service.GetVehiclesForSaleAsync(filter)
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var handler = new VeiculoGetVehiclesForSaleHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoGetVehiclesForSaleHandler handler = new VeiculoGetVehiclesForSaleHandler(_service);
+            PagingQueryResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -378,18 +378,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarVeiculosVendidos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ListarVeiculosVendidos(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var command = new VeiculoGetVehiclesSoldCommand(filter);
+            VeiculoGetVehiclesSoldCommand command = new VeiculoGetVehiclesSoldCommand(filter);
 
             //Mockando retorno do serviço de domínio.
             _service.GetVehiclesSoldAsync(filter)
-                .Returns(new ValueTask<PagingQueryResult<Veiculo>>(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos))));
+                .Returns(new ValueTask<PagingQueryResult<VeiculoEntity>>(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos))));
 
             //Act
-            var handler = new VeiculoGetVehiclesSoldHandler(_service);
-            var result = await handler.Handle(command, CancellationToken.None);
+            VeiculoGetVehiclesSoldHandler handler = new VeiculoGetVehiclesSoldHandler(_service);
+            PagingQueryResult<VeiculoEntity> result = await handler.Handle(command, CancellationToken.None);
 
             //Assert
             Assert.True(result.Content.Any());

@@ -1,6 +1,4 @@
-﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +11,7 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
     /// Controller dos Pagamentos dos Veiculos cadastrados
     /// </summary>
     [Route("api/[Controller]")]
-    public class WebhookController : ApiController<VeiculoPagamento>
+    public class WebhookController : ApiController<VeiculoPagamentoEntity>
     {
         private readonly IVeiculoController _controller;
 
@@ -33,9 +31,9 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Pagamento Veiculo inserido com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para inserção do Veiculo.</response>
         [HttpPost("veiculo/pagamento")]
-        [ProducesResponseType(typeof(ModelResult<VeiculoPagamento>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoPagamentoEntity>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Post(VeiculoPagamento model)
+        public async Task<IActionResult> Post(VeiculoPagamentoEntity model)
         {
             return ExecuteCommand(await _controller.PostPagamentoAsync(model));
         }

@@ -4,9 +4,9 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoPutCommand : IRequest<ModelResult<Veiculo>>
+    public class VeiculoPutCommand : IRequest<ModelResult<VeiculoEntity>>
     {
-        public VeiculoPutCommand(Guid id, Veiculo entity,
+        public VeiculoPutCommand(Guid id, VeiculoEntity entity,
             string[]? businessRules = null)
         {
             Id = id;
@@ -15,7 +15,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
         }
 
         public Guid Id { get; private set; }
-        public Veiculo Entity { get; private set; }
+        public VeiculoEntity Entity { get; private set; }
         public string[]? BusinessRules { get; private set; }
     }
 }

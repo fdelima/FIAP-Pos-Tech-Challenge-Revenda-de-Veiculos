@@ -31,10 +31,10 @@ namespace TestProject.IntegrationTest.External
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
         public async void InserirComDadosValidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Marca = marca,
@@ -49,15 +49,15 @@ namespace TestProject.IntegrationTest.External
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
             {
                 item.IdVeiculoFoto = Guid.NewGuid();
                 item.IdVeiculo = veiculo.IdVeiculo;
             }
 
             //Act
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
-            var result = await _veiculoGateway.InsertAsync(veiculo);
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
+            VeiculoEntity result = await _veiculoGateway.InsertAsync(veiculo);
 
             //Assert
             try
@@ -77,10 +77,10 @@ namespace TestProject.IntegrationTest.External
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
         public async Task InserirComDadosInvalidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Marca = marca,
@@ -95,15 +95,15 @@ namespace TestProject.IntegrationTest.External
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
             {
                 item.IdVeiculoFoto = Guid.NewGuid();
                 item.IdVeiculo = veiculo.IdVeiculo;
             }
 
             //Act
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
-            var result = await _veiculoGateway.InsertAsync(veiculo);
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
+            VeiculoEntity result = await _veiculoGateway.InsertAsync(veiculo);
 
             //Assert
             try
@@ -124,10 +124,10 @@ namespace TestProject.IntegrationTest.External
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async void AlterarComDadosValidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -142,20 +142,20 @@ namespace TestProject.IntegrationTest.External
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
             {
                 item.IdVeiculoFoto = Guid.NewGuid();
                 item.IdVeiculo = veiculo.IdVeiculo;
             }
 
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
-            var result = await _veiculoGateway.InsertAsync(veiculo);
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
+            VeiculoEntity result = await _veiculoGateway.InsertAsync(veiculo);
             await _veiculoGateway.CommitAsync();
 
             //Alterando
             veiculo.Preco = veiculo.Preco * 1.58m;
 
-            var dbEntity = await _veiculoGateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == veiculo.IdVeiculo);
+            VeiculoEntity? dbEntity = await _veiculoGateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == veiculo.IdVeiculo);
 
             //Act
             await _veiculoGateway.UpdateAsync(dbEntity, veiculo);
@@ -182,10 +182,10 @@ namespace TestProject.IntegrationTest.External
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async void AlterarComDadosInvalidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -200,14 +200,14 @@ namespace TestProject.IntegrationTest.External
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
             {
                 item.IdVeiculoFoto = Guid.NewGuid();
                 item.IdVeiculo = veiculo.IdVeiculo;
             }
 
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
-            var result = await _veiculoGateway.InsertAsync(veiculo);
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
+            VeiculoEntity result = await _veiculoGateway.InsertAsync(veiculo);
             await _veiculoGateway.CommitAsync();
 
             //Alterando
@@ -215,7 +215,7 @@ namespace TestProject.IntegrationTest.External
             veiculo.Placa = null;
             veiculo.Renavam = null;
 
-            var dbEntity = await _veiculoGateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == veiculo.IdVeiculo);
+            VeiculoEntity? dbEntity = await _veiculoGateway.FirstOrDefaultWithIncludeAsync(x => x.Fotos, x => x.IdVeiculo == veiculo.IdVeiculo);
 
             //Act
             await _veiculoGateway.UpdateAsync(dbEntity, veiculo);
@@ -243,10 +243,10 @@ namespace TestProject.IntegrationTest.External
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 1)]
         public async void DeletarVeiculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -261,13 +261,13 @@ namespace TestProject.IntegrationTest.External
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
             {
                 item.IdVeiculoFoto = Guid.NewGuid();
                 item.IdVeiculo = veiculo.IdVeiculo;
             }
 
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
             await _veiculoGateway.InsertAsync(veiculo);
             await _veiculoGateway.CommitAsync();
 
@@ -296,10 +296,10 @@ namespace TestProject.IntegrationTest.External
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 1)]
         public async void ConsultarVeiculoPorId(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -314,18 +314,18 @@ namespace TestProject.IntegrationTest.External
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
             {
                 item.IdVeiculoFoto = Guid.NewGuid();
                 item.IdVeiculo = veiculo.IdVeiculo;
             }
 
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
             await _veiculoGateway.InsertAsync(veiculo);
             await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _veiculoGateway.FindByIdAsync(idVeiculo);
+            VeiculoEntity? result = await _veiculoGateway.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.True(result != null);
@@ -336,13 +336,13 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculo(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> Veiculos)
+        public async Task ConsultarVeiculo(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> Veiculos)
         {
             ///Arrange
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
 
             //Act
-            var result = await _veiculoGateway.GetItemsAsync(filter, sortProp);
+            PagingQueryResult<VeiculoEntity> result = await _veiculoGateway.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -353,18 +353,18 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
 
             await _veiculoGateway.InsertRangeAsync(veiculos);
             await _veiculoGateway.CommitAsync();
 
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10, ObjFilter = veiculos.ElementAt(0) };
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10, ObjFilter = veiculos.ElementAt(0) };
 
             //Act
-            var result = await _veiculoGateway.GetItemsAsync(filter, param.ConsultRule(), sortProp);
+            PagingQueryResult<VeiculoEntity> result = await _veiculoGateway.GetItemsAsync(filter, param.ConsultRule(), sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -375,16 +375,16 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
 
             await _veiculoGateway.InsertRangeAsync(veiculos);
             await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _veiculoGateway.GetItemsAsync(filter, sortProp);
+            PagingQueryResult<VeiculoEntity> result = await _veiculoGateway.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -395,16 +395,16 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarVeiculosAVenda(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ListarVeiculosAVenda(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
 
             await _veiculoGateway.InsertRangeAsync(veiculos);
             await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _veiculoGateway.GetItemsAsync(filter, x => x.Status == enmVeiculoStatus.VITRINE.ToString(), o => o.Preco);
+            PagingQueryResult<VeiculoEntity> result = await _veiculoGateway.GetItemsAsync(filter, x => x.Status == enmVeiculoStatus.VITRINE.ToString(), o => o.Preco);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -415,16 +415,16 @@ namespace TestProject.IntegrationTest.External
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarVeiculosVendidos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ListarVeiculosVendidos(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var _veiculoGateway = new BaseGateway<Veiculo>(_sqlserverTest.GetDbContext());
+            BaseGateway<VeiculoEntity> _veiculoGateway = new BaseGateway<VeiculoEntity>(_sqlserverTest.GetDbContext());
 
             await _veiculoGateway.InsertRangeAsync(veiculos);
             await _veiculoGateway.CommitAsync();
 
             //Act
-            var result = await _veiculoGateway.GetItemsAsync(filter, x => x.Status == enmVeiculoStatus.VENDIDO.ToString(), o => o.Preco);
+            PagingQueryResult<VeiculoEntity> result = await _veiculoGateway.GetItemsAsync(filter, x => x.Status == enmVeiculoStatus.VENDIDO.ToString(), o => o.Preco);
 
             //Assert
             Assert.True(result.Content.Any());

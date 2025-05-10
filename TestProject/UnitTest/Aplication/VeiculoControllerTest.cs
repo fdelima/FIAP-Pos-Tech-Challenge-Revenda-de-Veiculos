@@ -21,8 +21,8 @@ namespace TestProject.UnitTest.Aplication
     public partial class VeiculoControllerTest
     {
         private readonly IMediator _mediator;
-        private readonly IValidator<Veiculo> _validator;
-        private readonly IValidator<VeiculoPagamento> _PagamentoValidator;
+        private readonly IValidator<VeiculoEntity> _validator;
+        private readonly IValidator<VeiculoPagamentoEntity> _PagamentoValidator;
 
         /// <summary>
         /// Construtor da classe de teste.
@@ -40,10 +40,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, true, 3)]
         public async Task InserirComDadosValidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Marca = marca,
@@ -58,17 +58,17 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
                 item.IdVeiculo = veiculo.IdVeiculo;
 
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoPostCommand>())
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var result = await aplicationController.PostAsync(veiculo);
+            ModelResult<VeiculoEntity> result = await aplicationController.PostAsync(veiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -80,10 +80,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Inclusao, false, 3)]
         public async Task InserirComDadosInvalidos(string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 Marca = marca,
                 Modelo = modelo,
@@ -97,10 +97,10 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
-            var result = await aplicationController.PostAsync(veiculo);
+            ModelResult<VeiculoEntity> result = await aplicationController.PostAsync(veiculo);
 
             //Assert
             Assert.False(result.IsValid);
@@ -113,10 +113,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task AlterarComDadosValidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -131,17 +131,17 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
                 item.IdVeiculo = idVeiculo;
 
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoPutCommand>())
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var result = await aplicationController.PutAsync(idVeiculo, veiculo);
+            ModelResult<VeiculoEntity> result = await aplicationController.PutAsync(idVeiculo, veiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -153,10 +153,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, false, 3)]
         public async Task AlterarComDadosInvalidos(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -171,10 +171,10 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
-            var result = await aplicationController.PutAsync(idVeiculo, veiculo);
+            ModelResult<VeiculoEntity> result = await aplicationController.PutAsync(idVeiculo, veiculo);
 
             //Assert
             Assert.False(result.IsValid);
@@ -186,10 +186,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task DeletarVeiculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -204,14 +204,14 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoDeleteCommand>())
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var result = await aplicationController.DeleteAsync(idVeiculo);
+            ModelResult<VeiculoEntity> result = await aplicationController.DeleteAsync(idVeiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -223,10 +223,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task PagamentoVieculo(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -241,10 +241,10 @@ namespace TestProject.UnitTest.Aplication
                 Fotos = fotos
             };
 
-            foreach (var item in fotos)
+            foreach (VeiculoFotoEntity item in fotos)
                 item.IdVeiculo = idVeiculo;
 
-            var pagamento = new VeiculoPagamento
+            VeiculoPagamentoEntity pagamento = new VeiculoPagamentoEntity
             {
                 IdVeiculo = idVeiculo,
                 Banco = "Banco do Brasil",
@@ -254,18 +254,18 @@ namespace TestProject.UnitTest.Aplication
                 ValorRecebido = 100000
             };
 
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno da busca do veiculo.
             _mediator.Send(Arg.Any<VeiculoFindByIdCommand>())
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
-            
+
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoPagamentoPostCommand>())
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var result = await aplicationController.PostPagamentoAsync(pagamento);
+            ModelResult<VeiculoPagamentoEntity> result = await aplicationController.PostPagamentoAsync(pagamento);
 
             //Assert
             Assert.True(result.IsValid);
@@ -277,10 +277,10 @@ namespace TestProject.UnitTest.Aplication
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Alteracao, true, 3)]
         public async Task ConsultarVeiculoPorId(Guid idVeiculo, string marca, string modelo, int anoFabricacao, int anoModelo,
-            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFoto> fotos)
+            string placa, string renavam, decimal preco, string status, string thumb, ICollection<VeiculoFotoEntity> fotos)
         {
             ///Arrange
-            var veiculo = new Veiculo
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = idVeiculo,
                 Marca = marca,
@@ -294,14 +294,14 @@ namespace TestProject.UnitTest.Aplication
                 Thumb = thumb,
                 Fotos = fotos
             };
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoFindByIdCommand>())
                 .Returns(Task.FromResult(ModelResultFactory.SucessResult(veiculo)));
 
             //Act
-            var result = await aplicationController.FindByIdAsync(idVeiculo);
+            ModelResult<VeiculoEntity> result = await aplicationController.FindByIdAsync(idVeiculo);
 
             //Assert
             Assert.True(result.IsValid);
@@ -312,18 +312,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoComCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoGetItemsCommand>())
-                .Returns(Task.FromResult(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos), 1, 1)));
+                .Returns(Task.FromResult(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos), 1, 1)));
 
             //Act
-            var result = await aplicationController.ConsultItemsAsync(filter, param.ConsultRule(), sortProp);
+            PagingQueryResult<VeiculoEntity> result = await aplicationController.ConsultItemsAsync(filter, param.ConsultRule(), sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -334,18 +334,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoSemCondicao(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoGetItemsCommand>())
-                .Returns(Task.FromResult(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos), 1, 1)));
+                .Returns(Task.FromResult(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos), 1, 1)));
 
             //Act
-            var result = await aplicationController.GetItemsAsync(filter, sortProp);
+            PagingQueryResult<VeiculoEntity> result = await aplicationController.GetItemsAsync(filter, sortProp);
 
             //Assert
             Assert.True(result.Content.Any());
@@ -356,18 +356,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, false, 10)]
-        public async Task ConsultarVeiculoComCondicaoInvalidos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoComCondicaoInvalidos(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
 
             filter = null;
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
             try
             {
-                var result = await aplicationController.ConsultItemsAsync(filter, param.ConsultRule(), sortProp);
+                PagingQueryResult<VeiculoEntity> result = await aplicationController.ConsultItemsAsync(filter, param.ConsultRule(), sortProp);
             }
             catch (Exception ex)
             {
@@ -381,17 +381,17 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, false, 10)]
-        public async Task ConsultarVeiculoSemCondicaoInvalidos(IPagingQueryParam filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ConsultarVeiculoSemCondicaoInvalidos(IPagingQueryParam filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
 
             filter = null;
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
 
             //Act
             try
             {
-                var result = await aplicationController.GetItemsAsync(filter, sortProp);
+                PagingQueryResult<VeiculoEntity> result = await aplicationController.GetItemsAsync(filter, sortProp);
             }
             catch (Exception ex)
             {
@@ -406,18 +406,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarVeiculosAVenda(PagingQueryParam<Veiculo> filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ListarVeiculosAVenda(PagingQueryParam<VeiculoEntity> filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoGetVehiclesForSaleCommand>())
-                .Returns(Task.FromResult(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos), 1, 1)));
+                .Returns(Task.FromResult(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos), 1, 1)));
 
             //Act
-            var result = await aplicationController.GetVehiclesForSaleAsync(filter);
+            PagingQueryResult<VeiculoModel> result = await aplicationController.GetVehiclesForSaleAsync(filter);
 
             //Assert
             Assert.Contains(result.Content, x => x.Status.Equals(enmVeiculoStatus.VITRINE.ToString()));
@@ -428,18 +428,18 @@ namespace TestProject.UnitTest.Aplication
         /// </summary>
         [Theory]
         [MemberData(nameof(ObterDados), enmTipo.Consulta, true, 3)]
-        public async Task ListarVeiculosVendidos(PagingQueryParam<Veiculo> filter, Expression<Func<Veiculo, object>> sortProp, IEnumerable<Veiculo> veiculos)
+        public async Task ListarVeiculosVendidos(PagingQueryParam<VeiculoEntity> filter, Expression<Func<VeiculoEntity, object>> sortProp, IEnumerable<VeiculoEntity> veiculos)
         {
             ///Arrange
-            var aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
-            var param = new PagingQueryParam<Veiculo>() { CurrentPage = 1, Take = 10 };
+            VeiculoController aplicationController = new VeiculoController(_mediator, _validator, _PagamentoValidator);
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = 1, Take = 10 };
 
             //Mockando retorno do mediator.
             _mediator.Send(Arg.Any<VeiculoGetVehiclesForSaleCommand>())
-                .Returns(Task.FromResult(new PagingQueryResult<Veiculo>(new List<Veiculo>(veiculos), 1, 1)));
+                .Returns(Task.FromResult(new PagingQueryResult<VeiculoEntity>(new List<VeiculoEntity>(veiculos), 1, 1)));
 
             //Act
-            var result = await aplicationController.GetVehiclesForSaleAsync(filter);
+            PagingQueryResult<VeiculoModel> result = await aplicationController.GetVehiclesForSaleAsync(filter);
 
             //Assert
             Assert.Contains(result.Content, x => x.Status.Equals(enmVeiculoStatus.VENDIDO.ToString()));

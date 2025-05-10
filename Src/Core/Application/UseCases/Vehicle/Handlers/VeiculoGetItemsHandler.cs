@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Handlers
 {
-    public class VeiculoGetItemsHandler : IRequestHandler<VeiculoGetItemsCommand, PagingQueryResult<Veiculo>>
+    public class VeiculoGetItemsHandler : IRequestHandler<VeiculoGetItemsCommand, PagingQueryResult<VeiculoEntity>>
     {
         private readonly IVeiculoService _service;
 
@@ -15,7 +15,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
             _service = service;
         }
 
-        public async Task<PagingQueryResult<Veiculo>> Handle(VeiculoGetItemsCommand command, CancellationToken cancellationToken = default)
+        public async Task<PagingQueryResult<VeiculoEntity>> Handle(VeiculoGetItemsCommand command, CancellationToken cancellationToken = default)
         {
             if (command.Expression == null)
                 return await _service.GetItemsAsync(command.Filter, command.SortProp);

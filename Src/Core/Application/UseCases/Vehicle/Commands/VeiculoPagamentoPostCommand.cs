@@ -4,15 +4,15 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoPagamentoPostCommand : IRequest<ModelResult<Veiculo>>
+    public class VeiculoPagamentoPostCommand : IRequest<ModelResult<VeiculoEntity>>
     {
-        public VeiculoPagamentoPostCommand(Veiculo veiculo, VeiculoPagamento pagamento)
+        public VeiculoPagamentoPostCommand(VeiculoEntity veiculo, VeiculoPagamentoEntity pagamento)
         {
             Veiculo = veiculo;
             Pagamento = pagamento;
         }
 
-        public Veiculo Veiculo { get; private set; }
-        public VeiculoPagamento Pagamento { get; private set; }
+        public VeiculoEntity Veiculo { get; private set; }
+        public VeiculoPagamentoEntity Pagamento { get; private set; }
     }
 }

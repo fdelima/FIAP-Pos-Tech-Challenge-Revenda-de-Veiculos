@@ -4,7 +4,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoDeleteCommand : IRequest<ModelResult<Veiculo>>
+    public class VeiculoDeleteCommand : IRequest<ModelResult<VeiculoEntity>>
     {
         public VeiculoDeleteCommand(Guid id, string[]? businessRules = null)
         {

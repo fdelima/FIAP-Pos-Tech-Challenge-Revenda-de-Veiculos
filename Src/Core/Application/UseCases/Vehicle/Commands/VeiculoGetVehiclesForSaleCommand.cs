@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoGetVehiclesForSaleCommand : IRequest<PagingQueryResult<Veiculo>>
+    public class VeiculoGetVehiclesForSaleCommand : IRequest<PagingQueryResult<VeiculoEntity>>
     {
         public VeiculoGetVehiclesForSaleCommand(IPagingQueryParam filter)
         {

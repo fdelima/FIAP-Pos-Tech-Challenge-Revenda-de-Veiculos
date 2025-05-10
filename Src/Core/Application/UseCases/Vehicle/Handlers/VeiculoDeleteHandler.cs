@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Handlers
 {
-    public class VeiculoDeleteHandler : IRequestHandler<VeiculoDeleteCommand, ModelResult<Veiculo>>
+    public class VeiculoDeleteHandler : IRequestHandler<VeiculoDeleteCommand, ModelResult<VeiculoEntity>>
     {
         private readonly IVeiculoService _service;
 
@@ -15,7 +15,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
             _service = service;
         }
 
-        public async Task<ModelResult<Veiculo>> Handle(VeiculoDeleteCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult<VeiculoEntity>> Handle(VeiculoDeleteCommand command, CancellationToken cancellationToken = default)
         {
             return await _service.DeleteAsync(command.Id, command.BusinessRules);
         }

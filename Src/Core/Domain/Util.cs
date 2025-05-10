@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain
 {

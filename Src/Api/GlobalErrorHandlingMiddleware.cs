@@ -1,11 +1,7 @@
-﻿using Azure.Core;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages;
+﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Messages;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Text;
 using System.Text.Json;
 
 namespace FIAP.Pos.Tech.Challenge.Api
@@ -35,6 +31,10 @@ namespace FIAP.Pos.Tech.Challenge.Api
             {
                 await _next(context);
             }
+            catch (InvalidOperationException ex)
+            {
+                await HandleInvalidOperationExceptionAsync(context, ex);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, string.Concat(ex.InnerException?.Message ?? ex.Message, context.Request.Method,
@@ -46,13 +46,31 @@ namespace FIAP.Pos.Tech.Challenge.Api
             }
         }
 
+        private static Task WriteResponseAsync(HttpContext context, ModelResult<object> modelResult, int statusCode)
+        {
+            string exceptionResult = JsonSerializer.Serialize(modelResult);
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
+
+            return context.Response.WriteAsync(exceptionResult);
+        }
+
+        private static Task HandleInvalidOperationExceptionAsync(HttpContext context, InvalidOperationException ex)
+        {
+            ModelResult<object> m = ModelResultFactory.None();
+            m.AddMessage(ex.InnerException?.Message ?? ex.Message);
+            return WriteResponseAsync(context, m, (int)HttpStatusCode.BadRequest);
+        }
+
+
+
         private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             string stackTrace = (ex.StackTrace ?? "");
             stackTrace = stackTrace.Length > 200 ? stackTrace.IndexOf(" in ") > -1 ? stackTrace.Substring(0, stackTrace.IndexOf(" in ")) : stackTrace.Substring(0, 200) : stackTrace;
             stackTrace += " ...";
 
-            var m = ModelResultFactory.Error<object>(default!,
+            ModelResult<object> m = ModelResultFactory.Error<object>(default!,
                 string.Concat(context.Request.Method,
                 context.Request.IsHttps ? " https://" : " http://",
                 context.Request.Host.Value,
@@ -62,11 +80,8 @@ namespace FIAP.Pos.Tech.Challenge.Api
                 stackTrace);
             m.AddMessage(ErrorMessages.InternalServerError);
 
-            string exceptionResult = JsonSerializer.Serialize(m);
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            return WriteResponseAsync(context, m, (int)HttpStatusCode.InternalServerError);
 
-            return context.Response.WriteAsync(exceptionResult);
         }
     }
 }

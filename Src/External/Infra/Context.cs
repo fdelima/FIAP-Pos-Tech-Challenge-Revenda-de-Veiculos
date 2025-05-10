@@ -11,9 +11,9 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra
 
         #region [ DbSets ]
 
-        public virtual DbSet<Veiculo> Veiculos { get; set; }
-        public virtual DbSet<VeiculoFoto> VeiculoFotos { get; set; }
-        public virtual DbSet<VeiculoPagamento> VeiculoPagamentos { get; set; }
+        public virtual DbSet<VeiculoEntity> Veiculos { get; set; }
+        public virtual DbSet<VeiculoFotoEntity> VeiculoFotos { get; set; }
+        public virtual DbSet<VeiculoPagamentoEntity> VeiculoPagamentos { get; set; }
 
         #endregion DbSets
 

@@ -4,15 +4,15 @@ using System.Text.Json.Serialization;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
 
-public partial class VeiculoFoto : IDomainEntity
+public partial class VeiculoFotoEntity : IDomainEntity
 {
     /// <summary>
     /// Retorna a regra de validação a ser utilizada na inserção.
     /// </summary>
     public Expression<Func<IDomainEntity, bool>> InsertDuplicatedRule()
     {
-        return x => ((VeiculoFoto)x).IdVeiculo.Equals(IdVeiculo) &&
-                    ((VeiculoFoto)x).Imagem.Equals(Imagem);
+        return x => ((VeiculoFotoEntity)x).IdVeiculo.Equals(IdVeiculo) &&
+                    ((VeiculoFotoEntity)x).Imagem.Equals(Imagem);
     }
 
     /// <summary>
@@ -20,9 +20,9 @@ public partial class VeiculoFoto : IDomainEntity
     /// </summary>
     public Expression<Func<IDomainEntity, bool>> AlterDuplicatedRule()
     {
-        return x => !((VeiculoFoto)x).IdVeiculoFoto.Equals(IdVeiculoFoto) &&
-                    ((VeiculoFoto)x).IdVeiculo.Equals(IdVeiculo) &&
-                    ((VeiculoFoto)x).Imagem.Equals(Imagem);
+        return x => !((VeiculoFotoEntity)x).IdVeiculoFoto.Equals(IdVeiculoFoto) &&
+                    ((VeiculoFotoEntity)x).IdVeiculo.Equals(IdVeiculo) &&
+                    ((VeiculoFotoEntity)x).Imagem.Equals(Imagem);
     }
 
     public Guid IdVeiculoFoto { get; set; }
@@ -30,6 +30,6 @@ public partial class VeiculoFoto : IDomainEntity
     public required string Imagem { get; set; }
 
     [JsonIgnore]
-    public virtual Veiculo Veiculo { get; set; } = null!;
+    public virtual VeiculoEntity Veiculo { get; set; } = null!;
 
 }

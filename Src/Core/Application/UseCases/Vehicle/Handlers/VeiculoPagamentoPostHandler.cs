@@ -7,7 +7,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Handlers
 {
-    public class VeiculoPagamentoPostHandler : IRequestHandler<VeiculoPagamentoPostCommand, ModelResult<Veiculo>>
+    public class VeiculoPagamentoPostHandler : IRequestHandler<VeiculoPagamentoPostCommand, ModelResult<VeiculoEntity>>
     {
         private readonly IVeiculoService _service;
 
@@ -16,7 +16,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle
             _service = service;
         }
 
-        public async Task<ModelResult<Veiculo>> Handle(VeiculoPagamentoPostCommand command, CancellationToken cancellationToken = default)
+        public async Task<ModelResult<VeiculoEntity>> Handle(VeiculoPagamentoPostCommand command, CancellationToken cancellationToken = default)
         {
             command.Veiculo.Status = enmVeiculoStatus.VENDIDO.ToString();
             command.Veiculo.Pagamentos.Add(command.Pagamento);

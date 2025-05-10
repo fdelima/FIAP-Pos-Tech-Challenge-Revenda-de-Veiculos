@@ -1,6 +1,5 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
-using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +12,7 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
     /// Controller dos Veiculos cadastrados
     /// </summary>
     [Route("api/[Controller]")]
-    public class VeiculoController : ApiController<Veiculo>
+    public class VeiculoController : ApiController<VeiculoEntity>
     {
         private readonly IVeiculoController _controller;
 
@@ -30,10 +29,9 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<PagingQueryResult<Veiculo>> Get(int currentPage = 1, int take = 10)
+        public async Task<PagingQueryResult<VeiculoModel>> Get(int currentPage = 1, int take = 10)
         {
-            PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
-            return await _controller.GetItemsAsync(param, param.SortProp());
+            return await _controller.GetListItemsAsync(currentPage, take);
         }
 
         /// <summary>
@@ -41,9 +39,9 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// </summary>
         [HttpGet("Venda")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<PagingQueryResult<Veiculo>> GetVehiclesForSaleAsync(int currentPage = 1, int take = 10)
+        public async Task<PagingQueryResult<VeiculoModel>> GetVehiclesForSaleAsync(int currentPage = 1, int take = 10)
         {
-            PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = currentPage, Take = take };
             return await _controller.GetVehiclesForSaleAsync(param);
         }
 
@@ -52,9 +50,9 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// </summary>
         [HttpGet("Vendidos")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<PagingQueryResult<Veiculo>> GetVehiclesSoldAsync(int currentPage = 1, int take = 10)
+        public async Task<PagingQueryResult<VeiculoModel>> GetVehiclesSoldAsync(int currentPage = 1, int take = 10)
         {
-            PagingQueryParam<Veiculo> param = new PagingQueryParam<Veiculo>() { CurrentPage = currentPage, Take = take };
+            PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>() { CurrentPage = currentPage, Take = take };
             return await _controller.GetVehiclesSoldAsync(param);
         }
 
@@ -65,8 +63,8 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo encontrada ou nulo</response>
         /// <response code="400">Erro ao recuperar Veiculo cadastrado</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> FindById(Guid id)
         {
@@ -82,9 +80,9 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="400">Erro ao recuperar listagem dos Veiculos cadastrados</response>
         [HttpPost("consult")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<PagingQueryResult<Veiculo>> Consult(PagingQueryParam<Veiculo> param)
+        public async Task<PagingQueryResult<VeiculoModel>> Consult(PagingQueryParam<VeiculoModel> param)
         {
-            return await _controller.ConsultItemsAsync(param, param.ConsultRule(), param.SortProp());
+            return await _controller.ConsultListItemsAsync(param);
         }
 
         /// <summary>
@@ -95,9 +93,9 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo inserida com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para inserção do Veiculo.</response>
         [HttpPost()]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Post(Veiculo model)
+        public async Task<IActionResult> Post(VeiculoEntity model)
         {
             return ExecuteCommand(await _controller.PostAsync(model));
         }
@@ -111,10 +109,10 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo alterada com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para alteração do Veiculo.</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Put(Guid id, Veiculo model)
+        public async Task<IActionResult> Put(Guid id, VeiculoEntity model)
         {
             return ExecuteCommand(await _controller.PutAsync(id, model));
         }
@@ -127,8 +125,8 @@ namespace FIAP.Pos.Tech.Challenge.Api.Controllers
         /// <response code="200">Veiculo deletada com sucesso.</response>
         /// <response code="400">Erros de validação dos parâmetros para deleção do Veiculo.</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(ModelResult<Veiculo>), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ModelResult<VeiculoEntity>), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> Delete(Guid id)
         {

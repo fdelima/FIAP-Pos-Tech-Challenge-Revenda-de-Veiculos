@@ -33,21 +33,21 @@ namespace TestProject.UnitTest.Domain
             Type[] result = Util.GetTypesInNamespace(valor);
 
             //Assert
-            Assert.Contains(typeof(Veiculo), result);
-            Assert.Contains(typeof(VeiculoFoto), result);
+            Assert.Contains(typeof(VeiculoEntity), result);
+            Assert.Contains(typeof(VeiculoFotoEntity), result);
         }
 
         [Fact]
         public void DuplicatedResultTest()
         {
             //Arrange
-            var veiculo = new Veiculo { Marca = "FIAP", Modelo = "Teste", AnoFabricacao = 2023, AnoModelo = 2023, Placa = "ABC1234", Renavam = "12345678901234567", Preco = 100000, Status = enmVeiculoStatus.VITRINE.ToString() };
-            
+            VeiculoEntity veiculo = new VeiculoEntity { Marca = "FIAP", Modelo = "Teste", AnoFabricacao = 2023, AnoModelo = 2023, Placa = "ABC1234", Renavam = "12345678901234567", Preco = 100000, Status = enmVeiculoStatus.VITRINE.ToString() };
+
             //Act
-            var resut = ModelResultFactory.DuplicatedResult(veiculo);
+            ModelResult<VeiculoEntity> resut = ModelResultFactory.DuplicatedResult(veiculo);
 
             //Assert
-            Assert.Contains(BusinessMessages.DuplicatedError<Veiculo>(), resut.ListErrors());
+            Assert.Contains(BusinessMessages.DuplicatedError<VeiculoEntity>(), resut.ListErrors());
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace TestProject.UnitTest.Domain
         {
             //Arrange
             //Act
-            var resut = ModelResultFactory.None();
+            ModelResult<object> resut = ModelResultFactory.None();
 
             //Assert
             Assert.True(resut.ListErrors().Count() == 0);

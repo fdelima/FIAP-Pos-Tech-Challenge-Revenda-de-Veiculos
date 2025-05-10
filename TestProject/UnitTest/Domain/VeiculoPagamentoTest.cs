@@ -8,10 +8,10 @@ namespace TestProject.UnitTest.Domain
         public void InsertDuplicatedRule_SameVeiculoIdValorCpfCnpj_ReturnsTrue()
         {
             // Arrange  
-            var veiculoId = Guid.NewGuid();
-            var valor = 1000.00m;
-            var cpfCnpj = "123.456.789-00";
-            var pagamento1 = new VeiculoPagamento
+            Guid veiculoId = Guid.NewGuid();
+            decimal valor = 1000.00m;
+            string cpfCnpj = "123.456.789-00";
+            VeiculoPagamentoEntity pagamento1 = new VeiculoPagamentoEntity
             {
                 IdVeiculo = veiculoId,
                 ValorRecebido = valor,
@@ -19,7 +19,7 @@ namespace TestProject.UnitTest.Domain
                 Banco = "Banco Itaú", // Fix for CS9035  
                 Conta = "12345-6"     // Fix for CS9035  
             };
-            var pagamento2 = new VeiculoPagamento
+            VeiculoPagamentoEntity pagamento2 = new VeiculoPagamentoEntity
             {
                 IdVeiculo = veiculoId,
                 ValorRecebido = valor,
@@ -29,8 +29,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act  
-            var rule = pagamento1.InsertDuplicatedRule().Compile();
-            var isDuplicated = rule(pagamento2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = pagamento1.InsertDuplicatedRule().Compile();
+            bool isDuplicated = rule(pagamento2);
 
             // Assert  
             Assert.True(isDuplicated);
@@ -40,9 +40,9 @@ namespace TestProject.UnitTest.Domain
         public void InsertDuplicatedRule_DifferentVeiculoId_ReturnsFalse()
         {
             // Arrange  
-            var valor = 1000.00m;
-            var cpfCnpj = "123.456.789-00";
-            var pagamento1 = new VeiculoPagamento
+            decimal valor = 1000.00m;
+            string cpfCnpj = "123.456.789-00";
+            VeiculoPagamentoEntity pagamento1 = new VeiculoPagamentoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 ValorRecebido = valor,
@@ -50,7 +50,7 @@ namespace TestProject.UnitTest.Domain
                 Banco = "Banco Itaú", // Fix for CS9035  
                 Conta = "12345-6"     // Fix for CS9035  
             };
-            var pagamento2 = new VeiculoPagamento
+            VeiculoPagamentoEntity pagamento2 = new VeiculoPagamentoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 ValorRecebido = valor,
@@ -60,8 +60,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act  
-            var rule = pagamento1.InsertDuplicatedRule().Compile();
-            var isDuplicated = rule(pagamento2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = pagamento1.InsertDuplicatedRule().Compile();
+            bool isDuplicated = rule(pagamento2);
 
             // Assert  
             Assert.False(isDuplicated);
@@ -71,10 +71,10 @@ namespace TestProject.UnitTest.Domain
         public void AlterDuplicatedRule_SameVeiculoIdValorCpfCnpj_ReturnsTrue()
         {
             // Arrange  
-            var veiculoId = Guid.NewGuid();
-            var valor = 1000.00m;
-            var cpfCnpj = "123.456.789-00";
-            var pagamento1 = new VeiculoPagamento
+            Guid veiculoId = Guid.NewGuid();
+            decimal valor = 1000.00m;
+            string cpfCnpj = "123.456.789-00";
+            VeiculoPagamentoEntity pagamento1 = new VeiculoPagamentoEntity
             {
                 IdVeiculoPagamento = Guid.NewGuid(),
                 IdVeiculo = veiculoId,
@@ -83,7 +83,7 @@ namespace TestProject.UnitTest.Domain
                 Banco = "Banco Itaú", // Fix for CS9035  
                 Conta = "12345-6"     // Fix for CS9035  
             };
-            var pagamento2 = new VeiculoPagamento
+            VeiculoPagamentoEntity pagamento2 = new VeiculoPagamentoEntity
             {
                 IdVeiculoPagamento = Guid.NewGuid(),
                 IdVeiculo = veiculoId,
@@ -94,8 +94,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act  
-            var rule = pagamento1.AlterDuplicatedRule().Compile();
-            var isDuplicated = rule(pagamento2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = pagamento1.AlterDuplicatedRule().Compile();
+            bool isDuplicated = rule(pagamento2);
 
             // Assert  
             Assert.True(isDuplicated);
@@ -105,9 +105,9 @@ namespace TestProject.UnitTest.Domain
         public void AlterDuplicatedRule_DifferentVeiculoId_ReturnsFalse()
         {
             // Arrange  
-            var valor = 1000.00m;
-            var cpfCnpj = "123.456.789-00";
-            var pagamento1 = new VeiculoPagamento
+            decimal valor = 1000.00m;
+            string cpfCnpj = "123.456.789-00";
+            VeiculoPagamentoEntity pagamento1 = new VeiculoPagamentoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 ValorRecebido = valor,
@@ -115,7 +115,7 @@ namespace TestProject.UnitTest.Domain
                 Banco = "Banco Itaú", // Fix for CS9035  
                 Conta = "12345-6"     // Fix for CS9035  
             };
-            var pagamento2 = new VeiculoPagamento
+            VeiculoPagamentoEntity pagamento2 = new VeiculoPagamentoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 ValorRecebido = valor,
@@ -125,8 +125,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act  
-            var rule = pagamento1.AlterDuplicatedRule().Compile();
-            var isDuplicated = rule(pagamento2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = pagamento1.AlterDuplicatedRule().Compile();
+            bool isDuplicated = rule(pagamento2);
 
             // Assert  
             Assert.False(isDuplicated);
@@ -135,10 +135,10 @@ namespace TestProject.UnitTest.Domain
         public void Entity_PropertiesAreSetCorrectly()
         {
             // Arrange
-            var id = Guid.NewGuid();
-            var idVeiculo = Guid.NewGuid();
-            var data = DateTime.Now;
-            var veiculo = new VeiculoPagamento
+            Guid id = Guid.NewGuid();
+            Guid idVeiculo = Guid.NewGuid();
+            DateTime data = DateTime.Now;
+            VeiculoPagamentoEntity veiculo = new VeiculoPagamentoEntity
             {
                 IdVeiculoPagamento = id,
                 IdVeiculo = idVeiculo,

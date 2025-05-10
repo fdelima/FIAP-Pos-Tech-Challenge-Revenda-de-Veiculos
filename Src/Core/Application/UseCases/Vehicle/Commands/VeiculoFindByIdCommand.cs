@@ -4,7 +4,7 @@ using MediatR;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.UseCases.Vehicle.Commands
 {
-    public class VeiculoFindByIdCommand : IRequest<ModelResult<Veiculo>>
+    public class VeiculoFindByIdCommand : IRequest<ModelResult<VeiculoEntity>>
     {
         public VeiculoFindByIdCommand(Guid id)
         {

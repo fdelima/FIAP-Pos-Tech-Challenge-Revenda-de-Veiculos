@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Infra.Mappings;
 
-internal class VeiculoMap : IEntityTypeConfiguration<Veiculo>
+internal class VeiculoMap : IEntityTypeConfiguration<VeiculoEntity>
 {
-    public void Configure(EntityTypeBuilder<Veiculo> builder)
+    public void Configure(EntityTypeBuilder<VeiculoEntity> builder)
     {
         builder.HasKey(e => e.IdVeiculo);
 

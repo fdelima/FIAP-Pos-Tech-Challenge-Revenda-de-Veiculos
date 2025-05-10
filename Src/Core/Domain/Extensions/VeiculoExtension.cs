@@ -11,7 +11,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions
         /// <summary>
         /// Retorna a regra de validação a ser utilizada na atualização.
         /// </summary>
-        public static Expression<Func<Veiculo, bool>> ConsultRule(this PagingQueryParam<Veiculo> param)
+        public static Expression<Func<VeiculoEntity, bool>> ConsultRule(this PagingQueryParam<VeiculoEntity> param)
         {
             return x => (x.IdVeiculo.Equals(param.ObjFilter.IdVeiculo) || param.ObjFilter.IdVeiculo.Equals(default)) &&
                         (x.Marca.Equals(param.ObjFilter.Marca) || string.IsNullOrWhiteSpace(param.ObjFilter.Marca)) &&
@@ -27,7 +27,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Extensions
         /// <summary>
         /// Retorna a propriedade a ser ordenada
         /// </summary>
-        public static Expression<Func<Veiculo, object>> SortProp(this PagingQueryParam<Veiculo> param)
+        public static Expression<Func<VeiculoEntity, object>> SortProp(this PagingQueryParam<VeiculoEntity> param)
         {
             switch (param?.SortProperty?.ToLower())
             {

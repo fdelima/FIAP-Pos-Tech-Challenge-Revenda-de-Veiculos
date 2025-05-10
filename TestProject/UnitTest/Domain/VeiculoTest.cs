@@ -8,7 +8,7 @@ namespace TestProject.UnitTest.Domain
         public void InsertDuplicatedRule_SameRenavam_ReturnsTrue()
         {
             // Arrange
-            var veiculo1 = new Veiculo
+            VeiculoEntity veiculo1 = new VeiculoEntity
             {
                 Renavam = "ABC123456789",
                 Marca = "Fiat",
@@ -16,7 +16,7 @@ namespace TestProject.UnitTest.Domain
                 Placa = "XYZ-9876",
                 Status = "Disponível"
             };
-            var veiculo2 = new Veiculo
+            VeiculoEntity veiculo2 = new VeiculoEntity
             {
                 Renavam = "ABC123456789",
                 Marca = "Fiat",
@@ -26,8 +26,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act
-            var rule = veiculo1.InsertDuplicatedRule().Compile();
-            var isDuplicated = rule(veiculo2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = veiculo1.InsertDuplicatedRule().Compile();
+            bool isDuplicated = rule(veiculo2);
 
             // Assert
             Assert.True(isDuplicated);
@@ -37,7 +37,7 @@ namespace TestProject.UnitTest.Domain
         public void InsertDuplicatedRule_DifferentRenavam_ReturnsFalse()
         {
             // Arrange
-            var veiculo1 = new Veiculo
+            VeiculoEntity veiculo1 = new VeiculoEntity
             {
                 Renavam = "ABC123456789",
                 Marca = "Fiat",
@@ -45,7 +45,7 @@ namespace TestProject.UnitTest.Domain
                 Placa = "XYZ-9876",
                 Status = "Disponível"
             };
-            var veiculo2 = new Veiculo
+            VeiculoEntity veiculo2 = new VeiculoEntity
             {
                 Renavam = "XYZ987654321",
                 Marca = "Fiat",
@@ -55,8 +55,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act
-            var rule = veiculo1.InsertDuplicatedRule().Compile();
-            var isDuplicated = rule(veiculo2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = veiculo1.InsertDuplicatedRule().Compile();
+            bool isDuplicated = rule(veiculo2);
 
             // Assert
             Assert.False(isDuplicated);
@@ -66,7 +66,7 @@ namespace TestProject.UnitTest.Domain
         public void AlterDuplicatedRule_DifferentIdSameRenavam_ReturnsTrue()
         {
             // Arrange
-            var veiculo1 = new Veiculo
+            VeiculoEntity veiculo1 = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Renavam = "ABC123456789",
@@ -75,7 +75,7 @@ namespace TestProject.UnitTest.Domain
                 Placa = "XYZ-9876",
                 Status = "Disponível"
             };
-            var veiculo2 = new Veiculo
+            VeiculoEntity veiculo2 = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Renavam = "ABC123456789",
@@ -86,8 +86,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act
-            var rule = veiculo1.AlterDuplicatedRule().Compile();
-            var isDuplicated = rule(veiculo2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = veiculo1.AlterDuplicatedRule().Compile();
+            bool isDuplicated = rule(veiculo2);
 
             // Assert
             Assert.True(isDuplicated);
@@ -97,7 +97,7 @@ namespace TestProject.UnitTest.Domain
         public void AlterDuplicatedRule_SameIdSameRenavam_ReturnsFalse()
         {
             // Arrange
-            var veiculo1 = new Veiculo
+            VeiculoEntity veiculo1 = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Renavam = "ABC123456789",
@@ -106,7 +106,7 @@ namespace TestProject.UnitTest.Domain
                 Placa = "XYZ-9876",
                 Status = "Disponível"
             };
-            var veiculo2 = new Veiculo
+            VeiculoEntity veiculo2 = new VeiculoEntity
             {
                 IdVeiculo = veiculo1.IdVeiculo,
                 Renavam = "ABC123456789",
@@ -117,8 +117,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act
-            var rule = veiculo1.AlterDuplicatedRule().Compile();
-            var isDuplicated = rule(veiculo2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = veiculo1.AlterDuplicatedRule().Compile();
+            bool isDuplicated = rule(veiculo2);
 
             // Assert
             Assert.False(isDuplicated);
@@ -128,7 +128,7 @@ namespace TestProject.UnitTest.Domain
         public void AlterDuplicatedRule_DifferentIdDifferentRenavam_ReturnsFalse()
         {
             // Arrange
-            var veiculo1 = new Veiculo
+            VeiculoEntity veiculo1 = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Renavam = "ABC123456789",
@@ -137,7 +137,7 @@ namespace TestProject.UnitTest.Domain
                 Placa = "XYZ-9876",
                 Status = "Disponível"
             };
-            var veiculo2 = new Veiculo
+            VeiculoEntity veiculo2 = new VeiculoEntity
             {
                 IdVeiculo = Guid.NewGuid(),
                 Renavam = "XYZ987654321",
@@ -148,8 +148,8 @@ namespace TestProject.UnitTest.Domain
             };
 
             // Act
-            var rule = veiculo1.AlterDuplicatedRule().Compile();
-            var isDuplicated = rule(veiculo2);
+            Func<FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces.IDomainEntity, bool> rule = veiculo1.AlterDuplicatedRule().Compile();
+            bool isDuplicated = rule(veiculo2);
 
             // Assert
             Assert.False(isDuplicated);
@@ -159,8 +159,8 @@ namespace TestProject.UnitTest.Domain
         public void Entity_PropertiesAreSetCorrectly()
         {
             // Arrange
-            var id = Guid.NewGuid();
-            var veiculo = new Veiculo
+            Guid id = Guid.NewGuid();
+            VeiculoEntity veiculo = new VeiculoEntity
             {
                 IdVeiculo = id,
                 Marca = "Fiat",

@@ -7,7 +7,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Validator
     /// <summary>
     /// Regras de validação da model
     /// </summary>
-    public class VeiculoFotoValidator : AbstractValidator<VeiculoFoto>
+    public class VeiculoFotoValidator : AbstractValidator<VeiculoFotoEntity>
     {
         /// <summary>
         /// Contrutor das regras de validação da model
