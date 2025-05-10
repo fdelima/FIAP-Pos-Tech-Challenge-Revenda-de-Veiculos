@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mssqltools-revendadeveiculos-pod
+  labels:
+    apps: mssqltools-revendadeveiculos
+spec:
+  containers:
+    - name: mssqltools-revendadeveiculos-container
+      env:
+        - name: MSSQL_INSTANCE
+          valueFrom:
+            configMapKeyRef:
+              name: sqlserver-revendadeveiculos-configmap
+              key: MSSQL_INSTANCE
+        - name: MSSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sqlserver-revendadeveiculos-secrets
+              key: MSSQL_USER
+        - name: MSSQL_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqlserver-revendadeveiculos-secrets
+              key: MSSQL_USER_PASSWORD
+      image: fdelima/fiap-pos-techchallenge-revendadeveiculos-scripts-database:fase2
+  restartPolicy: Never

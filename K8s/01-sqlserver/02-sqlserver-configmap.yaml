@@ -5,3 +5,4 @@ metadata:
 data:
   ACCEPT_EULA: "Y"
   MSSQL_PID: Developer
+  MSSQL_INSTANCE: sqlserver-revendadeveiculos
