@@ -15,7 +15,7 @@ spec:
         apps: sqlserver-revendadeveiculos
     spec:      
       containers:
-        - name: sqlserver-revendadeveiculos
+        - name: sqlserver-revendadeveiculos-container
           env:
             - name: ACCEPT_EULA
               valueFrom:
@@ -27,7 +27,7 @@ spec:
                 configMapKeyRef:
                   name: sqlserver-revendadeveiculos-configmap
                   key: MSSQL_PID
-            - name: MSSQL_USER_PASSWORD
+            - name: SA_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: sqlserver-revendadeveiculos-secrets

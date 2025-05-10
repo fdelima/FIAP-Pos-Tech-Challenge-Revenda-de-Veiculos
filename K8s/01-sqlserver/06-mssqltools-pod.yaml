@@ -8,17 +8,17 @@ spec:
   containers:
     - name: mssqltools-revendadeveiculos-container
       env:
-        - name: MSSQL_INSTANCE
+        - name: INSTANCE
           valueFrom:
             configMapKeyRef:
               name: sqlserver-revendadeveiculos-configmap
               key: MSSQL_INSTANCE
-        - name: MSSQL_USER
+        - name: USER
           valueFrom:
             secretKeyRef:
               name: sqlserver-revendadeveiculos-secrets
               key: MSSQL_USER
-        - name: MSSQL_USER_PASSWORD
+        - name: PASSWORD
           valueFrom:
             secretKeyRef:
               name: sqlserver-revendadeveiculos-secrets
