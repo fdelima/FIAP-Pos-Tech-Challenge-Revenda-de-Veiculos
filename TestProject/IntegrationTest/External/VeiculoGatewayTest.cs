@@ -65,9 +65,10 @@ namespace TestProject.IntegrationTest.External
                 await _veiculoGateway.CommitAsync();
                 Assert.True(true);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 Assert.True(false);
+                Console.WriteLine(ex.Message);
             }
         }
 

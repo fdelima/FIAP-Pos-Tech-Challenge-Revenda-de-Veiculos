@@ -190,7 +190,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Application.Controllers
             PagingQueryParam<VeiculoEntity> param = new PagingQueryParam<VeiculoEntity>
             {
                 CurrentPage = filter.CurrentPage,
-                ObjFilter = (VeiculoEntity)filter.ObjFilter,
+                ObjFilter = new VeiculoEntity(filter.ObjFilter),
                 SortProperty = filter.SortProperty,
                 SortDirection = filter.SortDirection,
                 Take = filter.Take

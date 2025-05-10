@@ -1,4 +1,5 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Interfaces;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 
@@ -31,5 +32,5 @@ public partial class VeiculoFotoEntity : IDomainEntity
 
     [JsonIgnore]
     public virtual VeiculoEntity Veiculo { get; set; } = null!;
-
+   
 }

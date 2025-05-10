@@ -1,5 +1,6 @@
 ﻿using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Entities;
+using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Models;
 using FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.ValuesObject;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
@@ -106,7 +107,7 @@ namespace TestProject.ComponenteTest
         {
             HttpClient client = _apiTest.GetClient();
             HttpResponseMessage response = await client.PostAsJsonAsync(
-                $"api/veiculo/consult", new PagingQueryParam<VeiculoEntity> { ObjFilter = _veiculo });
+                $"api/veiculo/consult", new PagingQueryParam<VeiculoModel> { ObjFilter = (VeiculoModel)_veiculo });
 
             string responseContent = await response.Content.ReadAsStringAsync();
             dynamic actualResult = JsonConvert.DeserializeObject(responseContent);
