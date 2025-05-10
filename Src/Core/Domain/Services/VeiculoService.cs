@@ -26,7 +26,7 @@ namespace FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.Domain.Services
 
             if (veiculo == null) return ModelResultFactory.NotFoundResult<Veiculo>();
 
-            if (veiculo.Status.Equals(enmVeiculoStatus.VENDIDO))
+            if (veiculo.Status.Equals(enmVeiculoStatus.VENDIDO.ToString()))
             {
                 Veiculo? r1 = await _gateway.FirstOrDefaultWithIncludeAsync(x => x.Pagamentos, x => x.IdVeiculo == Id);
                 if (r1 != null) veiculo.Pagamentos = r1.Pagamentos;

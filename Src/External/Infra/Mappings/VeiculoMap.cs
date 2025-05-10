@@ -34,7 +34,7 @@ internal class VeiculoMap : IEntityTypeConfiguration<Veiculo>
         builder.Property(e => e.Preco)
             .HasColumnName("preco");
         builder.Property(e => e.Status)
-            .HasMaxLength(10)
+            .HasMaxLength(50)
             .HasColumnName("status");
         builder.Property(e => e.Thumb)
             .IsUnicode(false)
