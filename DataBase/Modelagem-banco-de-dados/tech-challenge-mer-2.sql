@@ -123,3 +123,10 @@ BEGIN
 	END
 END
 GO
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[veiculo_pagamento]') AND type in (N'U'))
+BEGIN
+	IF (SELECT COUNT(1) FROM [dbo].[veiculo_pagamento]) = 0
+	BEGIN
+		INSERT [dbo].[veiculo_pagamento] ([id_veiculo_pagamento], [id_veiculo], [data], [valor_recebido], [banco], [conta], [cpf_cnpj]) VALUES (N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'fbb5f7df-dc12-4471-8a3a-c51e24def4a9', CAST(N'2025-05-10T13:36:17.620' AS DateTime), CAST(35000.00 AS Decimal(18, 2)), N'itau', N'1234-123456', N'12345678909   ')
+	END
+END
