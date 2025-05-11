@@ -11,6 +11,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "8080:8080"
+
+  finish:
+    image: alpine:latest
+    depends_on:
+      - sqlserver-revendadeveiculos
+      - mssqltools-revendadeveiculos
+      - fiap.pos.tech.challenge.revendadeveiculos.api
+    command: ["sh", "-c", "sleep 25; echo 'Serviço fiap.pos.tech.challenge.revendadeveiculos.api finalizado!'; echo 'acesse http://localhost:8080/api-docs'"]
+
   sqlserver-revendadeveiculos:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:

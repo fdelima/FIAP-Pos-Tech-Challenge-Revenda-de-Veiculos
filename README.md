@@ -19,10 +19,22 @@ resolver o problema e entender o que precisa ser feito para que a solução func
 
 Outro ponto importante é fazer a documentação dos endpoints de forma adequada para que o time de frontend possa fazer a integração de forma correta. O padrão a ser usado é o OpenAPI/Swagger. 
 Além disso, como estamos com um novo time responsável pela infraestrutura, será necessário a implantação de Kubernetes. Foi solicitado que toda a descrição dos serviços a serem publicados sejam feitas neste padrão, usando deployment, configmap, secrets e services.
+        - 
+# Entregáveis 
+## 1. PDF contendo os links de acesso aos itens abaixo:  
+### 1.1 Repositório com o código-fonte do software;  
+- [Repositório :: FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos)  
 
+### 1.2 Vídeo demonstrando a solução funcionando, tanto na implementação da aplicação quanto na infraestrutura Kubernetes.  
+- xxx
+
+## 2. Conteúdo do Repositório:  
+### 2.1 Arquivo Readme.md que explique o que é o projeto, como foi implementado, como usar localmente e como testar;  
 ## Como executar no visual studio 2022
 * Certifique-se que o docker desktop esteja em execução
 * Abra a solução (FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos.sln) com o visual studio 2022
+* Com o botão direito sobre o projeto docker-compose selecione Set as Startup Project
+![Set as Startup Project](Documentacao/set-startup-project.png)
 * Start visual studio na opção docker-compose conforme imagem abaixo:
 ![image](Documentacao/VS-2022-play-docker-compose.png)
 
@@ -36,11 +48,101 @@ docker compose up
 ```
 # Navegação
 * Documentação     
-    * [http://localhost:8080/api-docs](http://localhost:8080/api-docs/index.html) 
-* Swagger    
-    * [http://localhost:8080/swagger](http://localhost:8080/swagger/index.html) 
+    * Swagger :: [http://localhost:8080/swagger](http://localhost:8080/swagger/index.html) 
+    * API docs by Redocly :: [http://localhost:8080/api-docs](http://localhost:8080/api-docs/index.html) 
+### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
+<table>
+    <tr>
+        <td>
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa.png" alt="estrutura-projeto-arquitetura-limpa">
+        </td>
+        <td>
+            <h3>Application</h3>
+            <p>Esta camada atua como um mediador entre a camada de interface do usuário (Api) e a camada de domínio (Domain).<br/><br/>
+            <b>Controllers</b>
+            Especificamente, a função dos Controllers é servir como o conector entre as camadas mais externas (que lidam com a interface do usuário ou outras aplicações) e a camada de Casos de Uso. Eles são responsáveis por organizar os passos de uma requisição recebida.
+            <br/><br/>
+            <b>UseCases</b>
+            Os Casos de Uso (Use Cases) residem na camada logo exterior à camada de Entidades e interior à camada de Adaptadores de Interface (onde estão os Controllers, Presenters e Gateways).A principal função dos Casos de Uso é centralizar a implementação das regras de negócio
+            </p>
+            <h3>Domain</h3>
+            <p> 
+                É considerada "O coração do Software", um termo cunhado por Eric Evans (2003).
+                Esta camada contém os conceitos de negócios e onde estão todas as regras de negócio.
+                É nela que a lógica de negócio é executada
+            </p>
+            <h3>Ioc</h3>
+            <p> 
+                A Inversão de Controle (IoC) é um princípio de design no qual o fluxo de controle de um programa é invertido em comparação com a programação tradicional. Em vez de um objeto controlar a criação e o gerenciamento de suas dependências, essa responsabilidade é delegada a uma entidade externa, como um framework, um container ou outro componente.
+                A Injeção de Dependências é um padrão de projeto onde as dependências de um objeto são "injetadas" nele, em vez de ele mesmo criá-las.
+            </p>
+            <h3>Infra</h3>
+            <p> 
+                Camada de Infraestrutura fornece o suporte técnico fundamental, lidando com aspectos como comunicação (mensageria) e armazenamento (persistência de dados), para que as camadas acima (Interface do Usuário, Aplicação e Domínio) possam cumprir suas responsabilidades.
+            </p>
+            <h3>Api</h3>
+            <p> 
+                 Essa camada é o ponto de interação do usuário (humano ou outro sistema) com o software.
+            </p>            
+        </td>
+    </tr>
+</table>
 
+### 2.3 Todos os arquivos “manifesto” Kubernetes para a implementação da solução em um cluster, o Dockerfile para o build da aplicação e o arquivo de definição dockercompose que descreva todos os componentes necessários para que a aplicação funcione corretamente e seja possível subir a aplicação localmente usando apenas o comando “docker compose up”.
 
+#### Executando docker-compose localmente visual studio code
+* \Docker
+![vs-code-docker-open-terminal](/Documentacao/vs-code-docker-open-terminal.png)
+* Comando
+  ```
+  docker compose up
+  ```
+* Resultado
+![vs-code-docker-open-terminal-resultado](/Documentacao/vs-code-docker-terminal-result.png)
+
+#### Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.
+<table>
+    <tr>
+        <td>
+            <img src="./Documentacao/k8s-manifestos.png" alt="Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.">
+        </td>
+        <td>
+            <p> <h3>SqlServer</h3>
+            <a href="./K8s/01-sqlserver/01-sqlserver-sercrets.yaml">01-sqlserver-sercrets.yaml</a><br/>
+            <a href="./K8s/01-sqlserver/02-sqlserver-configmap.yaml">02-sqlserver-configmap.yaml</a><br/>
+            <a href="./K8s/01-sqlserver/03-sqlserver-pvc.yaml">03-sqlserver-pvc.yaml</a><br/>
+            <a href="./K8s/01-sqlserver/04-sqlserver-service.yaml">04-sqlserver-service.yaml</a><br/>
+            <a href="./K8s/01-sqlserver/05-sqlserver-statefulSet.yaml">05-sqlserver-statefulSet.yaml</a><br/>
+            <a href="./K8s/01-sqlserver/06-mssqltools-pod.yaml">06-mssqltools-pod.yaml</a>
+            </p>
+            <p> <h3>Api</h3>
+            <a href="./K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml">01-fiap-pos-tech-challenge-api-service.yaml</a><br/>
+            <a href="./K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml">02-fiap-pos-tech-challenge-api-deployment.yaml</a><br/>
+            <a href="./K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml">03-fiap-pos-tech-challenge-api-hpa.yaml</a>
+        </td>
+    </tr>
+</table>
+
+#### Executando Kubernets localmente no visual studio code
+* \K8s\01-sqlserver  
+![vs-code-docker-sqlserver-open-terminal](/Documentacao/vs-code-docker-sqlserver-open-terminal.png)
+* Comando
+  ```
+  kubectl apply -f .
+  ```
+* Resultado
+![vs-code-k8s-sqlserver-terminal-result](/Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
+
+* \K8s\02-api  
+![vs-code-docker-api-open-terminal](/Documentacao/vs-code-docker-api-open-terminal.png)
+* Comando
+  ```
+  kubectl apply -f .
+  ```
+* Resultado
+![vs-code-k8s-api-terminal-result](/Documentacao/vs-code-k8s-api-terminal-result.png)
+
+# Extras
 # Banco de dados
 ## Diagrama entidade relacionamento (DER)
 ![image](Documentacao/Revenda-de-automoveis-DER.png)
@@ -55,22 +157,3 @@ docker compose up
  > * **Code coverage**
  ![Code coverage 80%](Documentacao/code-coverage.png)  
  [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/develop/TestProject/CodeCoverage/Report/index.html)
-        - 
-# Entregáveis 
-## 1. PDF contendo os links de acesso aos itens abaixo:  
-### 1.1 Repositório com o código-fonte do software (ver próximo item);  
-- [Repositório :: FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos)  
-
-### 1.2 Vídeo demonstrando a solução funcionando, tanto na implementação da aplicação quanto na infraestrutura Kubernetes.  
-- xxx
-
-## 2. Conteúdo do Repositório:  
-### 2.1 Arquivo Readme.md que explique o que é o projeto, como foi implementado, como usar localmente e como testar;  
-- [Como executar no visual studio 2022](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/tree/develop#como-executar-no-visual-studio-2022)
-- [Como executar manualmente no windows](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/tree/develop#como-executar-manualmente-no-windows)
-
-### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
-- ![image](Documentacao/estrutura-projeto-arquitetura-limpa.png)
-
-### 2.3 Todos os arquivos “manifesto” Kubernetes para a implementação da solução em um cluster, o Dockerfile para o build da aplicação e o arquivo de definição dockercompose que descreva todos os componentes necessários para que a aplicação funcione corretamente e seja possível subir a aplicação localmente usando apenas o comando “docker compose up”.
-- xxx
