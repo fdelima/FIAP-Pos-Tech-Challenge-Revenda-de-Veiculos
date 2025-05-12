@@ -58,7 +58,7 @@ docker compose up
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-Application.png" alt="estrutura-projeto-arquitetura-limpa-Application">
         </td>
         <td>
-            <h3>Application</h3>
+            <h3>Application (Application Business Rules)</h3>
             <p>Esta camada atua como um mediador entre a camada de interface do usuário (Api) e a camada de domínio (Domain).<br/><br/>
             <b>Controllers</b>
             Especificamente, a função dos Controllers é servir como o conector entre as camadas mais externas (que lidam com a interface do usuário ou outras aplicações) e a camada de Casos de Uso. Eles são responsáveis por organizar os passos de uma requisição recebida.
@@ -73,14 +73,14 @@ docker compose up
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-domain.png" alt="estrutura-projeto-arquitetura-limpa-domain">
         </td>
         <td>
-            <h3>Domain</h3>
+            <h3>Domain (Enterprise Busines Rules)</h3>
             <p> 
                 É considerada "O coração do Software", um termo cunhado por Eric Evans (2003).
                 Esta camada contém os conceitos de negócios e onde estão todas as regras de negócio.
                 É nela que a lógica de negócio é executada.
                 <br/><br/>
                 <b>Entities</b>
-                São a camada mais interna e central da arquitetura.
+                São a camada mais interna e central da arquitetura. (single-responsibility principle)
                 <br/><br/>
                 <b>Services</b>
                  A função dos Serviços de Domínio (Domain Services) é a seguinte: • São objetos tratados separadamente. • Trabalham com diversas entidades e agregados. • São utilizados sempre que são necessários cálculos, execuções de rotinas e muito mais. Em resumo, eles atuam como coordenadores ou facilitadores para operações que envolvem múltiplos objetos de domínio (Entidades e Agregados), mas que não se encaixam naturalmente como responsabilidade de uma única Entidade ou Agregado. 
@@ -95,7 +95,7 @@ docker compose up
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-infra.png" alt="estrutura-projeto-arquitetura-limpa-infra">
         </td>
         <td>
-            <h3>Infra</h3>
+            <h3>Infra (Interface Adapters / Frameworks e Drivers)</h3>
             <p> 
                 Camada de Infraestrutura fornece o suporte técnico fundamental, lidando com aspectos como comunicação (mensageria) e armazenamento (persistência de dados), para que as camadas acima (Interface do Usuário, Aplicação e Domínio) possam cumprir suas responsabilidades.
                 <br/><br/>
@@ -109,7 +109,7 @@ docker compose up
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-user-interface.png" alt="estrutura-projeto-arquitetura-limpa-user-interface">
         </td>
         <td>
-            <h3>Api</h3>
+            <h3>Api (External Interface)</h3>
             <p> 
                  Essa camada é o ponto de interação do usuário (humano ou outro sistema) com o software.
             </p>  
@@ -120,7 +120,7 @@ docker compose up
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-ioc.png" alt="estrutura-projeto-arquitetura-limpa-ioc">
         </td>
         <td>
-            <h3>Ioc</h3>
+            <h3>Ioc (Dependency inversion principle)</h3>
             <p> 
                 A Inversão de Controle (IoC) é um princípio de design no qual o fluxo de controle de um programa é invertido em comparação com a programação tradicional. Em vez de um objeto controlar a criação e o gerenciamento de suas dependências, essa responsabilidade é delegada a uma entidade externa, como um framework, um container ou outro componente.
                 A Injeção de Dependências é um padrão de projeto onde as dependências de um objeto são "injetadas" nele, em vez de ele mesmo criá-las.
@@ -131,7 +131,7 @@ docker compose up
 
 ### 2.3 Todos os arquivos “manifesto” Kubernetes para a implementação da solução em um cluster, o Dockerfile para o build da aplicação e o arquivo de definição dockercompose que descreva todos os componentes necessários para que a aplicação funcione corretamente e seja possível subir a aplicação localmente usando apenas o comando “docker compose up”.
 
-#### Executando docker-compose localmente visual studio code
+#### Executando docker-compose localmente no visual studio code
 * \Docker  
 ![vs-code-docker-open-terminal](/Documentacao/vs-code-docker-open-terminal.png)
 * Comando
@@ -184,12 +184,12 @@ docker compose up
 ![vs-code-k8s-api-terminal-result](/Documentacao/vs-code-k8s-api-terminal-result.png)
 
 # Extras
-# Banco de dados
-## Diagrama entidade relacionamento (DER)
+## Banco de dados
+### Diagrama entidade relacionamento (DER)
 ![image](Documentacao/Revenda-de-automoveis-DER.png)
 
- # Qualidade de software;
- ## **Teste realizados**  
+ ### Qualidade de software;
+ #### **Teste realizados**  
  > Realizado teste de componente em BDD.  
  > Realizado teste de integração.  
  > Realizado teste unitários.  
@@ -198,3 +198,23 @@ docker compose up
  > * **Code coverage**  
  ![Code coverage 80%](Documentacao/code-coverage.png)  
  [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/develop/TestProject/CodeCoverage/Report/index.html)
+  
+ ## Branch protegida
+ * main  
+ ![main-branch-protection](/Documentacao/main-branch-protection.png)
+ ![main-branch-protection](/Documentacao/main-branch-protection-1.png)
+
+ ## CI/CD
+- Workflows
+    - Docker Image api CI
+        - [Workflow file](/.github/workflows/dotnet.yml)
+        - [Action](/actions/runs/14961870058)
+    - Docker Image mssql-tools CI
+        - [Workflow file](/.github/workflows/mssql-tools.yml)
+        - [Action](/actions/runs/11096258209/job/14960860467)    
+    - Terraform In Azure with User-assigned Managed Identity 
+        - [Workflow file](/.github/workflows/deploy-terraform-infrastructure-in-azure.yml)
+        - [Action criando recursos no azure](/actions/runs/11037364521/job/?????)
+
+
+
