@@ -53,10 +53,10 @@ docker compose up
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
 <table>
     <tr>
-        <td>
+        <td style="width:50%">
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa.png" alt="estrutura-projeto-arquitetura-limpa">
         </td>
-        <td>
+        <td style="font-size:10px">
             <h3>Application</h3>
             <p>Esta camada atua como um mediador entre a camada de interface do usuário (Api) e a camada de domínio (Domain).<br/><br/>
             <b>Controllers</b>
@@ -69,7 +69,23 @@ docker compose up
             <p> 
                 É considerada "O coração do Software", um termo cunhado por Eric Evans (2003).
                 Esta camada contém os conceitos de negócios e onde estão todas as regras de negócio.
-                É nela que a lógica de negócio é executada
+                É nela que a lógica de negócio é executada.
+                <br/><br/>
+                <b>Entities</b>
+                São a camada mais interna e central da arquitetura.
+                <br/><br/>
+                <b>Services</b>
+                 A função dos Serviços de Domínio (Domain Services) é a seguinte:
+• São objetos tratados separadamente.
+• Trabalham com diversas entidades e agregados.
+• São utilizados sempre que são necessários cálculos, execuções de rotinas e muito mais.
+Em resumo, eles atuam como coordenadores ou facilitadores para operações que envolvem múltiplos objetos de domínio (Entidades e Agregados), mas que não se encaixam naturalmente como responsabilidade de uma única Entidade ou Agregado. 
+                <br/><br/>
+                <b>ValuesObject</b>
+                As principais características e funções dos Objetos de Valor, segundo as fontes, são:
+• São reconhecidos por não possuírem identificadores.
+• Seus valores são usados para os distinguir um do outro.
+• Cada Objeto de Valor é único e imutável. O valor é criado como um todo e não muda depois de sua criação
             </p>
             <h3>Ioc</h3>
             <p> 
@@ -79,6 +95,9 @@ docker compose up
             <h3>Infra</h3>
             <p> 
                 Camada de Infraestrutura fornece o suporte técnico fundamental, lidando com aspectos como comunicação (mensageria) e armazenamento (persistência de dados), para que as camadas acima (Interface do Usuário, Aplicação e Domínio) possam cumprir suas responsabilidades.
+                <br/><br/>
+                <b>Gateways</b>
+                São componentes que residem na camada de Adaptadores de Interface (ou Interface Adapters). Esta é a camada que faz a intermediação entre as camadas mais internas (Casos de Uso e Entidades) e as camadas mais externas (Frameworks & Drivers)
             </p>
             <h3>Api</h3>
             <p> 
@@ -97,7 +116,7 @@ docker compose up
   ```
   docker compose up
   ```
-* Resultado
+* Resultado esperado
 ![vs-code-docker-open-terminal-resultado](/Documentacao/vs-code-docker-terminal-result.png)
 
 #### Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.
@@ -130,7 +149,7 @@ docker compose up
   ```
   kubectl apply -f .
   ```
-* Resultado
+* Resultado esperado
 ![vs-code-k8s-sqlserver-terminal-result](/Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
 
 * \K8s\02-api  
@@ -139,7 +158,7 @@ docker compose up
   ```
   kubectl apply -f .
   ```
-* Resultado
+* Resultado esperado
 ![vs-code-k8s-api-terminal-result](/Documentacao/vs-code-k8s-api-terminal-result.png)
 
 # Extras
