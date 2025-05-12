@@ -54,7 +54,7 @@ docker compose up
 <table>
     <tr>
         <td style="width: 50%">
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa.png" alt="estrutura-projeto-arquitetura-limpa">
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa.png" width="465px" alt="estrutura-projeto-arquitetura-limpa">
         </td>
         <td style="font-size: 10px;">
             <h3>Application</h3>
@@ -75,17 +75,10 @@ docker compose up
                 São a camada mais interna e central da arquitetura.
                 <br/><br/>
                 <b>Services</b>
-                 A função dos Serviços de Domínio (Domain Services) é a seguinte:
-• São objetos tratados separadamente.
-• Trabalham com diversas entidades e agregados.
-• São utilizados sempre que são necessários cálculos, execuções de rotinas e muito mais.
-Em resumo, eles atuam como coordenadores ou facilitadores para operações que envolvem múltiplos objetos de domínio (Entidades e Agregados), mas que não se encaixam naturalmente como responsabilidade de uma única Entidade ou Agregado. 
+                 A função dos Serviços de Domínio (Domain Services) é a seguinte: • São objetos tratados separadamente. • Trabalham com diversas entidades e agregados. • São utilizados sempre que são necessários cálculos, execuções de rotinas e muito mais. Em resumo, eles atuam como coordenadores ou facilitadores para operações que envolvem múltiplos objetos de domínio (Entidades e Agregados), mas que não se encaixam naturalmente como responsabilidade de uma única Entidade ou Agregado. 
                 <br/><br/>
                 <b>ValuesObject</b>
-                As principais características e funções dos Objetos de Valor, segundo as fontes, são:
-• São reconhecidos por não possuírem identificadores.
-• Seus valores são usados para os distinguir um do outro.
-• Cada Objeto de Valor é único e imutável. O valor é criado como um todo e não muda depois de sua criação
+                As principais características e funções dos Objetos de Valor, segundo as fontes, são: • São reconhecidos por não possuírem identificadores. • Seus valores são usados para os distinguir um do outro. • Cada Objeto de Valor é único e imutável. O valor é criado como um todo e não muda depois de sua criação
             </p>
             <h3>Ioc</h3>
             <p> 
@@ -110,7 +103,7 @@ Em resumo, eles atuam como coordenadores ou facilitadores para operações que e
 ### 2.3 Todos os arquivos “manifesto” Kubernetes para a implementação da solução em um cluster, o Dockerfile para o build da aplicação e o arquivo de definição dockercompose que descreva todos os componentes necessários para que a aplicação funcione corretamente e seja possível subir a aplicação localmente usando apenas o comando “docker compose up”.
 
 #### Executando docker-compose localmente visual studio code
-* \Docker
+* \Docker  
 ![vs-code-docker-open-terminal](/Documentacao/vs-code-docker-open-terminal.png)
 * Comando
   ```
