@@ -53,10 +53,10 @@ docker compose up
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
 <table>
     <tr>
-        <td style="width:50%">
+        <td style="width: 50%">
             <img src="./Documentacao/estrutura-projeto-arquitetura-limpa.png" alt="estrutura-projeto-arquitetura-limpa">
         </td>
-        <td style="font-size:10px">
+        <td style="font-size: 10px;">
             <h3>Application</h3>
             <p>Esta camada atua como um mediador entre a camada de interface do usuário (Api) e a camada de domínio (Domain).<br/><br/>
             <b>Controllers</b>
@@ -173,6 +173,6 @@ Em resumo, eles atuam como coordenadores ou facilitadores para operações que e
  > Realizado teste unitários.  
  > * ![Teste realizados](Documentacao/tests.png)     
  >    
- > * **Code coverage**
+ > * **Code coverage**  
  ![Code coverage 80%](Documentacao/code-coverage.png)  
  [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/develop/TestProject/CodeCoverage/Report/index.html)
