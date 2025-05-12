@@ -146,7 +146,7 @@ docker compose up
 ![vs-code-k8s-sqlserver-terminal-result](/Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
 
 * \K8s\02-api  
-![vs-code-docker-api-open-terminal](/Documentacao/vs-code-docker-api-open-terminal.png)
+![vs-code-k8s-api-open-terminal](/Documentacao/vs-code-k8s-api-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
