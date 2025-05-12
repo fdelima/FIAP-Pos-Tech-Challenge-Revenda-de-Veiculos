@@ -51,12 +51,13 @@ docker compose up
     * Swagger :: [http://localhost:8080/swagger](http://localhost:8080/swagger/index.html) 
     * API docs by Redocly :: [http://localhost:8080/api-docs](http://localhost:8080/api-docs/index.html) 
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
+![estrutura-projeto-arquitetura-limpa](./Documentacao/estrutura-projeto-arquitetura-limpa.png)
 <table>
     <tr>
-        <td style="width: 50%">
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa.png" width="465px" alt="estrutura-projeto-arquitetura-limpa">
+        <td>
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-Application.png" alt="estrutura-projeto-arquitetura-limpa-Application">
         </td>
-        <td style="font-size: 10px;">
+        <td>
             <h3>Application</h3>
             <p>Esta camada atua como um mediador entre a camada de interface do usuário (Api) e a camada de domínio (Domain).<br/><br/>
             <b>Controllers</b>
@@ -64,7 +65,14 @@ docker compose up
             <br/><br/>
             <b>UseCases</b>
             Os Casos de Uso (Use Cases) residem na camada logo exterior à camada de Entidades e interior à camada de Adaptadores de Interface (onde estão os Controllers, Presenters e Gateways).A principal função dos Casos de Uso é centralizar a implementação das regras de negócio
-            </p>
+            </p>                                
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-domain.png" alt="estrutura-projeto-arquitetura-limpa-domain">
+        </td>
+        <td>
             <h3>Domain</h3>
             <p> 
                 É considerada "O coração do Software", um termo cunhado por Eric Evans (2003).
@@ -80,11 +88,13 @@ docker compose up
                 <b>ValuesObject</b>
                 As principais características e funções dos Objetos de Valor, segundo as fontes, são: • São reconhecidos por não possuírem identificadores. • Seus valores são usados para os distinguir um do outro. • Cada Objeto de Valor é único e imutável. O valor é criado como um todo e não muda depois de sua criação
             </p>
-            <h3>Ioc</h3>
-            <p> 
-                A Inversão de Controle (IoC) é um princípio de design no qual o fluxo de controle de um programa é invertido em comparação com a programação tradicional. Em vez de um objeto controlar a criação e o gerenciamento de suas dependências, essa responsabilidade é delegada a uma entidade externa, como um framework, um container ou outro componente.
-                A Injeção de Dependências é um padrão de projeto onde as dependências de um objeto são "injetadas" nele, em vez de ele mesmo criá-las.
-            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-infra.png" alt="estrutura-projeto-arquitetura-limpa-infra">
+        </td>
+        <td>
             <h3>Infra</h3>
             <p> 
                 Camada de Infraestrutura fornece o suporte técnico fundamental, lidando com aspectos como comunicação (mensageria) e armazenamento (persistência de dados), para que as camadas acima (Interface do Usuário, Aplicação e Domínio) possam cumprir suas responsabilidades.
@@ -92,10 +102,29 @@ docker compose up
                 <b>Gateways</b>
                 São componentes que residem na camada de Adaptadores de Interface (ou Interface Adapters). Esta é a camada que faz a intermediação entre as camadas mais internas (Casos de Uso e Entidades) e as camadas mais externas (Frameworks & Drivers)
             </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-user-interface.png" alt="estrutura-projeto-arquitetura-limpa-user-interface">
+        </td>
+        <td>
             <h3>Api</h3>
             <p> 
                  Essa camada é o ponto de interação do usuário (humano ou outro sistema) com o software.
-            </p>            
+            </p>  
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-ioc.png" alt="estrutura-projeto-arquitetura-limpa-ioc">
+        </td>
+        <td>
+            <h3>Ioc</h3>
+            <p> 
+                A Inversão de Controle (IoC) é um princípio de design no qual o fluxo de controle de um programa é invertido em comparação com a programação tradicional. Em vez de um objeto controlar a criação e o gerenciamento de suas dependências, essa responsabilidade é delegada a uma entidade externa, como um framework, um container ou outro componente.
+                A Injeção de Dependências é um padrão de projeto onde as dependências de um objeto são "injetadas" nele, em vez de ele mesmo criá-las.
+            </p> 
         </td>
     </tr>
 </table>
