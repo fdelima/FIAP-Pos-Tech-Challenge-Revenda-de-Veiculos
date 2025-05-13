@@ -217,7 +217,7 @@ docker compose up
         - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14995550366/job/42128775003)
     - Deploy APP TO AKS Workflow
         - [Workflow file](/.github/workflows/deploy-azure-kubernetes-service.yml)
-        - [Action criando recursos no azure](./actions/runs/11037364521/job/?????)    
+        - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14996233999/job/42131039598)    
 
 
 
