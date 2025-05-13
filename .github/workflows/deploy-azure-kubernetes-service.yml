@@ -30,6 +30,10 @@ jobs:
       - name: CREATE DEPLOYMENT MANIFEST PATH
         run: mkdir ${{ env.DEPLOYMENT_MANIFEST_PATH }}
 
+      - name: List files
+        run: |
+            ls
+
       - name: COPY FILES TO DEPLOYMENT MANIFEST PATH
         run: |
           cp ./K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
@@ -45,7 +49,7 @@ jobs:
           include: |
             ${{ env.DEPLOYMENT_MANIFEST_PATH }}/02-fiap-pos-tech-challenge-api-deployment.yaml
 
-      - name: List files in the ./K8s/Infra/Azure
+      - name: List files in the ./K8s/Infra/Azure/toDeploy
         working-directory: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
         run: |
             ls

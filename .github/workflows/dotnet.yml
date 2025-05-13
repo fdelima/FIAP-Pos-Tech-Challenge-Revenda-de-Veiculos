@@ -2,7 +2,7 @@ name: FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
 
 jobs:
 
