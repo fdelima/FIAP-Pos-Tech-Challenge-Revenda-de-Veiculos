@@ -2,7 +2,7 @@ name: Deploy Terraform In Azure with User-assigned Managed Identity Workfow
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
 
 permissions:
   id-token: write
