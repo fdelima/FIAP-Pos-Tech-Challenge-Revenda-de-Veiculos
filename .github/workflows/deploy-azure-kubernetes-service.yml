@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main", "develop" ]
   workflow_run:
-    workflows: ["Deploy Terraform In Azure with User-assigned Managed Identity", "FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow"]
+    workflows: ["Deploy Terraform In Azure with User-assigned Managed Identity Workfow", "FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow"]
     types:
       - completed
 

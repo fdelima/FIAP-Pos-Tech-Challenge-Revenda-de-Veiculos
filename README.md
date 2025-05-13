@@ -214,7 +214,7 @@ docker compose up
         - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14960860467/job/42022537140)    
     - Terraform In Azure with User-assigned Managed Identity 
         - [Workflow file](/.github/workflows/deploy-terraform-infrastructure-in-azure.yml)
-        - [Action criando recursos no azure](./actions/runs/11037364521/job/?????)
+        - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14995550366/job/42128775003)
     - Deploy APP TO AKS Workflow
         - [Workflow file](/.github/workflows/deploy-azure-kubernetes-service.yml)
         - [Action criando recursos no azure](./actions/runs/11037364521/job/?????)    
