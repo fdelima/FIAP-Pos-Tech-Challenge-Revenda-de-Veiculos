@@ -2,7 +2,7 @@ name: Deploy APP TO AKS Workflow
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   workflow_run:
     workflows: ["Deploy Terraform K8s In Azure with User-assigned Managed Identity Workfow", "FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow"]
     types:
@@ -43,13 +43,29 @@ jobs:
           cp ./K8s/01-sqlserver/02-sqlserver-configmap.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
           cp ./K8s/01-sqlserver/06-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
 
-      - name: Set ASPNETCORE_ENVIRONMENT
+      - name: Set Azure ASPNETCORE_ENVIRONMENT
         uses: thiagodnf/string-replacer@v1.0.2
         with:
           find: "Development"
           replace: "Azure"
           include: |
             ${{ env.DEPLOYMENT_MANIFEST_PATH }}/02-fiap-pos-tech-challenge-api-deployment.yaml
+
+      - name: Set Azure MSSQL_USER
+        uses: thiagodnf/string-replacer@v1.0.2
+        with:
+          find: "c2E="
+          replace: "YXp1cmVhZG1pbg=="
+          include: |
+            ${{ env.DEPLOYMENT_MANIFEST_PATH }}/01-sqlserver/01-sqlserver-sercrets.yaml
+      
+      - name: Set Azure MSSQL_INSTANCE
+        uses: thiagodnf/string-replacer@v1.0.2
+        with:
+          find: "sqlserver-revendadeveiculos"
+          replace: "${{ secrets.AZURE_SERVER_NAME }}"
+          include: |
+            ${{ env.DEPLOYMENT_MANIFEST_PATH }}/01-sqlserver/01-sqlserver-configmap.yaml
 
       - name: List files in the ./K8s/Infra/Azure/toDeploy
         working-directory: ${{ env.DEPLOYMENT_MANIFEST_PATH }}

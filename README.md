@@ -206,18 +206,20 @@ docker compose up
 
  ## CI/CD
 - Workflows
-    - Docker Image api CI
+    - FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow
         - [Workflow file](/.github/workflows/dotnet.yml)
         - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14987953033/job/42105341829)
-    - Docker Image mssql-tools CI
+    - FIAP Pos Tech Challenge Revenda de Veiculos Mssql Tools Workflow
         - [Workflow file](/.github/workflows/mssql-tools.yml)
         - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14960860467/job/42022537140)    
-    - Terraform In Azure with User-assigned Managed Identity 
-        - [Workflow file](/.github/workflows/deploy-terraform-infrastructure-in-azure.yml)
+    - Deploy Terraform K8s In Azure with User-assigned Managed Identity Workfow 
+        - [Workflow file](/.github/workflows/deploy-terraform-k8s-infrastructure-in-azure.yml)
         - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14995550366/job/42128775003)
     - Deploy APP TO AKS Workflow
         - [Workflow file](/.github/workflows/deploy-azure-kubernetes-service.yml)
-        - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14996233999/job/42131039598)    
-
+        - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14996233999/job/42131039598)
+    - Deploy Terraform SqlServer In Azure with User-assigned Managed Identity Workfow
+        - [Workflow file](/.github/workflows/deploy-terraform-sqlserver-infrastructure-in-azure.yml)
+        - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/15002391869/job/42152466086)
 
 
