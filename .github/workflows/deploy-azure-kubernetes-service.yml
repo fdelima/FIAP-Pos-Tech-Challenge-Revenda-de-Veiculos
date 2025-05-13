@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
   workflow_run:
-    workflows: ["Deploy Terraform In Azure with User-assigned Managed Identity", "Docker Image api CI"]
+    workflows: ["Deploy Terraform In Azure with User-assigned Managed Identity", "FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow"]
     types:
       - completed
 
@@ -16,7 +16,7 @@ permissions:
 env:
   RESOURCE_GROUP: "fiap-pos-tech-aks-rg"
   CLUSTER_NAME: "fiap-pos-tech-k8s-cluster"
-  DEPLOYMENT_MANIFEST_PATH: "./Src/Infra/Azure/toDeploy"
+  DEPLOYMENT_MANIFEST_PATH: "./K8s/Infra/Azure/toDeploy"
 
 jobs:
   deploy:
@@ -32,12 +32,20 @@ jobs:
 
       - name: COPY FILES TO DEPLOYMENT MANIFEST PATH
         run: |
-          cp ./Src/02-api/01-fiap-pos-tech-challenge-api-service.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-          cp ./Src/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-          cp ./Src/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-          cp ./Src/01-sqlserver/05-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./K8s/01-sqlserver/05-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
 
-      - name: List files in the ./Src/Infra/Azure
+      - name: Set ASPNETCORE_ENVIRONMENT
+        uses: thiagodnf/string-replacer@v1.0.2
+        with:
+          find: "Development"
+          replace: "Azure"
+          include: |
+            ${{ env.DEPLOYMENT_MANIFEST_PATH }}/02-fiap-pos-tech-challenge-api-deployment.yaml
+
+      - name: List files in the ./K8s/Infra/Azure
         working-directory: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
         run: |
             ls

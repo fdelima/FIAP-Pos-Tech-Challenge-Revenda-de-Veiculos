@@ -208,13 +208,16 @@ docker compose up
 - Workflows
     - Docker Image api CI
         - [Workflow file](/.github/workflows/dotnet.yml)
-        - [Action](/actions/runs/14961870058)
+        - [Action](./actions/runs/14961870058)
     - Docker Image mssql-tools CI
         - [Workflow file](/.github/workflows/mssql-tools.yml)
-        - [Action](/actions/runs/11096258209/job/14960860467)    
+        - [Action](./actions/runs/11096258209/job/14960860467)    
     - Terraform In Azure with User-assigned Managed Identity 
         - [Workflow file](/.github/workflows/deploy-terraform-infrastructure-in-azure.yml)
-        - [Action criando recursos no azure](/actions/runs/11037364521/job/?????)
+        - [Action criando recursos no azure](./actions/runs/11037364521/job/?????)
+    - Deploy APP TO AKS Workflow
+        - [Workflow file](/.github/workflows/deploy-azure-kubernetes-service.yml)
+        - [Action criando recursos no azure](./actions/runs/11037364521/job/?????)    
 
 
 
