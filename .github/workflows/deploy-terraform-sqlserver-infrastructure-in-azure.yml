@@ -2,7 +2,7 @@ name: Deploy Terraform SqlServer In Azure with User-assigned Managed Identity Wo
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
 
 permissions:
   id-token: write
