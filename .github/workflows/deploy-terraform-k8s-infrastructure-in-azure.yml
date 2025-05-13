@@ -1,0 +1,55 @@
+name: Deploy Terraform K8s In Azure with User-assigned Managed Identity Workfow
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write
+  contents: read    
+
+jobs:
+  deploy-terraform-infrastructure-in-azure:
+    runs-on: self-hosted    
+
+    steps:
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          auth-type: IDENTITY
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+        
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+          
+      - name: List files in the ./K8s/Infra/Azure
+        working-directory: ./K8s/Infra/Azure
+        run: |
+            ls
+        
+      - name: Terraform Init
+        working-directory: ./K8s/Infra/Azure
+        run: terraform init
+        
+      - name: Terraform Plan
+        working-directory: ./K8s/Infra/Azure
+        run: terraform plan -out main.tfplan
+  
+      - name: Terraform Apply
+        id: terraformApply
+        working-directory: ./K8s/Infra/Azure
+        run: |
+            if [ $(az group exists --name 'fiap-pos-tech-aks-rg') = false ]; then 
+              terraform apply main.tfplan        
+            fi
+
+      - name: Rollback Terraform Apply
+        working-directory: ./K8s/Infra/Azure
+        if: failure() && steps.terraformApply.outcome == 'failure'
+        run: |
+            terraform plan -destroy -out main.destroy.tfplan
+            terraform apply main.destroy.tfplan
