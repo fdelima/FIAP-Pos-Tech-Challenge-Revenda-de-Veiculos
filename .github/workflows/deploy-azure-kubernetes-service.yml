@@ -39,7 +39,7 @@ jobs:
           cp ./K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
           cp ./K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
           cp ./K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
-          cp ./K8s/01-sqlserver/05-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
+          cp ./K8s/01-sqlserver/06-mssqltools-pod.yaml ${{ env.DEPLOYMENT_MANIFEST_PATH }}/
 
       - name: Set ASPNETCORE_ENVIRONMENT
         uses: thiagodnf/string-replacer@v1.0.2
