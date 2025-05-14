@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AssemblyName>FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>FIAP.Pos.Tech.Challenge.RevendaDeVeiculos.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Somente para teste remover -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+		<ProjectReference Include="..\..\External\Infra\Infra.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sqlserver-revendadeveiculos-statefulset
+  labels:
+    apps: sqlserver-revendadeveiculos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      apps: sqlserver-revendadeveiculos
+  template:
+    metadata:
+      labels:
+        apps: sqlserver-revendadeveiculos
+    spec:      
+      containers:
+        - name: sqlserver-revendadeveiculos-container
+          env:
+            - name: ACCEPT_EULA
+              valueFrom:
+                configMapKeyRef:
+                  name: sqlserver-revendadeveiculos-configmap
+                  key: ACCEPT_EULA
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  name: sqlserver-revendadeveiculos-configmap
+                  key: MSSQL_PID
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sqlserver-revendadeveiculos-secrets
+                  key: MSSQL_USER_PASSWORD                  
+          image: mcr.microsoft.com/mssql/server:2019-latest          
+          ports:
+            - containerPort: 1433
+          volumeMounts:
+            - mountPath: /var/opt/mssql
+              name: sql-data-revendadeveiculos
+      restartPolicy: Always
+      volumes:
+        - name: sql-data-revendadeveiculos
+          persistentVolumeClaim:
+            claimName: sql-data-revendadeveiculos

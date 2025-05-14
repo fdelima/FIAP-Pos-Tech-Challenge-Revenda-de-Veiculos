@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sqlserver-revendadeveiculos-secrets
+type: Opaque
+data:
+  MSSQL_USER: c2E=
+  MSSQL_USER_PASSWORD: U3FsU2VydmVyMjAxOSE=
