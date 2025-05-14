@@ -35,7 +35,7 @@ Além disso, como estamos com um novo time responsável pela infraestrutura, ser
 * Abra a solução (FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos.sln) com o visual studio 2022
 * Com o botão direito sobre o projeto docker-compose selecione Set as Startup Project  
 ![Set as Startup Project](Documentacao/set-startup-project.png)
-* Start visual studio na opção docker-compose conforme imagem abaixo:
+* Start visual studio na opção docker-compose conforme imagem abaixo:  
 ![image](Documentacao/VS-2022-play-docker-compose.png)
 
 ## Como executar manualmente no windows
@@ -133,13 +133,13 @@ docker compose up
 
 #### Executando docker-compose localmente no visual studio code
 * \Docker  
-![vs-code-docker-open-terminal](/Documentacao/vs-code-docker-open-terminal.png)
+![vs-code-docker-open-terminal](./Documentacao/vs-code-docker-open-terminal.png)
 * Comando
   ```
   docker compose up
   ```
-* Resultado esperado
-![vs-code-docker-open-terminal-resultado](/Documentacao/vs-code-docker-terminal-result.png)
+* Resultado esperado  
+![vs-code-docker-open-terminal-resultado](./Documentacao/vs-code-docker-terminal-result.png)
 
 #### Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.
 <table>
@@ -166,22 +166,22 @@ docker compose up
 
 #### Executando Kubernets localmente no visual studio code
 * \K8s\01-sqlserver  
-![vs-code-docker-sqlserver-open-terminal](/Documentacao/vs-code-docker-sqlserver-open-terminal.png)
+![vs-code-docker-sqlserver-open-terminal](./Documentacao/vs-code-docker-sqlserver-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
   ```
-* Resultado esperado
-![vs-code-k8s-sqlserver-terminal-result](/Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
+* Resultado esperado  
+![vs-code-k8s-sqlserver-terminal-result](./Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
 
 * \K8s\02-api  
-![vs-code-k8s-api-open-terminal](/Documentacao/vs-code-k8s-api-open-terminal.png)
+![vs-code-k8s-api-open-terminal](./Documentacao/vs-code-k8s-api-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
   ```
-* Resultado esperado
-![vs-code-k8s-api-terminal-result](/Documentacao/vs-code-k8s-api-terminal-result.png)
+* Resultado esperado  
+![vs-code-k8s-api-terminal-result](./Documentacao/vs-code-k8s-api-terminal-result.png)
 
 # Extras
 ## Banco de dados
@@ -201,8 +201,8 @@ docker compose up
   
  ## Branch protegida
  * main  
- ![main-branch-protection](/Documentacao/main-branch-protection.png)
- ![main-branch-protection](/Documentacao/main-branch-protection-1.png)
+ ![main-branch-protection](./Documentacao/main-branch-protection.png)
+ ![main-branch-protection](./Documentacao/main-branch-protection-1.png)
 
  ## CI/CD
 - Workflows
@@ -224,4 +224,4 @@ docker compose up
 
 
 ## Diagrama Arquitetural
-![Diagrama Arquitetural](/Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
+![Diagrama Arquitetural](./Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
