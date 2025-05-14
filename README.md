@@ -26,14 +26,14 @@ Além disso, como estamos com um novo time responsável pela infraestrutura, ser
 - [Repositório :: FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos)  
 
 ### 1.2 Vídeo demonstrando a solução funcionando, tanto na implementação da aplicação quanto na infraestrutura Kubernetes.  
-- xxx
+- [Video youtube](https://youtu.be/ZTk_LjgOmF0)
 
 ## 2. Conteúdo do Repositório:  
 ### 2.1 Arquivo Readme.md que explique o que é o projeto, como foi implementado, como usar localmente e como testar;  
 ## Como executar no visual studio 2022
 * Certifique-se que o docker desktop esteja em execução
 * Abra a solução (FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos.sln) com o visual studio 2022
-* Com o botão direito sobre o projeto docker-compose selecione Set as Startup Project
+* Com o botão direito sobre o projeto docker-compose selecione Set as Startup Project  
 ![Set as Startup Project](Documentacao/set-startup-project.png)
 * Start visual studio na opção docker-compose conforme imagem abaixo:
 ![image](Documentacao/VS-2022-play-docker-compose.png)
@@ -197,7 +197,7 @@ docker compose up
  >    
  > * **Code coverage**  
  ![Code coverage 80%](Documentacao/code-coverage.png)  
- [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/develop/TestProject/CodeCoverage/Report/index.html)
+ [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/TestProject/CodeCoverage/Report/index.html)
   
  ## Branch protegida
  * main  
@@ -223,3 +223,5 @@ docker compose up
         - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/15002391869/job/42152466086)
 
 
+## Diagrama Arquitetural
+![Diagrama Arquitetural](/Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
