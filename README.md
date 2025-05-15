@@ -34,14 +34,14 @@ Além disso, como estamos com um novo time responsável pela infraestrutura, ser
 * Certifique-se que o docker desktop esteja em execução
 * Abra a solução (FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos.sln) com o visual studio 2022
 * Com o botão direito sobre o projeto docker-compose selecione Set as Startup Project  
-![Set as Startup Project](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/set-startup-project.png)
+![Set as Startup Project](Documentacao/set-startup-project.png)
 * Start visual studio na opção docker-compose conforme imagem abaixo:  
-![image](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/VS-2022-play-docker-compose.png)
+![image](Documentacao/VS-2022-play-docker-compose.png)
 
 ## Como executar manualmente no windows
 * Certifique-se que o docker desktop esteja em execução
 * Após o clone do projeto abra a pasta "Docker" no prompt de comando conforme imagem abaixo:
-![image](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/Abrir-Terminal.png)
+![image](Documentacao/Abrir-Terminal.png)
 * Excute o commando abaixo:
 ```
 docker compose up
@@ -51,7 +51,7 @@ docker compose up
     * Swagger :: [http://localhost:8080/swagger](http://localhost:8080/swagger/index.html) 
     * API docs by Redocly :: [http://localhost:8080/api-docs](http://localhost:8080/api-docs/index.html) 
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
-![estrutura-projeto-arquitetura-limpa](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/estrutura-projeto-arquitetura-limpa.png)
+![estrutura-projeto-arquitetura-limpa](Documentacao/estrutura-projeto-arquitetura-limpa.png)
 <table>
     <tr>
         <td>
@@ -133,13 +133,13 @@ docker compose up
 
 #### Executando docker-compose localmente no visual studio code
 * \Docker  
-![vs-code-docker-open-terminal](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/vs-code-docker-open-terminal.png)
+![vs-code-docker-open-terminal](Documentacao/vs-code-docker-open-terminal.png)
 * Comando
   ```
   docker compose up
   ```
 * Resultado esperado  
-![vs-code-docker-open-terminal-resultado](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/vs-code-docker-terminal-result.png)
+![vs-code-docker-open-terminal-resultado](Documentacao/vs-code-docker-terminal-result.png)
 
 #### Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.
 <table>
@@ -166,43 +166,43 @@ docker compose up
 
 #### Executando Kubernets localmente no visual studio code
 * \K8s\01-sqlserver  
-![vs-code-docker-sqlserver-open-terminal](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/vs-code-docker-sqlserver-open-terminal.png)
+![vs-code-docker-sqlserver-open-terminal](Documentacao/vs-code-docker-sqlserver-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
   ```
 * Resultado esperado  
-![vs-code-k8s-sqlserver-terminal-result](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
+![vs-code-k8s-sqlserver-terminal-result](Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
 
 * \K8s\02-api  
-![vs-code-k8s-api-open-terminal](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/vs-code-k8s-api-open-terminal.png)
+![vs-code-k8s-api-open-terminal](Documentacao/vs-code-k8s-api-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
   ```
 * Resultado esperado  
-![vs-code-k8s-api-terminal-result](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/vs-code-k8s-api-terminal-result.png)
+![vs-code-k8s-api-terminal-result](Documentacao/vs-code-k8s-api-terminal-result.png)
 
 # Extras
 ## Banco de dados
 ### Diagrama entidade relacionamento (DER)
-![image](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/Revenda-de-automoveis-DER.png)
+![image](Documentacao/Revenda-de-automoveis-DER.png)
 
  ### Qualidade de software;
  #### **Teste realizados**  
  > Realizado teste de componente em BDD.  
  > Realizado teste de integração.  
  > Realizado teste unitários.  
- > * ![Teste realizados](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/tests.png)     
+ > * ![Teste realizados](Documentacao/tests.png)     
  >    
  > * **Code coverage**  
- ![Code coverage 80%](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/code-coverage.png)  
+ ![Code coverage 80%](Documentacao/code-coverage.png)  
  [Xunit Code Coverage :: Veja aqui mais detalhes](https://html-preview.github.io/?url=https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/TestProject/CodeCoverage/Report/index.html)
   
  ## Branch protegida
  * main  
- ![main-branch-protection](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/main-branch-protection.png)
- ![main-branch-protection](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/main-branch-protection-1.png)
+ ![main-branch-protection](Documentacao/main-branch-protection.png)
+ ![main-branch-protection](Documentacao/main-branch-protection-1.png)
 
  ## CI/CD
 - Workflows
@@ -224,4 +224,4 @@ docker compose up
 
 
 ## Diagrama Arquitetural
-![Diagrama Arquitetural](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
+![Diagrama Arquitetural](Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
