@@ -51,11 +51,11 @@ docker compose up
     * Swagger :: [http://localhost:8080/swagger](http://localhost:8080/swagger/index.html) 
     * API docs by Redocly :: [http://localhost:8080/api-docs](http://localhost:8080/api-docs/index.html) 
 ### 2.2 Código-fonte de software que funcione corretamente, implemente todas as necessidades acima descritas e implemente os conceitos SOLID e Clean Architecture de forma prescritiva;  
-![estrutura-projeto-arquitetura-limpa](./Documentacao/estrutura-projeto-arquitetura-limpa.png)
+![estrutura-projeto-arquitetura-limpa](Documentacao/estrutura-projeto-arquitetura-limpa.png)
 <table>
     <tr>
         <td>
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-Application.png" alt="estrutura-projeto-arquitetura-limpa-Application">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-Application.png" alt="estrutura-projeto-arquitetura-limpa-Application">
         </td>
         <td>
             <h3>Application (Application Business Rules)</h3>
@@ -70,7 +70,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-domain.png" alt="estrutura-projeto-arquitetura-limpa-domain">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-domain.png" alt="estrutura-projeto-arquitetura-limpa-domain">
         </td>
         <td>
             <h3>Domain (Enterprise Busines Rules)</h3>
@@ -92,7 +92,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-infra.png" alt="estrutura-projeto-arquitetura-limpa-infra">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-infra.png" alt="estrutura-projeto-arquitetura-limpa-infra">
         </td>
         <td>
             <h3>Infra (Interface Adapters / Frameworks e Drivers)</h3>
@@ -106,7 +106,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-user-interface.png" alt="estrutura-projeto-arquitetura-limpa-user-interface">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-user-interface.png" alt="estrutura-projeto-arquitetura-limpa-user-interface">
         </td>
         <td>
             <h3>Api (External Interface)</h3>
@@ -117,7 +117,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="./Documentacao/estrutura-projeto-arquitetura-limpa-ioc.png" alt="estrutura-projeto-arquitetura-limpa-ioc">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-ioc.png" alt="estrutura-projeto-arquitetura-limpa-ioc">
         </td>
         <td>
             <h3>Ioc (Dependency inversion principle)</h3>
@@ -133,55 +133,55 @@ docker compose up
 
 #### Executando docker-compose localmente no visual studio code
 * \Docker  
-![vs-code-docker-open-terminal](./Documentacao/vs-code-docker-open-terminal.png)
+![vs-code-docker-open-terminal](Documentacao/vs-code-docker-open-terminal.png)
 * Comando
   ```
   docker compose up
   ```
 * Resultado esperado  
-![vs-code-docker-open-terminal-resultado](./Documentacao/vs-code-docker-terminal-result.png)
+![vs-code-docker-open-terminal-resultado](Documentacao/vs-code-docker-terminal-result.png)
 
 #### Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.
 <table>
     <tr>
         <td>
-            <img src="./Documentacao/k8s-manifestos.png" alt="Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.">
+            <img src="Documentacao/k8s-manifestos.png" alt="Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.">
         </td>
         <td>
             <p> <h3>SqlServer</h3>
-            <a href="./K8s/01-sqlserver/01-sqlserver-sercrets.yaml">01-sqlserver-sercrets.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/02-sqlserver-configmap.yaml">02-sqlserver-configmap.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/03-sqlserver-pvc.yaml">03-sqlserver-pvc.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/04-sqlserver-service.yaml">04-sqlserver-service.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/05-sqlserver-statefulSet.yaml">05-sqlserver-statefulSet.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/06-mssqltools-pod.yaml">06-mssqltools-pod.yaml</a>
+            <a href="K8s/01-sqlserver/01-sqlserver-sercrets.yaml">01-sqlserver-sercrets.yaml</a><br/>
+            <a href="K8s/01-sqlserver/02-sqlserver-configmap.yaml">02-sqlserver-configmap.yaml</a><br/>
+            <a href="K8s/01-sqlserver/03-sqlserver-pvc.yaml">03-sqlserver-pvc.yaml</a><br/>
+            <a href="K8s/01-sqlserver/04-sqlserver-service.yaml">04-sqlserver-service.yaml</a><br/>
+            <a href="K8s/01-sqlserver/05-sqlserver-statefulSet.yaml">05-sqlserver-statefulSet.yaml</a><br/>
+            <a href="K8s/01-sqlserver/06-mssqltools-pod.yaml">06-mssqltools-pod.yaml</a>
             </p>
             <p> <h3>Api</h3>
-            <a href="./K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml">01-fiap-pos-tech-challenge-api-service.yaml</a><br/>
-            <a href="./K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml">02-fiap-pos-tech-challenge-api-deployment.yaml</a><br/>
-            <a href="./K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml">03-fiap-pos-tech-challenge-api-hpa.yaml</a>
+            <a href="K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml">01-fiap-pos-tech-challenge-api-service.yaml</a><br/>
+            <a href="K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml">02-fiap-pos-tech-challenge-api-deployment.yaml</a><br/>
+            <a href="K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml">03-fiap-pos-tech-challenge-api-hpa.yaml</a>
         </td>
     </tr>
 </table>
 
 #### Executando Kubernets localmente no visual studio code
 * \K8s\01-sqlserver  
-![vs-code-docker-sqlserver-open-terminal](./Documentacao/vs-code-docker-sqlserver-open-terminal.png)
+![vs-code-docker-sqlserver-open-terminal](Documentacao/vs-code-docker-sqlserver-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
   ```
 * Resultado esperado  
-![vs-code-k8s-sqlserver-terminal-result](./Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
+![vs-code-k8s-sqlserver-terminal-result](Documentacao/vs-code-k8s-sqlserver-terminal-result.png)
 
 * \K8s\02-api  
-![vs-code-k8s-api-open-terminal](./Documentacao/vs-code-k8s-api-open-terminal.png)
+![vs-code-k8s-api-open-terminal](Documentacao/vs-code-k8s-api-open-terminal.png)
 * Comando
   ```
   kubectl apply -f .
   ```
 * Resultado esperado  
-![vs-code-k8s-api-terminal-result](./Documentacao/vs-code-k8s-api-terminal-result.png)
+![vs-code-k8s-api-terminal-result](Documentacao/vs-code-k8s-api-terminal-result.png)
 
 # Extras
 ## Banco de dados
@@ -201,8 +201,8 @@ docker compose up
   
  ## Branch protegida
  * main  
- ![main-branch-protection](./Documentacao/main-branch-protection.png)
- ![main-branch-protection](./Documentacao/main-branch-protection-1.png)
+ ![main-branch-protection](Documentacao/main-branch-protection.png)
+ ![main-branch-protection](Documentacao/main-branch-protection-1.png)
 
  ## CI/CD
 - Workflows
@@ -224,4 +224,4 @@ docker compose up
 
 
 ## Diagrama Arquitetural
-![Diagrama Arquitetural](./Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
+![Diagrama Arquitetural](Documentacao/FIAP-Pos-Tech-Challenge-revenda-de-veiculos-Arquitetura.drawio.png)
