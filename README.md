@@ -207,20 +207,20 @@ docker compose up
  ## CI/CD
 - Workflows
     - FIAP Pos Tech Challenge Revenda de Veiculos Api Workflow
-        - [Workflow file](/.github/workflows/dotnet.yml)
-        - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14987953033/job/42105341829)
+        - [Workflow file](actions/workflows/dotnet.yml)
+        - [Action](actions/runs/14987953033/job/42105341829)
     - FIAP Pos Tech Challenge Revenda de Veiculos Mssql Tools Workflow
-        - [Workflow file](/.github/workflows/mssql-tools.yml)
-        - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14960860467/job/42022537140)    
+        - [Workflow file](actions/workflows/mssql-tools.yml)
+        - [Action](actions/runs/14960860467/job/42022537140)    
     - Deploy Terraform K8s In Azure with User-assigned Managed Identity Workfow 
-        - [Workflow file](/.github/workflows/deploy-terraform-k8s-infrastructure-in-azure.yml)
-        - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/14995550366/job/42128775003)
+        - [Workflow file](actions/workflows/deploy-terraform-k8s-infrastructure-in-azure.yml)
+        - [Action criando recursos no azure](actions/runs/14995550366/job/42128775003)
     - Deploy APP TO AKS Workflow
-        - [Workflow file](/.github/workflows/deploy-azure-kubernetes-service.yml)
-        - [Action](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/15002873630/job/42154102499)
+        - [Workflow file](actions/workflows/deploy-azure-kubernetes-service.yml)
+        - [Action](actions/runs/15002873630/job/42154102499)
     - Deploy Terraform SqlServer In Azure with User-assigned Managed Identity Workfow
-        - [Workflow file](/.github/workflows/deploy-terraform-sqlserver-infrastructure-in-azure.yml)
-        - [Action criando recursos no azure](https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/actions/runs/15002391869/job/42152466086)
+        - [Workflow file](actions/workflows/deploy-terraform-sqlserver-infrastructure-in-azure.yml)
+        - [Action criando recursos no azure](actions/runs/15002391869/job/42152466086)
 
 
 ## Diagrama Arquitetural
