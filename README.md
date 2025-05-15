@@ -55,7 +55,7 @@ docker compose up
 <table>
     <tr>
         <td>
-            <img src="https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/estrutura-projeto-arquitetura-limpa-Application.png" alt="estrutura-projeto-arquitetura-limpa-Application">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-Application.png" alt="estrutura-projeto-arquitetura-limpa-Application">
         </td>
         <td>
             <h3>Application (Application Business Rules)</h3>
@@ -70,7 +70,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/estrutura-projeto-arquitetura-limpa-domain.png" alt="estrutura-projeto-arquitetura-limpa-domain">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-domain.png" alt="estrutura-projeto-arquitetura-limpa-domain">
         </td>
         <td>
             <h3>Domain (Enterprise Busines Rules)</h3>
@@ -92,7 +92,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/estrutura-projeto-arquitetura-limpa-infra.png" alt="estrutura-projeto-arquitetura-limpa-infra">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-infra.png" alt="estrutura-projeto-arquitetura-limpa-infra">
         </td>
         <td>
             <h3>Infra (Interface Adapters / Frameworks e Drivers)</h3>
@@ -106,7 +106,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/estrutura-projeto-arquitetura-limpa-user-interface.png" alt="estrutura-projeto-arquitetura-limpa-user-interface">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-user-interface.png" alt="estrutura-projeto-arquitetura-limpa-user-interface">
         </td>
         <td>
             <h3>Api (External Interface)</h3>
@@ -117,7 +117,7 @@ docker compose up
     </tr>
     <tr>
         <td>
-            <img src="https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/estrutura-projeto-arquitetura-limpa-ioc.png" alt="estrutura-projeto-arquitetura-limpa-ioc">
+            <img src="Documentacao/estrutura-projeto-arquitetura-limpa-ioc.png" alt="estrutura-projeto-arquitetura-limpa-ioc">
         </td>
         <td>
             <h3>Ioc (Dependency inversion principle)</h3>
@@ -145,21 +145,21 @@ docker compose up
 <table>
     <tr>
         <td>
-            <img src="https://github.com/fdelima/FIAP-Pos-Tech-Challenge-Revenda-de-Veiculos/blob/main/Documentacao/k8s-manifestos.png" alt="Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.">
+            <img src="Documentacao/k8s-manifestos.png" alt="Arquivos “manifesto” Kubernetes para a implementação da solução em um cluster.">
         </td>
         <td>
             <p> <h3>SqlServer</h3>
-            <a href="./K8s/01-sqlserver/01-sqlserver-sercrets.yaml">01-sqlserver-sercrets.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/02-sqlserver-configmap.yaml">02-sqlserver-configmap.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/03-sqlserver-pvc.yaml">03-sqlserver-pvc.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/04-sqlserver-service.yaml">04-sqlserver-service.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/05-sqlserver-statefulSet.yaml">05-sqlserver-statefulSet.yaml</a><br/>
-            <a href="./K8s/01-sqlserver/06-mssqltools-pod.yaml">06-mssqltools-pod.yaml</a>
+            <a href="K8s/01-sqlserver/01-sqlserver-sercrets.yaml">01-sqlserver-sercrets.yaml</a><br/>
+            <a href="K8s/01-sqlserver/02-sqlserver-configmap.yaml">02-sqlserver-configmap.yaml</a><br/>
+            <a href="K8s/01-sqlserver/03-sqlserver-pvc.yaml">03-sqlserver-pvc.yaml</a><br/>
+            <a href="K8s/01-sqlserver/04-sqlserver-service.yaml">04-sqlserver-service.yaml</a><br/>
+            <a href="K8s/01-sqlserver/05-sqlserver-statefulSet.yaml">05-sqlserver-statefulSet.yaml</a><br/>
+            <a href="K8s/01-sqlserver/06-mssqltools-pod.yaml">06-mssqltools-pod.yaml</a>
             </p>
             <p> <h3>Api</h3>
-            <a href="./K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml">01-fiap-pos-tech-challenge-api-service.yaml</a><br/>
-            <a href="./K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml">02-fiap-pos-tech-challenge-api-deployment.yaml</a><br/>
-            <a href="./K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml">03-fiap-pos-tech-challenge-api-hpa.yaml</a>
+            <a href="K8s/02-api/01-fiap-pos-tech-challenge-api-service.yaml">01-fiap-pos-tech-challenge-api-service.yaml</a><br/>
+            <a href="K8s/02-api/02-fiap-pos-tech-challenge-api-deployment.yaml">02-fiap-pos-tech-challenge-api-deployment.yaml</a><br/>
+            <a href="K8s/02-api/03-fiap-pos-tech-challenge-api-hpa.yaml">03-fiap-pos-tech-challenge-api-hpa.yaml</a>
         </td>
     </tr>
 </table>
